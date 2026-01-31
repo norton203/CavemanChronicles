@@ -1,4 +1,4 @@
-﻿using static Android.Icu.Text.TimeZoneFormat;
+﻿
 
 namespace CavemanChronicles
 {

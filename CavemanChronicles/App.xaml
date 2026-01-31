@@ -1,14 +1,19 @@
-﻿<Application.Resources>
-    <ResourceDictionary>
-        <Color x:Key="RetroGreen">#00FF00</Color>
-        <Color x:Key="RetroAmber">#FFAA00</Color>
-        <Color x:Key="RetroBackground">#000000</Color>
-        <Color x:Key="RetroBorder">#333333</Color>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CavemanChronicles.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="RetroGreen">#00FF00</Color>
+            <Color x:Key="RetroAmber">#FFAA00</Color>
+            <Color x:Key="RetroBackground">#000000</Color>
+            <Color x:Key="RetroBorder">#333333</Color>
 
-        <Style TargetType="Label" x:Key="RetroText">
-            <Setter Property="FontFamily" Value="Courier New"/>
-            <Setter Property="TextColor" Value="{StaticResource RetroGreen}"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource RetroBackground}"/>
-        </Style>
-    </ResourceDictionary>
-</Application.Resources>
+            <Style TargetType="Label" x:Key="RetroText">
+                <Setter Property="FontFamily" Value="Courier New"/>
+                <Setter Property="TextColor" Value="{StaticResource RetroGreen}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource RetroBackground}"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
