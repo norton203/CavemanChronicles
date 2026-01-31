@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CavemanChronicles.CharacterCreationPage"
+             BackgroundColor="Black">
+
+    <ScrollView x:Name="MainScrollView">
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Title -->
+            <Label Text="CAVEMAN CHRONICLES"
+                   TextColor="#00FF00"
+                   FontFamily="Courier New"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,10"/>
+
+            <Label Text="CHARACTER CREATION"
+                   TextColor="#00FF00"
+                   FontFamily="Courier New"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,30"/>
+
+            <!-- Name Entry -->
+            <Border Stroke="#00FF00" 
+                    StrokeThickness="2"
+                    Padding="15"
+                    BackgroundColor="Black">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="CHARACTER NAME"
+                           TextColor="#00FF00"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"/>
+
+                    <Entry x:Name="NameEntry"
+                           Placeholder="Enter your name..."
+                           PlaceholderColor="#004400"
+                           TextColor="#00FF00"
+                           BackgroundColor="Black"
+                           FontFamily="Courier New"
+                           FontSize="16"
+                           MaxLength="20"
+                           TextChanged="OnNameChanged"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Race Selection -->
+            <Border Stroke="#00FF00" 
+                    StrokeThickness="2"
+                    Padding="15"
+                    BackgroundColor="Black">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="SELECT YOUR RACE"
+                           TextColor="#00FF00"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"/>
+
+                    <CollectionView x:Name="RaceCollectionView"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnRaceSelected"
+                                    HeightRequest="400">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Stroke="#00FF00"
+                                        StrokeThickness="1"
+                                        Padding="10"
+                                        Margin="0,5,0,5"
+                                        BackgroundColor="Black">
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label Text="{Binding Name}"
+                                               TextColor="#00FF00"
+                                               FontFamily="Courier New"
+                                               FontSize="16"
+                                               FontAttributes="Bold"/>
+                                        <Label Text="{Binding Description}"
+                                               TextColor="#00AA00"
+                                               FontFamily="Courier New"
+                                               FontSize="12"
+                                               LineBreakMode="WordWrap"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Selected Race Stats -->
+            <Border x:Name="StatsPanel"
+                    Stroke="#00FF00" 
+                    StrokeThickness="2"
+                    Padding="15"
+                    BackgroundColor="Black"
+                    IsVisible="False">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="RACIAL BONUSES"
+                           TextColor="#00FF00"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Margin="0,0,0,10"/>
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8">
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="Strength:"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1"
+                               x:Name="StrengthLabel"
+                               Text="+0"
+                               TextColor="#FFAA00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="Dexterity:"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1"
+                               x:Name="DexterityLabel"
+                               Text="+0"
+                               TextColor="#FFAA00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Text="Intelligence:"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="1"
+                               x:Name="IntelligenceLabel"
+                               Text="+0"
+                               TextColor="#FFAA00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+
+                        <Label Grid.Row="3" Grid.Column="0"
+                               Text="Starting Health:"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1"
+                               x:Name="HealthLabel"
+                               Text="100"
+                               TextColor="#FFAA00"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Start Button -->
+            <Border x:Name="StartButton"
+                    Stroke="#00FF00" 
+                    StrokeThickness="2"
+                    Padding="15"
+                    BackgroundColor="#003300"
+                    IsVisible="False"
+                    Margin="0,0,0,20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStartAdventure"/>
+                </Border.GestureRecognizers>
+                <Label Text="START ADVENTURE"
+                       TextColor="#00FF00"
+                       FontFamily="Courier New"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+            </Border>
+
+            <!-- Instructions -->
+            <Label Text="Your adventure begins in the Caveman Era. As you level up, technology will advance through the ages!"
+                   TextColor="#00AA00"
+                   FontFamily="Courier New"
+                   FontSize="12"
+                   LineBreakMode="WordWrap"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,40"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

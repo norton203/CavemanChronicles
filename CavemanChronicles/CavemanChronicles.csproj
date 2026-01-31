@@ -73,4 +73,10 @@
       <Folder Include="Resources\Raw\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <MauiXaml Update="CharacterCreationPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+    </ItemGroup>
+
 </Project>

@@ -9,7 +9,14 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new MainPage()) { Title = "CavemanChronicles" };
+            // Start with character creation page wrapped in NavigationPage
+            var navigationPage = new NavigationPage(new CharacterCreationPage())
+            {
+                BarBackgroundColor = Colors.Black,
+                BarTextColor = Color.FromArgb("#00FF00")
+            };
+
+            return new Window(navigationPage) { Title = "Caveman Chronicles" };
         }
     }
 }

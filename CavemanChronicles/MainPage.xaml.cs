@@ -9,11 +9,22 @@ namespace CavemanChronicles
         private readonly GameService _gameService;
         private List<string> _gameTextHistory = new List<string>();
 
-        public MainPage()
+        public MainPage(Character character)
         {
             InitializeComponent();
             _gameService = new GameService();
-            _gameService.StartNewGame("Hero");
+            _gameService.Player = character;
+
+            // Add welcome message with race info
+            var raceStats = RaceData.GetRaceStats(character.Race);
+            _gameTextHistory.Add($"Welcome to Caveman Chronicles, {character.Name} the {raceStats.Name}!");
+            _gameTextHistory.Add("");
+            _gameTextHistory.Add("You awaken in a primitive cave. The smell of smoke and dirt fills your nostrils.");
+            _gameTextHistory.Add($"As a {raceStats.Name}, you possess unique strengths that will aid your journey through the ages.");
+            _gameTextHistory.Add("");
+            _gameTextHistory.Add("Type 'help' to see available commands.");
+
+            GameTextLabel.Text = string.Join("\n\n", _gameTextHistory);
             UpdateUI();
         }
 
@@ -50,8 +61,9 @@ namespace CavemanChronicles
                 { 0, 1, 1, 0, 0, 1, 1, 0 }
             };
 
-            // Color palette based on tech era
-            SKColor skinColor = GetEraColor(_gameService.Player?.CurrentEra ?? TechnologyEra.Caveman);
+            // Color palette based on tech era and race
+            SKColor skinColor = GetColorForRace(_gameService.Player?.Race ?? Race.Human,
+                                                _gameService.Player?.CurrentEra ?? TechnologyEra.Caveman);
             SKColor hairColor = SKColors.SaddleBrown;
 
             var paint = new SKPaint();
@@ -73,9 +85,10 @@ namespace CavemanChronicles
             }
         }
 
-        private SKColor GetEraColor(TechnologyEra era)
+        private SKColor GetColorForRace(Race race, TechnologyEra era)
         {
-            return era switch
+            // Base color varies by era
+            SKColor baseColor = era switch
             {
                 TechnologyEra.Caveman => SKColors.BurlyWood,
                 TechnologyEra.StoneAge => SKColors.Tan,
@@ -88,6 +101,25 @@ namespace CavemanChronicles
                 TechnologyEra.Future => SKColors.Cyan,
                 _ => SKColors.BurlyWood
             };
+
+            // Slight tint based on race
+            return race switch
+            {
+                Race.Elf => AdjustColor(baseColor, 1.1f, 1.0f, 0.9f),      // Slightly greenish
+                Race.Dwarf => AdjustColor(baseColor, 0.9f, 0.85f, 0.8f),   // Slightly darker/brownish
+                Race.HalfOrc => AdjustColor(baseColor, 0.85f, 1.0f, 0.85f),// Slightly greenish
+                Race.Halfling => AdjustColor(baseColor, 1.05f, 0.95f, 0.9f),// Slightly peachy
+                _ => baseColor // Human - no adjustment
+            };
+        }
+
+        private SKColor AdjustColor(SKColor color, float rMult, float gMult, float bMult)
+        {
+            return new SKColor(
+                (byte)Math.Min(255, color.Red * rMult),
+                (byte)Math.Min(255, color.Green * gMult),
+                (byte)Math.Min(255, color.Blue * bMult)
+            );
         }
 
         private void DrawRetroBorder(SKCanvas canvas, int width, int height)
@@ -131,7 +163,7 @@ namespace CavemanChronicles
             GraphicsCanvas.InvalidateSurface();
         }
 
-        private void AppendGameText(string text)
+        private async void AppendGameText(string text)
         {
             _gameTextHistory.Add(text);
 
@@ -143,15 +175,17 @@ namespace CavemanChronicles
 
             GameTextLabel.Text = string.Join("\n\n", _gameTextHistory);
 
-            // Auto-scroll to bottom
-            GameTextScroll.ScrollToAsync(0, GameTextLabel.Height, false);
+            // Auto-scroll to bottom with a small delay to let UI update
+            await Task.Delay(50);
+            await GameTextScroll.ScrollToAsync(GameTextLabel, ScrollToPosition.End, true);
         }
 
         private void UpdateUI()
         {
             if (_gameService.Player == null) return;
 
-            CharacterNameLabel.Text = _gameService.Player.Name.ToUpper();
+            var raceStats = RaceData.GetRaceStats(_gameService.Player.Race);
+            CharacterNameLabel.Text = $"{_gameService.Player.Name.ToUpper()} ({raceStats.Name.ToUpper()})";
             LevelLabel.Text = _gameService.Player.Level.ToString();
             HealthLabel.Text = $"{_gameService.Player.Health}/{_gameService.Player.MaxHealth}";
             EraLabel.Text = $"{_gameService.Player.CurrentEra.ToString().ToUpper()} ERA";

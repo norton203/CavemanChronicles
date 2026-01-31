@@ -3,6 +3,7 @@
     public class Character
     {
         public string Name { get; set; }
+        public Race Race { get; set; }
         public int Level { get; set; }
         public int Experience { get; set; }
         public int Health { get; set; }
