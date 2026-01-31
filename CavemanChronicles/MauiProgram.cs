@@ -22,7 +22,7 @@ namespace CavemanChronicles
 
             // Register services
             builder.Services.AddSingleton<GameService>();
-
+            builder.Services.AddSingleton<SaveService>();
             return builder.Build();
         }
     }

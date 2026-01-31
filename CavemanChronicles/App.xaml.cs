@@ -9,8 +9,8 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            // Start with character creation page wrapped in NavigationPage
-            var navigationPage = new NavigationPage(new CharacterCreationPage())
+            // Start with title page 
+            var navigationPage = new NavigationPage(new TitlePage())
             {
                 BarBackgroundColor = Colors.Black,
                 BarTextColor = Color.FromArgb("#00FF00")

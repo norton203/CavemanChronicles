@@ -5,10 +5,12 @@ namespace CavemanChronicles
     public partial class CharacterCreationPage : ContentPage
     {
         private RaceStats _selectedRace;
+        private readonly SaveService _saveService;
 
         public CharacterCreationPage()
         {
             InitializeComponent();
+            _saveService = new SaveService();
             RaceCollectionView.ItemsSource = RaceData.AllRaces;
         }
 
@@ -106,9 +108,21 @@ namespace CavemanChronicles
 
             character.Health = character.MaxHealth;
 
-            // Navigate to main game page with character
-            var mainPage = new MainPage(character);
-            await Navigation.PushAsync(mainPage);
+            // Save the character
+            bool saved = await _saveService.SaveCharacter(character);
+
+            if (saved)
+            {
+                // Navigate to main game page with character
+                var mainPage = new MainPage(character);
+                await Navigation.PushAsync(mainPage);
+            }
+            else
+            {
+                await DisplayAlert("Save Failed", "Could not save character, but you can still play.", "OK");
+                var mainPage = new MainPage(character);
+                await Navigation.PushAsync(mainPage);
+            }
         }
     }
 }

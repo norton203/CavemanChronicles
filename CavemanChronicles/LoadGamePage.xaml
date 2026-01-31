@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CavemanChronicles.LoadGamePage"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <!-- Title -->
+        <Label Grid.Row="0"
+               Text="LOAD GAME"
+               TextColor="#00FF00"
+               FontFamily="Courier New"
+               FontSize="28"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,20,0,30"/>
+
+        <!-- Saved Characters List -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout x:Name="SavesContainer" Spacing="10">
+                <!-- Saved characters will be added here dynamically -->
+                <Label x:Name="NoSavesLabel"
+                       Text="No saved games found.&#x0a;&#x0a;Start a new game to begin your adventure!"
+                       TextColor="#00AA00"
+                       FontFamily="Courier New"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="False"
+                       Margin="0,50,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Back Button -->
+        <Border Grid.Row="2"
+                Stroke="#00FF00"
+                StrokeThickness="2"
+                Padding="15"
+                BackgroundColor="Black"
+                Margin="0,20,0,0">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBack"/>
+            </Border.GestureRecognizers>
+            <Label Text="BACK TO MENU"
+                   TextColor="#00FF00"
+                   FontFamily="Courier New"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+        </Border>
+
+    </Grid>
+</ContentPage>
