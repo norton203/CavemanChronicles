@@ -48,7 +48,6 @@
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
@@ -60,17 +59,18 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.30" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.30" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+        <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.1" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\" />
-      <Folder Include="Helpers\" />
-      <Folder Include="ViewModels\" />
-      <Folder Include="Views\" />
+      <Folder Include="Assets\Items\" />
+      <Folder Include="Assets\Enemies\" />
+      <Folder Include="Assets\Sprites\" />
+            <Folder Include="Resources\Images\" />
+      <Folder Include="Resources\Raw\" />
     </ItemGroup>
 
 </Project>
