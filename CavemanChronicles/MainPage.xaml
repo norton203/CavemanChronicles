@@ -1,0 +1,33 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             BackgroundColor="#000000">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="0" Stroke="#00FF00" StrokeThickness="2">
+            <StackLayout Padding="10">
+                <Label Text="{Binding CharacterName}" Style="{StaticResource RetroText}"/>
+                <Label Text="{Binding LevelDisplay}" Style="{StaticResource RetroText}"/>
+            </StackLayout>
+        </Border>
+
+        <!-- Game Text Display -->
+        <ScrollView Grid.Row="1">
+            <Label Text="{Binding GameText}" 
+                   Style="{StaticResource RetroText}"
+                   LineBreakMode="WordWrap"/>
+        </ScrollView>
+
+        <!-- Command Input -->
+        <StackLayout Grid.Row="2">
+            <Entry Placeholder="Enter command..." 
+                   Text="{Binding CommandInput}"
+                   TextColor="#00FF00"
+                   BackgroundColor="#000000"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

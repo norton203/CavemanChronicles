@@ -1,0 +1,14 @@
+﻿<Application.Resources>
+    <ResourceDictionary>
+        <Color x:Key="RetroGreen">#00FF00</Color>
+        <Color x:Key="RetroAmber">#FFAA00</Color>
+        <Color x:Key="RetroBackground">#000000</Color>
+        <Color x:Key="RetroBorder">#333333</Color>
+
+        <Style TargetType="Label" x:Key="RetroText">
+            <Setter Property="FontFamily" Value="Courier New"/>
+            <Setter Property="TextColor" Value="{StaticResource RetroGreen}"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource RetroBackground}"/>
+        </Style>
+    </ResourceDictionary>
+</Application.Resources>
