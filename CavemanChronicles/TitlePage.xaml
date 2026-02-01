@@ -191,24 +191,24 @@
 
                 <!-- New Game Button - Styled like character creation -->
                 <Border x:Name="NewGameButton"
-                        StrokeThickness="0"
-                        Padding="0"
-                        BackgroundColor="Transparent">
+            StrokeThickness="0"
+            Padding="0"
+            BackgroundColor="Transparent">
                     <Grid>
                         <!-- Outer stone border effect -->
                         <Border x:Name="NewGameGlow"
-                                Stroke="#8B4513"
-                                StrokeThickness="4"
-                                Padding="25,15"
-                                BackgroundColor="Transparent"
-                                Opacity="0.5"
-                                Margin="-3,-3,-3,-3">
+                    Stroke="#8B4513"
+                    StrokeThickness="4"
+                    Padding="25,15"
+                    BackgroundColor="Transparent"
+                    Opacity="0.5"
+                    Margin="-3,-3,-3,-3">
                         </Border>
 
                         <!-- Main button with parchment style -->
                         <Border x:Name="NewGameBorder"
-                                StrokeThickness="3"
-                                Padding="25,15">
+                    StrokeThickness="3"
+                    Padding="25,15">
                             <Border.Stroke>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#FFD700" Offset="0.0"/>
@@ -224,43 +224,43 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnNewGame"/>
                                 <PointerGestureRecognizer PointerEntered="OnNewGamePointerEntered"
-                                                         PointerExited="OnNewGamePointerExited"/>
+                                             PointerExited="OnNewGamePointerExited"/>
                             </Border.GestureRecognizers>
 
                             <Grid ColumnDefinitions="Auto,*,Auto">
                                 <Label Grid.Column="0"
-                                       x:Name="NewGameLeftIcon"
-                                       Text="⚔ "
-                                       TextColor="#FFD700"
-                                       FontFamily="Courier New"
-                                       FontSize="24"
-                                       VerticalOptions="Center"/>
+                           x:Name="NewGameLeftIcon"
+                           Text="⚔ "
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
 
                                 <Grid Grid.Column="1">
                                     <Label x:Name="NewGameShadow"
-                                           Text="NEW GAME"
-                                           TextColor="#4B2600"
-                                           FontFamily="Courier New"
-                                           FontSize="24"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           Margin="2,2,0,0"/>
+                               Text="NEW GAME"
+                               TextColor="#4B2600"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               Margin="2,2,0,0"/>
                                     <Label x:Name="NewGameText"
-                                           Text="NEW GAME"
-                                           TextColor="#FFD700"
-                                           FontFamily="Courier New"
-                                           FontSize="24"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"/>
+                               Text="NEW GAME"
+                               TextColor="#FFD700"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
                                 </Grid>
 
                                 <Label Grid.Column="2"
-                                       x:Name="NewGameRightIcon"
-                                       Text=" ⚔"
-                                       TextColor="#FFD700"
-                                       FontFamily="Courier New"
-                                       FontSize="24"
-                                       VerticalOptions="Center"/>
+                           x:Name="NewGameRightIcon"
+                           Text=" ⚔"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -268,98 +268,24 @@
 
                 <!-- Load Game Button - Styled like spell scroll -->
                 <Border x:Name="LoadGameButton"
-                        StrokeThickness="0"
-                        Padding="0"
-                        BackgroundColor="Transparent">
+            StrokeThickness="0"
+            Padding="0"
+            BackgroundColor="Transparent">
                     <Grid>
                         <!-- Outer glow -->
                         <Border x:Name="LoadGameGlow"
-                                Stroke="#4169E1"
-                                StrokeThickness="4"
-                                Padding="25,15"
-                                BackgroundColor="Transparent"
-                                Opacity="0.5"
-                                Margin="-3,-3,-3,-3">
+                    Stroke="#4169E1"
+                    StrokeThickness="4"
+                    Padding="25,15"
+                    BackgroundColor="Transparent"
+                    Opacity="0.5"
+                    Margin="-3,-3,-3,-3">
                         </Border>
-                        <!-- Settings Button (add after Load Game Button) -->
-                        <Border StrokeThickness="0"
-        Padding="0"
-        BackgroundColor="Transparent">
-                            <Grid>
-                                <!-- Outer glow -->
-                                <Border x:Name="SettingsGameGlow"
-                Stroke="#00FF00"
-                StrokeThickness="4"
-                Padding="25,15"
-                BackgroundColor="Transparent"
-                Opacity="0.5"
-                Margin="-3,-3,-3,-3">
-                                </Border>
 
-                                <!-- Main button -->
-                                <Border x:Name="SettingsGameBorder"
-                StrokeThickness="3"
-                Padding="25,15">
-                                    <Border.Stroke>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="#00FF00" Offset="0.0"/>
-                                            <GradientStop Color="#FFD700" Offset="1.0"/>
-                                        </LinearGradientBrush>
-                                    </Border.Stroke>
-                                    <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <GradientStop Color="#0a1a0a" Offset="0.0"/>
-                                            <GradientStop Color="#051405" Offset="1.0"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnSettings"/>
-                                        <PointerGestureRecognizer PointerEntered="OnSettingsPointerEntered"
-                                         PointerExited="OnSettingsPointerExited"/>
-                                    </Border.GestureRecognizers>
-
-                                    <Grid ColumnDefinitions="Auto,*,Auto">
-                                        <Label Grid.Column="0"
-                       x:Name="SettingsLeftIcon"
-                       Text="⚙ "
-                       TextColor="#00FF00"
-                       FontFamily="Courier New"
-                       FontSize="24"
-                       VerticalOptions="Center"/>
-
-                                        <Grid Grid.Column="1">
-                                            <Label x:Name="SettingsShadow"
-                           Text="SETTINGS"
-                           TextColor="#003300"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="2,2,0,0"/>
-                                            <Label x:Name="SettingsText"
-                           Text="SETTINGS"
-                           TextColor="#00FF00"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
-                                        </Grid>
-
-                                        <Label Grid.Column="2"
-                       x:Name="SettingsRightIcon"
-                       Text=" ⚙"
-                       TextColor="#00FF00"
-                       FontFamily="Courier New"
-                       FontSize="24"
-                       VerticalOptions="Center"/>
-                                    </Grid>
-                                </Border>
-                            </Grid>
-                        </Border>
                         <!-- Main button -->
                         <Border x:Name="LoadGameBorder"
-                                StrokeThickness="3"
-                                Padding="25,15">
+                    StrokeThickness="3"
+                    Padding="25,15">
                             <Border.Stroke>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#00FFFF" Offset="0.0"/>
@@ -375,50 +301,125 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnLoadGame"/>
                                 <PointerGestureRecognizer PointerEntered="OnLoadGamePointerEntered"
-                                                         PointerExited="OnLoadGamePointerExited"/>
+                                             PointerExited="OnLoadGamePointerExited"/>
                             </Border.GestureRecognizers>
 
                             <Grid ColumnDefinitions="Auto,*,Auto">
                                 <Label Grid.Column="0"
-                                       x:Name="LoadGameLeftIcon"
-                                       Text="📜 "
-                                       TextColor="#00FFFF"
-                                       FontFamily="Courier New"
-                                       FontSize="24"
-                                       VerticalOptions="Center"/>
+                           x:Name="LoadGameLeftIcon"
+                           Text="📜 "
+                           TextColor="#00FFFF"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
 
                                 <Grid Grid.Column="1">
                                     <Label x:Name="LoadGameShadow"
-                                           Text="LOAD GAME"
-                                           TextColor="#003366"
-                                           FontFamily="Courier New"
-                                           FontSize="24"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"
-                                           Margin="2,2,0,0"/>
+                               Text="LOAD GAME"
+                               TextColor="#003366"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               Margin="2,2,0,0"/>
                                     <Label x:Name="LoadGameText"
-                                           Text="LOAD GAME"
-                                           TextColor="#00FFFF"
-                                           FontFamily="Courier New"
-                                           FontSize="24"
-                                           FontAttributes="Bold"
-                                           HorizontalOptions="Center"/>
+                               Text="LOAD GAME"
+                               TextColor="#00FFFF"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
                                 </Grid>
 
                                 <Label Grid.Column="2"
-                                       x:Name="LoadGameRightIcon"
-                                       Text=" 📜"
-                                       TextColor="#00FFFF"
-                                       FontFamily="Courier New"
-                                       FontSize="24"
-                                       VerticalOptions="Center"/>
+                           x:Name="LoadGameRightIcon"
+                           Text=" 📜"
+                           TextColor="#00FFFF"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Settings Button -->
+                <Border StrokeThickness="0"
+            Padding="0"
+            BackgroundColor="Transparent">
+                    <Grid>
+                        <!-- Outer glow -->
+                        <Border x:Name="SettingsGameGlow"
+                    Stroke="#00FF00"
+                    StrokeThickness="4"
+                    Padding="25,15"
+                    BackgroundColor="Transparent"
+                    Opacity="0.5"
+                    Margin="-3,-3,-3,-3">
+                        </Border>
+
+                        <!-- Main button -->
+                        <Border x:Name="SettingsGameBorder"
+                    StrokeThickness="3"
+                    Padding="25,15">
+                            <Border.Stroke>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#00FF00" Offset="0.0"/>
+                                    <GradientStop Color="#FFD700" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Stroke>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#0a1a0a" Offset="0.0"/>
+                                    <GradientStop Color="#051405" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSettings"/>
+                                <PointerGestureRecognizer PointerEntered="OnSettingsPointerEntered"
+                                             PointerExited="OnSettingsPointerExited"/>
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0"
+                           x:Name="SettingsLeftIcon"
+                           Text="⚙ "
+                           TextColor="#00FF00"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
+
+                                <Grid Grid.Column="1">
+                                    <Label x:Name="SettingsShadow"
+                               Text="SETTINGS"
+                               TextColor="#003300"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               Margin="2,2,0,0"/>
+                                    <Label x:Name="SettingsText"
+                               Text="SETTINGS"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                                </Grid>
+
+                                <Label Grid.Column="2"
+                           x:Name="SettingsRightIcon"
+                           Text=" ⚙"
+                           TextColor="#00FF00"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           VerticalOptions="Center"/>
                             </Grid>
                         </Border>
                     </Grid>
                 </Border>
 
             </VerticalStackLayout>
-
             <!-- Footer with D&D stat block style -->
             <VerticalStackLayout Grid.Row="4" Spacing="8">
 

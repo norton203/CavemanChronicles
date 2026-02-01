@@ -4,66 +4,148 @@
              x:Class="CavemanChronicles.LoadGamePage"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="20">
+    <Grid>
+        <!-- Background gradient -->
+        <BoxView>
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#0a0015" Offset="0.0"/>
+                    <GradientStop Color="#1a0033" Offset="0.5"/>
+                    <GradientStop Color="#0a0015" Offset="1.0"/>
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
 
-        <!-- Title -->
-        <Border Grid.Row="0"
-                Stroke="#00FF00"
-                StrokeThickness="3"
-                Padding="20,15"
-                BackgroundColor="#001100">
-            <Label Text="═══ LOAD SAVED GAME ═══"
-                   TextColor="#00FF00"
-                   FontFamily="Courier New"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
-        </Border>
+        <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="20">
 
-        <!-- Saved Characters List -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout x:Name="SavesContainer" Spacing="15">
-                <!-- Saved characters will be added here dynamically -->
-                <Border x:Name="NoSavesPanel"
-                        Stroke="#00FF00"
-                        StrokeThickness="2"
-                        Padding="30"
-                        BackgroundColor="Black"
-                        IsVisible="False">
-                    <VerticalStackLayout Spacing="15">
-                        <Label Text="[ NO SAVED GAMES FOUND ]"
-                               TextColor="#FFAA00"
+            <!-- Title -->
+            <VerticalStackLayout Grid.Row="0" Spacing="10">
+                <Grid ColumnDefinitions="*,Auto,*" Margin="0,20,0,10">
+                    <BoxView Grid.Column="0" HeightRequest="3" VerticalOptions="Center">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Transparent" Offset="0.0"/>
+                                <GradientStop Color="#00FFFF" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+
+                    <Border Grid.Column="1"
+                            Stroke="#00FFFF"
+                            StrokeThickness="2"
+                            Padding="15,8"
+                            Margin="10,0"
+                            BackgroundColor="#1a0033">
+                        <Label Text="📜 SCROLL 📜"
+                               TextColor="#00FFFF"
                                FontFamily="Courier New"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
-                        <Label Text="Start a new adventure to create your first save!"
-                               TextColor="#00AA00"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               HorizontalOptions="Center"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
+                               FontSize="16"
+                               FontAttributes="Bold"/>
+                    </Border>
+
+                    <BoxView Grid.Column="2" HeightRequest="3" VerticalOptions="Center">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#00FFFF" Offset="0.0"/>
+                                <GradientStop Color="Transparent" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+                </Grid>
+
+                <Border Stroke="#00FFFF"
+                        StrokeThickness="3"
+                        Padding="20,15"
+                        BackgroundColor="#0a1628">
+                    <Label Text="═══ LOAD SAVED GAME ═══"
+                           TextColor="#00FFFF"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
                 </Border>
             </VerticalStackLayout>
-        </ScrollView>
 
-        <!-- Back Button -->
-        <Border Grid.Row="2"
-                Stroke="#00FF00"
-                StrokeThickness="2"
-                Padding="15"
-                BackgroundColor="#003300">
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnBack"/>
-            </Border.GestureRecognizers>
-            <Label Text="← BACK TO MENU"
-                   TextColor="#00FF00"
-                   FontFamily="Courier New"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
-        </Border>
+            <!-- Saved Characters List -->
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout x:Name="SavesContainer" Spacing="15">
+                    <!-- Saved characters will be added here dynamically -->
+                    <Border x:Name="NoSavesPanel"
+                            Stroke="#FFD700"
+                            StrokeThickness="2"
+                            Padding="30"
+                            BackgroundColor="#0a0015"
+                            IsVisible="False">
+                        <VerticalStackLayout Spacing="15">
+                            <Label Text="[ NO SAVED GAMES FOUND ]"
+                                   TextColor="#FFAA00"
+                                   FontFamily="Courier New"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Start a new adventure to create your first save!"
+                                   TextColor="#8B4513"
+                                   FontFamily="Courier New"
+                                   FontSize="14"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </ScrollView>
 
+            <!-- Back Button -->
+            <Border Grid.Row="2"
+                    StrokeThickness="0"
+                    Padding="0"
+                    BackgroundColor="Transparent">
+                <Grid>
+                    <!-- Outer glow -->
+                    <Border Stroke="#00FFFF"
+                            StrokeThickness="4"
+                            Padding="15"
+                            BackgroundColor="Transparent"
+                            Opacity="0.5"
+                            Margin="-3,-3,-3,-3"/>
+
+                    <!-- Main button -->
+                    <Border StrokeThickness="3"
+                            Padding="15">
+                        <Border.Stroke>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#00FFFF" Offset="0.0"/>
+                                <GradientStop Color="#4169E1" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Stroke>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#0a1628" Offset="0.0"/>
+                                <GradientStop Color="#050b14" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBack"/>
+                        </Border.GestureRecognizers>
+
+                        <Grid>
+                            <Label Text="← BACK TO MENU"
+                                   TextColor="#003366"
+                                   FontFamily="Courier New"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   Margin="2,2,0,0"/>
+                            <Label Text="← BACK TO MENU"
+                                   TextColor="#00FFFF"
+                                   FontFamily="Courier New"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+        </Grid>
     </Grid>
 </ContentPage>
