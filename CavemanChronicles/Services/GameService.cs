@@ -1,11 +1,15 @@
-﻿
-
-namespace CavemanChronicles
+﻿namespace CavemanChronicles
 {
     public class GameService
     {
         public Character Player { get; set; }
         private Random _random = new Random();
+        private AudioService? _audioService;
+
+        public void SetAudioService(AudioService audioService)
+        {
+            _audioService = audioService;
+        }
 
         public void StartNewGame(string playerName)
         {
@@ -27,7 +31,7 @@ namespace CavemanChronicles
             };
         }
 
-        public string ProcessCommand(string command)
+        public async Task<string> ProcessCommand(string command)
         {
             if (string.IsNullOrWhiteSpace(command))
                 return "You stand idle, contemplating your existence.";
@@ -36,7 +40,7 @@ namespace CavemanChronicles
 
             // Basic command parsing
             if (command.Contains("attack") || command.Contains("fight"))
-                return HandleAttack(command);
+                return await HandleAttack(command);
 
             if (command.Contains("look") || command.Contains("examine"))
                 return HandleLook(command);
@@ -48,10 +52,10 @@ namespace CavemanChronicles
                 return HandleStats();
 
             if (command.Contains("rest") || command.Contains("sleep"))
-                return HandleRest();
+                return await HandleRest();
 
             if (command.Contains("explore") || command.Contains("search"))
-                return HandleExplore();
+                return await HandleExplore();
 
             if (command.Contains("help"))
                 return HandleHelp();
@@ -60,8 +64,12 @@ namespace CavemanChronicles
             return $"You don't know how to '{command}'. Try 'help' for available commands.";
         }
 
-        private string HandleAttack(string command)
+        private async Task<string> HandleAttack(string command)
         {
+            // Play attack sound
+            if (_audioService != null)
+                await _audioService.PlaySoundEffect("combat_hit.wav");
+
             // Simple combat simulation
             int damage = _random.Next(5, 15) + Player.Stats.Strength;
             int enemyDamage = _random.Next(3, 10);
@@ -71,6 +79,11 @@ namespace CavemanChronicles
             if (Player.Health <= 0)
             {
                 Player.Health = 0;
+
+                // Play game over sound
+                if (_audioService != null)
+                    await _audioService.PlaySoundEffect("game_over.wav");
+
                 return $"You strike with {damage} damage! But the enemy counters for {enemyDamage}!\nYou have been defeated! Game Over.";
             }
 
@@ -83,7 +96,7 @@ namespace CavemanChronicles
             // Check for level up
             if (Player.Experience >= Player.Level * 100)
             {
-                result += "\n\n" + LevelUp();
+                result += "\n\n" + await LevelUp();
             }
 
             return result;
@@ -132,14 +145,19 @@ namespace CavemanChronicles
                    $"Intelligence: {Player.Stats.Intelligence}";
         }
 
-        private string HandleRest()
+        private async Task<string> HandleRest()
         {
             int healAmount = _random.Next(20, 40);
             Player.Health = Math.Min(Player.Health + healAmount, Player.MaxHealth);
+
+            // Optional: Play rest sound
+            if (_audioService != null)
+                await _audioService.PlaySoundEffect("button_click.wav");
+
             return $"You rest and recover {healAmount} health. Current HP: {Player.Health}/{Player.MaxHealth}";
         }
 
-        private string HandleExplore()
+        private async Task<string> HandleExplore()
         {
             // Random exploration outcomes
             int outcome = _random.Next(1, 4);
@@ -147,13 +165,13 @@ namespace CavemanChronicles
             return outcome switch
             {
                 1 => "You explore and find nothing of interest.",
-                2 => FindRandomItem(),
+                2 => await FindRandomItem(),
                 3 => "You discover a hidden path, but decide not to follow it... yet.",
                 _ => "Your exploration yields no results."
             };
         }
 
-        private string FindRandomItem()
+        private async Task<string> FindRandomItem()
         {
             var item = new Item
             {
@@ -162,6 +180,11 @@ namespace CavemanChronicles
             };
 
             Player.Inventory.Add(item);
+
+            // Optional: Play item found sound
+            if (_audioService != null)
+                await _audioService.PlaySoundEffect("button_click.wav");
+
             return $"You found: {item.Name}!";
         }
 
@@ -194,8 +217,12 @@ namespace CavemanChronicles
                    "help - Show this message";
         }
 
-        public string LevelUp()
+        private async Task<string> LevelUp()
         {
+            // Play level up sound
+            if (_audioService != null)
+                await _audioService.PlaySoundEffect("level_up.wav");
+
             Player.Level++;
             Player.Experience = 0;
             Player.MaxHealth += 10;

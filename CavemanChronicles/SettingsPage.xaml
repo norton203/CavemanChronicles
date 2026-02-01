@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CavemanChronicles.SettingsPage"
+             BackgroundColor="Black">
+
+    <Grid>
+        <!-- Background gradient -->
+        <BoxView>
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#0a0015" Offset="0.0"/>
+                    <GradientStop Color="#1a0033" Offset="0.5"/>
+                    <GradientStop Color="#0a0015" Offset="1.0"/>
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <!-- Title -->
+                <Grid ColumnDefinitions="*,Auto,*" Margin="0,20,0,30">
+                    <BoxView Grid.Column="0" HeightRequest="3" VerticalOptions="Center">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="Transparent" Offset="0.0"/>
+                                <GradientStop Color="#FFD700" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+
+                    <Label Grid.Column="1"
+                           Text="⚙ SETTINGS ⚙"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           Margin="20,0"/>
+
+                    <BoxView Grid.Column="2" HeightRequest="3" VerticalOptions="Center">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#FFD700" Offset="0.0"/>
+                                <GradientStop Color="Transparent" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+                </Grid>
+
+                <!-- Audio Section -->
+                <Border Stroke="#FFD700"
+                        StrokeThickness="2"
+                        Padding="20"
+                        BackgroundColor="#0a0015">
+                    <VerticalStackLayout Spacing="20">
+
+                        <Label Text="◆ AUDIO SETTINGS ◆"
+                               TextColor="#FFD700"
+                               FontFamily="Courier New"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               Margin="0,0,0,10"/>
+
+                        <!-- Music Toggle -->
+                        <Grid ColumnDefinitions="*,Auto" RowSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="BACKGROUND MUSIC"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       FontAttributes="Bold"/>
+                                <Label Text="Toggle game music on/off"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="11"/>
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    x:Name="MusicSwitch"
+                                    OnColor="#FFD700"
+                                    ThumbColor="#FFFFFF"
+                                    VerticalOptions="Center"
+                                    Toggled="OnMusicToggled"/>
+                        </Grid>
+
+                        <!-- Music Volume -->
+                        <VerticalStackLayout Spacing="10" x:Name="MusicVolumePanel">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="Music Volume"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="14"/>
+                                <Label Grid.Column="1"
+                                       x:Name="MusicVolumeLabel"
+                                       Text="40%"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       FontAttributes="Bold"/>
+                            </Grid>
+
+                            <Slider x:Name="MusicVolumeSlider"
+                                    Minimum="0"
+                                    Maximum="100"
+                                    Value="40"
+                                    MinimumTrackColor="#FFD700"
+                                    MaximumTrackColor="#333333"
+                                    ThumbColor="#FFD700"
+                                    ValueChanged="OnMusicVolumeChanged"/>
+                        </VerticalStackLayout>
+
+                        <!-- Divider -->
+                        <BoxView HeightRequest="1" Color="#8B4513" Margin="0,10"/>
+
+                        <!-- Sound Effects Toggle -->
+                        <Grid ColumnDefinitions="*,Auto" RowSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="SOUND EFFECTS"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       FontAttributes="Bold"/>
+                                <Label Text="Toggle game sounds on/off"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="11"/>
+                            </VerticalStackLayout>
+
+                            <Switch Grid.Column="1"
+                                    x:Name="SoundSwitch"
+                                    OnColor="#FFD700"
+                                    ThumbColor="#FFFFFF"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSoundToggled"/>
+                        </Grid>
+
+                        <!-- Sound Volume -->
+                        <VerticalStackLayout Spacing="10" x:Name="SoundVolumePanel">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0"
+                                       Text="Sound Volume"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="14"/>
+                                <Label Grid.Column="1"
+                                       x:Name="SoundVolumeLabel"
+                                       Text="60%"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       FontAttributes="Bold"/>
+                            </Grid>
+
+                            <Slider x:Name="SoundVolumeSlider"
+                                    Minimum="0"
+                                    Maximum="100"
+                                    Value="60"
+                                    MinimumTrackColor="#FFD700"
+                                    MaximumTrackColor="#333333"
+                                    ThumbColor="#FFD700"
+                                    ValueChanged="OnSoundVolumeChanged"/>
+
+                            <!-- Test Sound Button -->
+                            <Border Stroke="#00FFFF"
+                                    StrokeThickness="2"
+                                    Padding="10"
+                                    BackgroundColor="#003333"
+                                    Margin="0,5,0,0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTestSound"/>
+                                </Border.GestureRecognizers>
+                                <Label Text="🔊 TEST SOUND"
+                                       TextColor="#00FFFF"
+                                       FontFamily="Courier New"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Reset Button -->
+                <Border Stroke="#FF4500"
+                        StrokeThickness="2"
+                        Padding="15"
+                        BackgroundColor="#1a0000">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnResetDefaults"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="↻ RESET TO DEFAULTS"
+                           TextColor="#FF4500"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- Back Button -->
+                <Border Stroke="#FFD700"
+                        StrokeThickness="2"
+                        Padding="15"
+                        BackgroundColor="#2B1810"
+                        Margin="0,10,0,20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBack"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="⚔ BACK TO MENU ⚔"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

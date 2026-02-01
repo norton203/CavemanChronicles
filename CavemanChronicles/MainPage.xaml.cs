@@ -141,7 +141,7 @@ namespace CavemanChronicles
             }
         }
 
-        private void OnCommandEntered(object sender, EventArgs e)
+        private async void OnCommandEntered(object sender, EventArgs e)
         {
             var command = CommandEntry.Text?.Trim().ToLower();
             if (string.IsNullOrEmpty(command)) return;
@@ -149,8 +149,8 @@ namespace CavemanChronicles
             // Add command to history
             AppendGameText($"> {command}");
 
-            // Process command
-            string response = _gameService.ProcessCommand(command);
+            // Process command (now async)
+            string response = await _gameService.ProcessCommand(command);
             AppendGameText(response);
 
             // Clear input

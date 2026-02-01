@@ -61,6 +61,7 @@
         <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.30" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+        <PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
         <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.1" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
@@ -69,8 +70,7 @@
       <Folder Include="Assets\Items\" />
       <Folder Include="Assets\Enemies\" />
       <Folder Include="Assets\Sprites\" />
-            <Folder Include="Resources\Images\" />
-      <Folder Include="Resources\Raw\" />
+      <Folder Include="Resources\Images\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -80,9 +80,16 @@
       <MauiXaml Update="LoadGamePage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+      <MauiXaml Update="SettingsPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="TitlePage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.30" />
     </ItemGroup>
 
 </Project>

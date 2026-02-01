@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using Plugin.Maui.Audio;
 
 namespace CavemanChronicles
 {
@@ -21,8 +22,12 @@ namespace CavemanChronicles
 #endif
 
             // Register services
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddSingleton<SettingsService>();
+            builder.Services.AddSingleton<AudioService>();
             builder.Services.AddSingleton<GameService>();
             builder.Services.AddSingleton<SaveService>();
+
             return builder.Build();
         }
     }

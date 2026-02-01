@@ -1,3 +1,4 @@
+﻿
 
 namespace CavemanChronicles
 {
@@ -18,7 +19,7 @@ namespace CavemanChronicles
 
             if (savedCharacters.Count == 0)
             {
-                NoSavesLabel.IsVisible = true;
+                NoSavesPanel.IsVisible = true;
                 return;
             }
 
@@ -39,50 +40,169 @@ namespace CavemanChronicles
             {
                 Stroke = Color.FromArgb("#00FF00"),
                 StrokeThickness = 2,
-                Padding = 15,
-                BackgroundColor = Colors.Black
+                Padding = 0,
+                BackgroundColor = Color.FromArgb("#001100")
             };
 
-            var stackLayout = new VerticalStackLayout { Spacing = 8 };
+            // Use Grid for precise layout control
+            var mainGrid = new Grid
+            {
+                RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Auto }, // Header
+                    new RowDefinition { Height = GridLength.Auto }, // Stats
+                    new RowDefinition { Height = GridLength.Auto }  // Buttons
+                },
+                RowSpacing = 0
+            };
 
-            // Character name and race
+            // === HEADER SECTION ===
+            var headerBorder = new Border
+            {
+                BackgroundColor = Color.FromArgb("#003300"),
+                Padding = 15
+            };
+
+            var headerStack = new VerticalStackLayout { Spacing = 5 };
+
             var nameLabel = new Label
             {
-                Text = $"{save.Character.Name} ({raceStats.Name})",
+                Text = $"▶ {save.Character.Name}",
                 TextColor = Color.FromArgb("#00FF00"),
                 FontFamily = "Courier New",
-                FontSize = 18,
+                FontSize = 20,
                 FontAttributes = FontAttributes.Bold
             };
 
-            // Level and era
-            var levelLabel = new Label
+            var raceLabel = new Label
             {
-                Text = $"Level {save.Character.Level} - {save.Character.CurrentEra} Era",
+                Text = $"Race: {raceStats.Name}",
                 TextColor = Color.FromArgb("#00FF00"),
                 FontFamily = "Courier New",
                 FontSize = 14
             };
 
-            // HP
-            var hpLabel = new Label
+            headerStack.Add(nameLabel);
+            headerStack.Add(raceLabel);
+            headerBorder.Content = headerStack;
+
+            Grid.SetRow(headerBorder, 0);
+            mainGrid.Add(headerBorder);
+
+            // === STATS SECTION ===
+            var statsGrid = new Grid
             {
-                Text = $"HP: {save.Character.Health}/{save.Character.MaxHealth}",
-                TextColor = Color.FromArgb("#00AA00"),
-                FontFamily = "Courier New",
-                FontSize = 12
+                Padding = 15,
+                ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
+                },
+                RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto }
+                },
+                RowSpacing = 10,
+                ColumnSpacing = 20
             };
 
-            // Save date
+            // Level
+            var levelTitle = new Label
+            {
+                Text = "Level:",
+                TextColor = Color.FromArgb("#00AA00"),
+                FontFamily = "Courier New",
+                FontSize = 13
+            };
+            Grid.SetRow(levelTitle, 0);
+            Grid.SetColumn(levelTitle, 0);
+
+            var levelValue = new Label
+            {
+                Text = save.Character.Level.ToString(),
+                TextColor = Color.FromArgb("#00FF00"),
+                FontFamily = "Courier New",
+                FontSize = 13,
+                FontAttributes = FontAttributes.Bold
+            };
+            Grid.SetRow(levelValue, 0);
+            Grid.SetColumn(levelValue, 1);
+
+            // Era
+            var eraTitle = new Label
+            {
+                Text = "Era:",
+                TextColor = Color.FromArgb("#00AA00"),
+                FontFamily = "Courier New",
+                FontSize = 13
+            };
+            Grid.SetRow(eraTitle, 1);
+            Grid.SetColumn(eraTitle, 0);
+
+            var eraValue = new Label
+            {
+                Text = save.Character.CurrentEra.ToString(),
+                TextColor = Color.FromArgb("#00FF00"),
+                FontFamily = "Courier New",
+                FontSize = 13,
+                FontAttributes = FontAttributes.Bold
+            };
+            Grid.SetRow(eraValue, 1);
+            Grid.SetColumn(eraValue, 1);
+
+            // Health
+            var hpTitle = new Label
+            {
+                Text = "Health:",
+                TextColor = Color.FromArgb("#00AA00"),
+                FontFamily = "Courier New",
+                FontSize = 13
+            };
+            Grid.SetRow(hpTitle, 2);
+            Grid.SetColumn(hpTitle, 0);
+
+            var hpValue = new Label
+            {
+                Text = $"{save.Character.Health}/{save.Character.MaxHealth}",
+                TextColor = Color.FromArgb("#00FF00"),
+                FontFamily = "Courier New",
+                FontSize = 13,
+                FontAttributes = FontAttributes.Bold
+            };
+            Grid.SetRow(hpValue, 2);
+            Grid.SetColumn(hpValue, 1);
+
+            statsGrid.Add(levelTitle);
+            statsGrid.Add(levelValue);
+            statsGrid.Add(eraTitle);
+            statsGrid.Add(eraValue);
+            statsGrid.Add(hpTitle);
+            statsGrid.Add(hpValue);
+
+            Grid.SetRow(statsGrid, 1);
+            mainGrid.Add(statsGrid);
+
+            // === FOOTER WITH DATE AND BUTTONS ===
+            var footerStack = new VerticalStackLayout
+            {
+                Spacing = 10,
+                Padding = 15,
+                BackgroundColor = Color.FromArgb("#000000")
+            };
+
+            // Date
             var dateLabel = new Label
             {
                 Text = $"Saved: {save.DisplayDate}",
                 TextColor = Color.FromArgb("#006600"),
                 FontFamily = "Courier New",
-                FontSize = 12
+                FontSize = 11,
+                Margin = new Thickness(0, 0, 0, 10)
             };
 
-            // Buttons
+            // Buttons Grid
             var buttonGrid = new Grid
             {
                 ColumnDefinitions = new ColumnDefinitionCollection
@@ -91,16 +211,17 @@ namespace CavemanChronicles
                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
                 ColumnSpacing = 10,
-                Margin = new Thickness(0, 10, 0, 0)
+                HeightRequest = 45
             };
 
             // Load button
             var loadButton = new Border
             {
                 Stroke = Color.FromArgb("#00FF00"),
-                StrokeThickness = 1,
-                Padding = 10,
-                BackgroundColor = Color.FromArgb("#003300")
+                StrokeThickness = 2,
+                Padding = 12,
+                BackgroundColor = Color.FromArgb("#003300"),
+                HorizontalOptions = LayoutOptions.Fill
             };
             loadButton.GestureRecognizers.Add(new TapGestureRecognizer
             {
@@ -108,21 +229,24 @@ namespace CavemanChronicles
             });
             loadButton.Content = new Label
             {
-                Text = "LOAD",
+                Text = "▶ LOAD",
                 TextColor = Color.FromArgb("#00FF00"),
                 FontFamily = "Courier New",
                 FontSize = 14,
                 FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.Center
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
+            Grid.SetColumn(loadButton, 0);
 
             // Delete button
             var deleteButton = new Border
             {
                 Stroke = Color.FromArgb("#FF0000"),
-                StrokeThickness = 1,
-                Padding = 10,
-                BackgroundColor = Colors.Black
+                StrokeThickness = 2,
+                Padding = 12,
+                BackgroundColor = Color.FromArgb("#330000"),
+                HorizontalOptions = LayoutOptions.Fill
             };
             deleteButton.GestureRecognizers.Add(new TapGestureRecognizer
             {
@@ -130,27 +254,26 @@ namespace CavemanChronicles
             });
             deleteButton.Content = new Label
             {
-                Text = "DELETE",
+                Text = "✕ DELETE",
                 TextColor = Color.FromArgb("#FF0000"),
                 FontFamily = "Courier New",
                 FontSize = 14,
                 FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.Center
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
-
-            Grid.SetColumn(loadButton, 0);
             Grid.SetColumn(deleteButton, 1);
 
             buttonGrid.Add(loadButton);
             buttonGrid.Add(deleteButton);
 
-            stackLayout.Add(nameLabel);
-            stackLayout.Add(levelLabel);
-            stackLayout.Add(hpLabel);
-            stackLayout.Add(dateLabel);
-            stackLayout.Add(buttonGrid);
+            footerStack.Add(dateLabel);
+            footerStack.Add(buttonGrid);
 
-            border.Content = stackLayout;
+            Grid.SetRow(footerStack, 2);
+            mainGrid.Add(footerStack);
+
+            border.Content = mainGrid;
 
             return border;
         }

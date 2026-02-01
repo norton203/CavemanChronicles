@@ -5,13 +5,19 @@ namespace CavemanChronicles
     public partial class CharacterCreationPage : ContentPage
     {
         private RaceStats _selectedRace;
+        private ClassData _selectedClass;
+        private BackgroundData _selectedBackground;
         private readonly SaveService _saveService;
+        private Random _random = new Random();
 
         public CharacterCreationPage()
         {
             InitializeComponent();
             _saveService = new SaveService();
+
             RaceCollectionView.ItemsSource = RaceData.AllRaces;
+            ClassCollectionView.ItemsSource = ClassData.AllClasses;
+            BackgroundCollectionView.ItemsSource = BackgroundData.AllBackgrounds;
         }
 
         private async void OnRaceSelected(object sender, SelectionChangedEventArgs e)
@@ -23,55 +29,192 @@ namespace CavemanChronicles
 
             if (_selectedRace != null)
             {
-                UpdateStatsDisplay();
-                StatsPanel.IsVisible = true;
-                CheckIfCanStart();
+                UpdateRacialBonuses();
+                CheckIfCanProceed();
 
-                // Auto-scroll to show the stats panel
-                await Task.Delay(100); // Small delay to let the UI update
-                await MainScrollView.ScrollToAsync(StatsPanel, ScrollToPosition.MakeVisible, true);
-            }
-        }
-
-        private void UpdateStatsDisplay()
-        {
-            StrengthLabel.Text = FormatBonus(_selectedRace.StrengthBonus);
-            DexterityLabel.Text = FormatBonus(_selectedRace.DexterityBonus);
-            IntelligenceLabel.Text = FormatBonus(_selectedRace.IntelligenceBonus);
-
-            int totalHealth = 100 + _selectedRace.HealthBonus;
-            HealthLabel.Text = totalHealth.ToString();
-        }
-
-        private string FormatBonus(int bonus)
-        {
-            if (bonus > 0)
-                return $"+{bonus}";
-            else if (bonus < 0)
-                return bonus.ToString();
-            else
-                return "0";
-        }
-
-        private async void CheckIfCanStart()
-        {
-            bool hasName = !string.IsNullOrWhiteSpace(NameEntry.Text);
-            bool hasRace = _selectedRace != null;
-
-            bool wasVisible = StartButton.IsVisible;
-            StartButton.IsVisible = hasName && hasRace;
-
-            // Auto-scroll to show the start button when it appears
-            if (!wasVisible && StartButton.IsVisible)
-            {
+                // Auto-scroll
                 await Task.Delay(100);
-                await MainScrollView.ScrollToAsync(StartButton, ScrollToPosition.End, true);
+                await MainScrollView.ScrollToAsync(ClassCollectionView, ScrollToPosition.MakeVisible, true);
             }
+        }
+
+        private async void OnClassSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count == 0)
+                return;
+
+            _selectedClass = e.CurrentSelection[0] as ClassData;
+
+            if (_selectedClass != null)
+            {
+                AbilityScoresPanel.IsVisible = true;
+                RollInitialStats();
+                CheckIfCanProceed();
+
+                await Task.Delay(100);
+                await MainScrollView.ScrollToAsync(AbilityScoresPanel, ScrollToPosition.MakeVisible, true);
+            }
+        }
+
+        private void OnBackgroundSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count == 0)
+                return;
+
+            _selectedBackground = e.CurrentSelection[0] as BackgroundData;
+            CheckIfCanProceed();
+        }
+
+        private void OnRollStats(object sender, EventArgs e)
+        {
+            RollInitialStats();
+        }
+
+        private void RollInitialStats()
+        {
+            // Roll 4d6, drop lowest - classic D&D method
+            StrengthEntry.Text = RollAbilityScore().ToString();
+            DexterityEntry.Text = RollAbilityScore().ToString();
+            ConstitutionEntry.Text = RollAbilityScore().ToString();
+            IntelligenceEntry.Text = RollAbilityScore().ToString();
+            WisdomEntry.Text = RollAbilityScore().ToString();
+            CharismaEntry.Text = RollAbilityScore().ToString();
+        }
+
+        private int RollAbilityScore()
+        {
+            // Roll 4d6, drop the lowest
+            var rolls = new List<int>
+            {
+                _random.Next(1, 7),
+                _random.Next(1, 7),
+                _random.Next(1, 7),
+                _random.Next(1, 7)
+            };
+
+            rolls.Sort();
+            return rolls[1] + rolls[2] + rolls[3]; // Sum the three highest
+        }
+
+        private void OnStatChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateStatModifiers();
+            UpdateSummary();
+            CheckIfCanProceed();
+        }
+
+        private void UpdateRacialBonuses()
+        {
+            if (_selectedRace == null) return;
+
+            StrengthBonusLabel.Text = _selectedRace.StrengthBonus != 0 ? $"(+{_selectedRace.StrengthBonus} race)" : "";
+            DexterityBonusLabel.Text = _selectedRace.DexterityBonus != 0 ? $"(+{_selectedRace.DexterityBonus} race)" : "";
+
+            // Constitution bonus (from race)
+            ConstitutionBonusLabel.Text = ""; // Races don't typically give CON in this system
+
+            IntelligenceBonusLabel.Text = _selectedRace.IntelligenceBonus != 0 ? $"(+{_selectedRace.IntelligenceBonus} race)" : "";
+
+            // Wisdom and Charisma (not in current race system, can expand later)
+            WisdomBonusLabel.Text = "";
+            CharismaBonusLabel.Text = "";
+        }
+
+        private void UpdateStatModifiers()
+        {
+            // Update modifier labels as stats change
+            if (int.TryParse(StrengthEntry.Text, out int str))
+                StrengthModLabel.Text = FormatModifier(CalculateModifier(str + (_selectedRace?.StrengthBonus ?? 0)));
+
+            if (int.TryParse(DexterityEntry.Text, out int dex))
+                DexterityModLabel.Text = FormatModifier(CalculateModifier(dex + (_selectedRace?.DexterityBonus ?? 0)));
+
+            if (int.TryParse(ConstitutionEntry.Text, out int con))
+                ConstitutionModLabel.Text = FormatModifier(CalculateModifier(con));
+
+            if (int.TryParse(IntelligenceEntry.Text, out int intel))
+                IntelligenceModLabel.Text = FormatModifier(CalculateModifier(intel + (_selectedRace?.IntelligenceBonus ?? 0)));
+
+            if (int.TryParse(WisdomEntry.Text, out int wis))
+                WisdomModLabel.Text = FormatModifier(CalculateModifier(wis));
+
+            if (int.TryParse(CharismaEntry.Text, out int cha))
+                CharismaModLabel.Text = FormatModifier(CalculateModifier(cha));
+        }
+
+        private int CalculateModifier(int score)
+        {
+            return (score - 10) / 2;
+        }
+
+        private string FormatModifier(int modifier)
+        {
+            if (modifier >= 0)
+                return $"+{modifier}";
+            return modifier.ToString();
+        }
+
+        private void UpdateSummary()
+        {
+            if (_selectedClass == null) return;
+
+            // Calculate HP based on class hit die + CON modifier
+            int baseHP = _selectedClass.HitDie;
+            if (int.TryParse(ConstitutionEntry.Text, out int con))
+            {
+                int conMod = CalculateModifier(con);
+                int totalHP = baseHP + conMod + (_selectedRace?.HealthBonus ?? 0);
+                HitPointsLabel.Text = Math.Max(1, totalHP).ToString(); // Minimum 1 HP
+            }
+
+            // Starting gold (varies by class, using simple calculation)
+            int startingGold = _random.Next(50, 150);
+            GoldLabel.Text = $"{startingGold} GP";
+
+            SummaryPanel.IsVisible = true;
         }
 
         private void OnNameChanged(object sender, TextChangedEventArgs e)
         {
-            CheckIfCanStart();
+            CheckIfCanProceed();
+        }
+
+        private async void CheckIfCanProceed()
+        {
+            bool hasName = !string.IsNullOrWhiteSpace(NameEntry.Text);
+            bool hasRace = _selectedRace != null;
+            bool hasClass = _selectedClass != null;
+            bool hasStats = HasValidStats();
+
+            bool wasVisible = StartButton.IsVisible;
+
+            if (hasName && hasRace && hasClass && hasStats)
+            {
+                BackstoryPanel.IsVisible = true;
+                SummaryPanel.IsVisible = true;
+                StartButton.IsVisible = true;
+
+                // Auto-scroll to start button when it appears
+                if (!wasVisible)
+                {
+                    await Task.Delay(100);
+                    await MainScrollView.ScrollToAsync(StartButton, ScrollToPosition.End, true);
+                }
+            }
+            else
+            {
+                StartButton.IsVisible = false;
+            }
+        }
+
+        private bool HasValidStats()
+        {
+            return int.TryParse(StrengthEntry.Text, out _) &&
+                   int.TryParse(DexterityEntry.Text, out _) &&
+                   int.TryParse(ConstitutionEntry.Text, out _) &&
+                   int.TryParse(IntelligenceEntry.Text, out _) &&
+                   int.TryParse(WisdomEntry.Text, out _) &&
+                   int.TryParse(CharismaEntry.Text, out _);
         }
 
         private async void OnStartAdventure(object sender, EventArgs e)
@@ -88,25 +231,77 @@ namespace CavemanChronicles
                 return;
             }
 
-            // Create character with selected race
+            if (_selectedClass == null)
+            {
+                await DisplayAlert("Missing Class", "Please select a class.", "OK");
+                return;
+            }
+
+            if (!HasValidStats())
+            {
+                await DisplayAlert("Invalid Stats", "Please ensure all ability scores are filled in.", "OK");
+                return;
+            }
+
+            // Parse stats
+            int.TryParse(StrengthEntry.Text, out int str);
+            int.TryParse(DexterityEntry.Text, out int dex);
+            int.TryParse(ConstitutionEntry.Text, out int con);
+            int.TryParse(IntelligenceEntry.Text, out int intel);
+            int.TryParse(WisdomEntry.Text, out int wis);
+            int.TryParse(CharismaEntry.Text, out int cha);
+
+            // Apply racial bonuses
+            str += _selectedRace.StrengthBonus;
+            dex += _selectedRace.DexterityBonus;
+            intel += _selectedRace.IntelligenceBonus;
+
+            // Calculate derived stats
+            int conMod = CalculateModifier(con);
+            int maxHP = _selectedClass.HitDie + conMod + _selectedRace.HealthBonus;
+            maxHP = Math.Max(1, maxHP); // Minimum 1 HP
+
+            int initiative = CalculateModifier(dex);
+            int armorClass = 10 + CalculateModifier(dex); // Base AC
+
+            // Create character
             var character = new Character
             {
                 Name = NameEntry.Text.Trim(),
                 Race = _selectedRace.Race,
+                Class = _selectedClass.Class,
+                Background = _selectedBackground?.Name ?? "None",
+                Backstory = BackstoryEditor.Text?.Trim() ?? "",
+                Alignment = "Neutral",
+
                 Level = 1,
                 Experience = 0,
-                MaxHealth = 100 + _selectedRace.HealthBonus,
+                MaxHealth = maxHP,
+                Health = maxHP,
+                HitDice = _selectedClass.HitDie,
+
                 CurrentEra = TechnologyEra.Caveman,
-                Inventory = new List<Item>(),
+
                 Stats = new CharacterStats
                 {
-                    Strength = 5 + _selectedRace.StrengthBonus,
-                    Dexterity = 5 + _selectedRace.DexterityBonus,
-                    Intelligence = 5 + _selectedRace.IntelligenceBonus
-                }
-            };
+                    Strength = str,
+                    Dexterity = dex,
+                    Constitution = con,
+                    Intelligence = intel,
+                    Wisdom = wis,
+                    Charisma = cha
+                },
 
-            character.Health = character.MaxHealth;
+                ArmorClass = armorClass,
+                Initiative = initiative,
+                Speed = 30, // Standard speed
+                ProficiencyBonus = 2, // Level 1 proficiency
+
+                Skills = InitializeSkills(_selectedClass, _selectedBackground),
+                Inventory = InitializeInventory(_selectedClass),
+                Languages = new List<string> { "Common" },
+                Gold = _random.Next(50, 150)
+            };
 
             // Save the character
             bool saved = await _saveService.SaveCharacter(character);
@@ -123,6 +318,110 @@ namespace CavemanChronicles
                 var mainPage = new MainPage(character);
                 await Navigation.PushAsync(mainPage);
             }
+        }
+
+        private List<Skill> InitializeSkills(ClassData classData, BackgroundData background)
+        {
+            var skills = new List<Skill>
+            {
+                // Strength
+                new Skill { Name = "Athletics", Ability = "STR", IsProficient = false },
+                
+                // Dexterity
+                new Skill { Name = "Acrobatics", Ability = "DEX", IsProficient = false },
+                new Skill { Name = "Sleight of Hand", Ability = "DEX", IsProficient = false },
+                new Skill { Name = "Stealth", Ability = "DEX", IsProficient = false },
+                
+                // Intelligence
+                new Skill { Name = "Arcana", Ability = "INT", IsProficient = false },
+                new Skill { Name = "History", Ability = "INT", IsProficient = false },
+                new Skill { Name = "Investigation", Ability = "INT", IsProficient = false },
+                new Skill { Name = "Nature", Ability = "INT", IsProficient = false },
+                new Skill { Name = "Religion", Ability = "INT", IsProficient = false },
+                
+                // Wisdom
+                new Skill { Name = "Animal Handling", Ability = "WIS", IsProficient = false },
+                new Skill { Name = "Insight", Ability = "WIS", IsProficient = false },
+                new Skill { Name = "Medicine", Ability = "WIS", IsProficient = false },
+                new Skill { Name = "Perception", Ability = "WIS", IsProficient = false },
+                new Skill { Name = "Survival", Ability = "WIS", IsProficient = false },
+                
+                // Charisma
+                new Skill { Name = "Deception", Ability = "CHA", IsProficient = false },
+                new Skill { Name = "Intimidation", Ability = "CHA", IsProficient = false },
+                new Skill { Name = "Performance", Ability = "CHA", IsProficient = false },
+                new Skill { Name = "Persuasion", Ability = "CHA", IsProficient = false }
+            };
+
+            // For now, give proficiency in a couple skills based on class
+            // In a full implementation, you'd let the player choose
+            var classSkills = classData.SkillProficiencies.Take(2);
+            foreach (var skillName in classSkills)
+            {
+                var skill = skills.FirstOrDefault(s => s.Name == skillName);
+                if (skill != null)
+                    skill.IsProficient = true;
+            }
+
+            // Add background proficiencies
+            if (background != null)
+            {
+                foreach (var skillName in background.SkillProficiencies)
+                {
+                    var skill = skills.FirstOrDefault(s => s.Name == skillName);
+                    if (skill != null)
+                        skill.IsProficient = true;
+                }
+            }
+
+            return skills;
+        }
+
+        private List<Item> InitializeInventory(ClassData classData)
+        {
+            var inventory = new List<Item>();
+
+            // Add class starting equipment adapted to Caveman era
+            foreach (var equipName in classData.StartingEquipment)
+            {
+                var item = new Item
+                {
+                    Name = AdaptToCavemanEra(equipName),
+                    Description = $"Primitive {equipName}",
+                    ItemType = GetItemType(equipName),
+                    Value = 10
+                };
+                inventory.Add(item);
+            }
+
+            return inventory;
+        }
+
+        private string AdaptToCavemanEra(string modernEquipment)
+        {
+            // Convert modern/medieval equipment to caveman equivalents
+            return modernEquipment.ToLower() switch
+            {
+                string s when s.Contains("sword") => "Sharp Stone",
+                string s when s.Contains("axe") => "Stone Axe",
+                string s when s.Contains("mail") || s.Contains("armor") => "Hide Armor",
+                string s when s.Contains("shield") => "Wooden Shield",
+                string s when s.Contains("bow") => "Crude Bow",
+                string s when s.Contains("staff") => "Wooden Staff",
+                string s when s.Contains("dagger") => "Flint Knife",
+                string s when s.Contains("spellbook") => "Cave Drawings",
+                _ => $"Primitive {modernEquipment}"
+            };
+        }
+
+        private ItemType GetItemType(string equipName)
+        {
+            string lower = equipName.ToLower();
+            if (lower.Contains("armor") || lower.Contains("mail") || lower.Contains("shield") || lower.Contains("hide"))
+                return ItemType.Armor;
+            if (lower.Contains("tool"))
+                return ItemType.Misc;
+            return ItemType.Weapon;
         }
     }
 }
