@@ -227,6 +227,8 @@ namespace CavemanChronicles
                    int.TryParse(CharismaEntry.Text, out _);
         }
 
+        // In CharacterCreationPage.xaml.cs, update the OnStartAdventure method:
+
         private async void OnStartAdventure(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(NameEntry.Text))
@@ -269,10 +271,10 @@ namespace CavemanChronicles
             // Calculate derived stats
             int conMod = CalculateModifier(con);
             int maxHP = _selectedClass.HitDie + conMod + _selectedRace.HealthBonus;
-            maxHP = Math.Max(1, maxHP); // Minimum 1 HP
+            maxHP = Math.Max(1, maxHP);
 
             int initiative = CalculateModifier(dex);
-            int armorClass = 10 + CalculateModifier(dex); // Base AC
+            int armorClass = 10 + CalculateModifier(dex);
 
             // Create character
             var character = new Character
@@ -304,8 +306,8 @@ namespace CavemanChronicles
 
                 ArmorClass = armorClass,
                 Initiative = initiative,
-                Speed = 30, // Standard speed
-                ProficiencyBonus = 2, // Level 1 proficiency
+                Speed = 30,
+                ProficiencyBonus = 2,
 
                 Skills = InitializeSkills(_selectedClass, _selectedBackground),
                 Inventory = InitializeInventory(_selectedClass),
@@ -318,18 +320,29 @@ namespace CavemanChronicles
 
             if (saved)
             {
-                // Navigate to main game page with character
-                var mainPage = new MainPage(character);
+                // Get services from DI
+                var gameService = Handler?.MauiContext?.Services.GetService<GameService>();
+                var combatService = Handler?.MauiContext?.Services.GetService<CombatService>();
+                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
+                var audioService = Handler?.MauiContext?.Services.GetService<AudioService>();
+
+                // Navigate to main game page with character and services
+                var mainPage = new MainPage(character, gameService, combatService, monsterLoader, audioService);
                 await Navigation.PushAsync(mainPage);
             }
             else
             {
                 await DisplayAlert("Save Failed", "Could not save character, but you can still play.", "OK");
-                var mainPage = new MainPage(character);
+
+                var gameService = Handler?.MauiContext?.Services.GetService<GameService>();
+                var combatService = Handler?.MauiContext?.Services.GetService<CombatService>();
+                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
+                var audioService = Handler?.MauiContext?.Services.GetService<AudioService>();
+
+                var mainPage = new MainPage(character, gameService, combatService, monsterLoader, audioService);
                 await Navigation.PushAsync(mainPage);
             }
         }
-
         private List<Skill> InitializeSkills(ClassData classData, BackgroundData background)
         {
             var skills = new List<Skill>

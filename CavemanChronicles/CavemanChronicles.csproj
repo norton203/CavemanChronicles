@@ -57,7 +57,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Resources\Raw\GameData\monsters_bronzeage.json" />
       <Content Remove="Resources\raw\GameData\monsters_caveman.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_ironage.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_stoneage.json" />
     </ItemGroup>
 
     <ItemGroup>

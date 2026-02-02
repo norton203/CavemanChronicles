@@ -43,10 +43,16 @@ namespace CavemanChronicles
         {
             try
             {
+                System.Diagnostics.Debug.WriteLine($"Attempting to load {fileName} for era {era}...");
+
                 var filePath = Path.Combine("GameData", fileName);
+                System.Diagnostics.Debug.WriteLine($"Full path: {filePath}");
+
                 using var stream = await FileSystem.OpenAppPackageFileAsync(filePath);
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
+
+                System.Diagnostics.Debug.WriteLine($"JSON loaded, length: {json.Length}");
 
                 var monsterFile = JsonSerializer.Deserialize<MonsterFile>(json, new JsonSerializerOptions
                 {
@@ -56,16 +62,27 @@ namespace CavemanChronicles
                 if (monsterFile?.Monsters != null)
                 {
                     _monstersByEra[era] = monsterFile.Monsters;
-                    System.Diagnostics.Debug.WriteLine($"Loaded {monsterFile.Monsters.Count} monsters for {era}");
+                    System.Diagnostics.Debug.WriteLine($"✓ Loaded {monsterFile.Monsters.Count} monsters for {era}");
                 }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"✗ MonsterFile or Monsters list is null for {fileName}");
+                    _monstersByEra[era] = new List<Monster>();
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"✗ File not found: {fileName}");
+                System.Diagnostics.Debug.WriteLine($"  Error: {ex.Message}");
+                _monstersByEra[era] = new List<Monster>();
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error loading {fileName}: {ex.Message}");
-                _monstersByEra[era] = new List<Monster>(); // Empty list as fallback
+                System.Diagnostics.Debug.WriteLine($"✗ Error loading {fileName}: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"  Stack: {ex.StackTrace}");
+                _monstersByEra[era] = new List<Monster>();
             }
         }
-
         public List<Monster> GetMonstersForEra(TechnologyEra era)
         {
             if (!_isLoaded)

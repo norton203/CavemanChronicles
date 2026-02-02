@@ -1,0 +1,399 @@
+{
+  "era": "StoneAge",
+  "monsters": [
+    {
+      "name": "Dire Wolf",
+      "description": "A massive wolf, larger and more ferocious than its cave-dwelling cousins.",
+      "type": "Beast",
+      "challengeRating": 2,
+      "armorClass": 14,
+      "hitPoints": 37,
+      "hitDice": 5,
+      "hitDieSize": 10,
+      "speed": 50,
+      "stats": {
+        "strength": 17,
+        "dexterity": 15,
+        "constitution": 15,
+        "intelligence": 3,
+        "wisdom": 12,
+        "charisma": 7
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 5,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "The dire wolf's massive jaws clamp down with crushing force."
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Pack Tactics",
+          "description": "Advantage on attack rolls if an ally is within 5 feet of target.",
+          "type": "Passive"
+        },
+        {
+          "name": "Keen Hearing and Smell",
+          "description": "Advantage on Perception checks using hearing or smell.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 15,
+      "experienceValue": 200,
+      "possibleLoot": [ "Dire Wolf Pelt", "Large Fang", "Wolf Claw" ],
+      "flavorText": [
+        "A howl pierces the air - a dire wolf emerges, larger than any you've seen!",
+        "The alpha predator has arrived. A dire wolf fixes you with its gaze!",
+        "Massive paws thunder across the ground as a dire wolf charges!"
+      ],
+      "defeatedText": "The dire wolf's howl fades as it collapses, defeated."
+    },
+    {
+      "name": "Woolly Mammoth",
+      "description": "A towering beast covered in thick fur, with massive curved tusks.",
+      "type": "Beast",
+      "challengeRating": 3,
+      "armorClass": 13,
+      "hitPoints": 126,
+      "hitDice": 11,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 24,
+        "dexterity": 9,
+        "constitution": 21,
+        "intelligence": 3,
+        "wisdom": 11,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Gore",
+          "attackBonus": 10,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 7,
+          "damageType": "Piercing",
+          "description": "Massive tusks impale their target!"
+        },
+        {
+          "name": "Stomp",
+          "attackBonus": 10,
+          "damageDiceCount": 4,
+          "damageDieSize": 10,
+          "damageBonus": 7,
+          "damageType": "Bludgeoning",
+          "description": "A massive foot comes crashing down!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Trampling Charge",
+          "description": "If moves 20+ feet toward creature and hits with gore, target must succeed DC 18 STR save or be knocked prone.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 50,
+      "experienceValue": 450,
+      "possibleLoot": [ "Mammoth Tusk", "Thick Fur Pelt", "Mammoth Meat (5 portions)" ],
+      "flavorText": [
+        "The ground shakes! A woolly mammoth trumpets a challenge!",
+        "An enormous shadow looms - a mammoth, tusks gleaming!",
+        "The smell of musk and fur - a mammoth charges!"
+      ],
+      "defeatedText": "The mighty mammoth falls like a collapsing mountain, its tusks digging into the earth."
+    },
+    {
+      "name": "Stone Age Shaman",
+      "description": "A tribal spellcaster who channels primal magic through bones and blood.",
+      "type": "Humanoid",
+      "challengeRating": 4,
+      "armorClass": 12,
+      "hitPoints": 44,
+      "hitDice": 8,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 10,
+        "dexterity": 14,
+        "constitution": 12,
+        "intelligence": 13,
+        "wisdom": 17,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Bone Staff",
+          "attackBonus": 4,
+          "damageDiceCount": 1,
+          "damageDieSize": 6,
+          "damageBonus": 2,
+          "damageType": "Bludgeoning",
+          "description": "A staff adorned with bones and feathers strikes!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Primal Spellcasting",
+          "description": "Can cast: Produce Flame, Cure Wounds, Entangle, Thunderwave. Spell save DC 13, +5 to hit.",
+          "type": "Action"
+        },
+        {
+          "name": "Ancestor's Guidance",
+          "description": "Once per combat, grant ally advantage on next attack or save.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 20,
+      "maxGold": 60,
+      "experienceValue": 550,
+      "possibleLoot": [ "Bone Staff", "Ritual Herbs", "Spirit Fetish", "Shaman's Pouch" ],
+      "flavorText": [
+        "Chanting fills the air - a shaman emerges, eyes glowing with power!",
+        "Bones rattle and the air crackles with primal magic!",
+        "A painted figure begins weaving mystical patterns in the air!"
+      ],
+      "defeatedText": "The shaman's chanting ceases as they collapse, their spirits departing."
+    },
+    {
+      "name": "Cave Bear",
+      "description": "A massive, aggressive bear that makes its den in dark caverns.",
+      "type": "Beast",
+      "challengeRating": 3,
+      "armorClass": 12,
+      "hitPoints": 42,
+      "hitDice": 5,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 20,
+        "dexterity": 10,
+        "constitution": 16,
+        "intelligence": 2,
+        "wisdom": 13,
+        "charisma": 7
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 7,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "Powerful jaws clamp down!"
+        },
+        {
+          "name": "Claw",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 5,
+          "damageType": "Slashing",
+          "description": "Massive claws swipe with devastating force!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Keen Smell",
+          "description": "Advantage on Perception checks using smell.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 30,
+      "experienceValue": 450,
+      "possibleLoot": [ "Bear Pelt", "Bear Claw", "Bear Meat (3 portions)" ],
+      "flavorText": [
+        "A thunderous roar echoes! A massive cave bear emerges!",
+        "The stench of bear musk fills your nostrils - it attacks!",
+        "You've entered a bear's territory - and it's not happy!"
+      ],
+      "defeatedText": "The great bear's roar fades to silence as it collapses."
+    },
+    {
+      "name": "Giant Elk",
+      "description": "An enormous elk with a majestic rack of antlers, fiercely territorial.",
+      "type": "Beast",
+      "challengeRating": 2,
+      "armorClass": 14,
+      "hitPoints": 42,
+      "hitDice": 5,
+      "hitDieSize": 12,
+      "speed": 60,
+      "stats": {
+        "strength": 19,
+        "dexterity": 16,
+        "constitution": 14,
+        "intelligence": 7,
+        "wisdom": 14,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Ram",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "The elk lowers its massive antlers and charges!"
+        },
+        {
+          "name": "Hooves",
+          "attackBonus": 6,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "Powerful hooves strike like hammers!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Charge",
+          "description": "If moves 20+ feet straight and hits with ram, target takes extra 2d6 damage and must succeed DC 14 STR save or be knocked prone.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 25,
+      "experienceValue": 200,
+      "possibleLoot": [ "Giant Antlers", "Elk Hide", "Elk Meat (4 portions)" ],
+      "flavorText": [
+        "A magnificent giant elk paws the ground, ready to defend its territory!",
+        "Antlers like trees - a giant elk bellows a challenge!",
+        "The thunder of hooves - a giant elk charges at full speed!"
+      ],
+      "defeatedText": "The giant elk stumbles and falls, its majestic antlers touching the earth one last time."
+    },
+    {
+      "name": "Stone Age Hunter",
+      "description": "An expert tracker and hunter, armed with atlatl and stone-tipped spears.",
+      "type": "Humanoid",
+      "challengeRating": 3,
+      "armorClass": 14,
+      "hitPoints": 32,
+      "hitDice": 5,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 13,
+        "dexterity": 16,
+        "constitution": 12,
+        "intelligence": 11,
+        "wisdom": 15,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Atlatl Spear",
+          "attackBonus": 5,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "A spear hurls through the air with deadly accuracy!"
+        },
+        {
+          "name": "Stone Knife",
+          "attackBonus": 5,
+          "damageDiceCount": 1,
+          "damageDieSize": 6,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "A sharp stone blade slashes out!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Hunter's Mark",
+          "description": "First attack each combat has advantage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Evasive",
+          "description": "When attacked by ranged weapon, can use reaction to gain +2 AC.",
+          "type": "Reaction"
+        }
+      ],
+      "minGold": 15,
+      "maxGold": 45,
+      "experienceValue": 450,
+      "possibleLoot": [ "Atlatl", "Stone Spearheads (3)", "Hunter's Hide Armor", "Tracking Tools" ],
+      "flavorText": [
+        "A skilled hunter emerges from concealment, weapon ready!",
+        "You've been tracked! A stone age hunter attacks!",
+        "Silent and deadly - a hunter's spear flies toward you!"
+      ],
+      "defeatedText": "The hunter falls, their tracking days over."
+    },
+    {
+      "name": "Terror Bird",
+      "description": "A massive flightless predatory bird with a powerful beak and talons.",
+      "type": "Beast",
+      "challengeRating": 3,
+      "armorClass": 13,
+      "hitPoints": 45,
+      "hitDice": 6,
+      "hitDieSize": 10,
+      "speed": 50,
+      "stats": {
+        "strength": 18,
+        "dexterity": 14,
+        "constitution": 15,
+        "intelligence": 2,
+        "wisdom": 12,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Beak",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "A massive hooked beak strikes like a pickaxe!"
+        },
+        {
+          "name": "Talons",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Slashing",
+          "description": "Powerful talons rake and tear!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Pounce",
+          "description": "If moves 30+ feet straight toward target and hits, target must succeed DC 14 STR save or be knocked prone.",
+          "type": "Action"
+        },
+        {
+          "name": "Aggressive",
+          "description": "As bonus action, can move up to speed toward hostile creature it can see.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 20,
+      "experienceValue": 450,
+      "possibleLoot": [ "Terror Bird Beak", "Large Feathers", "Bird Talons" ],
+      "flavorText": [
+        "A shriek splits the air - a terror bird races toward you on powerful legs!",
+        "Eight feet tall and furious - a terror bird attacks!",
+        "The ground shakes as a prehistoric predator bird charges!"
+      ],
+      "defeatedText": "The terror bird's shriek dies as it crashes to the ground."
+    }
+  ]
+}

@@ -278,14 +278,22 @@ namespace CavemanChronicles
             return border;
         }
 
+        // In LoadGamePage.xaml.cs, update LoadCharacter method:
+
         private async Task LoadCharacter(SavedCharacterInfo save)
         {
             var character = await _saveService.LoadCharacter(save.FilePath);
 
             if (character != null)
             {
-                // Navigate to main game with loaded character
-                var mainPage = new MainPage(character);
+                // Get services from DI
+                var gameService = Handler?.MauiContext?.Services.GetService<GameService>();
+                var combatService = Handler?.MauiContext?.Services.GetService<CombatService>();
+                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
+                var audioService = Handler?.MauiContext?.Services.GetService<AudioService>();
+
+                // Navigate to main game with loaded character and services
+                var mainPage = new MainPage(character, gameService, combatService, monsterLoader, audioService);
                 await Navigation.PushAsync(mainPage);
             }
             else

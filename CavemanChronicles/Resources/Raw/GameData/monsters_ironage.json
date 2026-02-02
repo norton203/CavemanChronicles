@@ -1,0 +1,373 @@
+{
+  "era": "IronAge",
+  "monsters": [
+    {
+      "name": "Iron Legion Soldier",
+      "description": "A disciplined soldier in iron armor, trained in formation combat.",
+      "type": "Humanoid",
+      "challengeRating": 7,
+      "armorClass": 18,
+      "hitPoints": 82,
+      "hitDice": 11,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 13,
+        "constitution": 16,
+        "intelligence": 10,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Iron Gladius",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Slashing",
+          "description": "A short iron sword strikes with brutal efficiency!"
+        },
+        {
+          "name": "Pilum Throw",
+          "attackBonus": 5,
+          "damageDiceCount": 1,
+          "damageDieSize": 10,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "A heavy iron javelin pierces armor!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Shield Wall",
+          "description": "When fighting alongside allies, AC increases by 2.",
+          "type": "Passive"
+        },
+        {
+          "name": "Disciplined",
+          "description": "Advantage on saves against being frightened.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 50,
+      "maxGold": 150,
+      "experienceValue": 1450,
+      "possibleLoot": [ "Iron Gladius", "Legion Armor", "Pilum", "Legion Standard" ],
+      "flavorText": [
+        "A soldier in iron plate advances in perfect formation!",
+        "The legion marches - discipline and iron combined!",
+        "Shield raised, sword ready - a trained warrior attacks!"
+      ],
+      "defeatedText": "The soldier falls, maintaining discipline even in defeat."
+    },
+    {
+      "name": "Iron Golem",
+      "description": "A massive construct of pure iron, nearly indestructible.",
+      "type": "Construct",
+      "challengeRating": 9,
+      "armorClass": 20,
+      "hitPoints": 210,
+      "hitDice": 20,
+      "hitDieSize": 10,
+      "speed": 20,
+      "stats": {
+        "strength": 24,
+        "dexterity": 9,
+        "constitution": 20,
+        "intelligence": 3,
+        "wisdom": 11,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Slam",
+          "attackBonus": 13,
+          "damageDiceCount": 3,
+          "damageDieSize": 8,
+          "damageBonus": 7,
+          "damageType": "Bludgeoning",
+          "description": "An iron fist crashes down like a falling anvil!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Immutable Form",
+          "description": "Immune to any spell or effect that would alter its form.",
+          "type": "Passive"
+        },
+        {
+          "name": "Magic Resistance",
+          "description": "Advantage on saves against spells and magical effects.",
+          "type": "Passive"
+        },
+        {
+          "name": "Poison Breath",
+          "description": "Recharge 5-6: Exhales poisonous gas in 15-foot cone. DC 19 CON save or take 10d8 poison damage (half on success).",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 200,
+      "experienceValue": 2300,
+      "possibleLoot": [ "Iron Ingots (10)", "Magical Core", "Golem Plates" ],
+      "flavorText": [
+        "The ground shakes - a golem of pure iron awakens!",
+        "Unstoppable and unfeeling - an iron colossus attacks!",
+        "Metal screams against metal as the iron golem moves!"
+      ],
+      "defeatedText": "The iron golem crashes to the ground, its magic finally exhausted."
+    },
+    {
+      "name": "Gladiator Champion",
+      "description": "An arena champion, master of multiple weapons and combat styles.",
+      "type": "Humanoid",
+      "challengeRating": 8,
+      "armorClass": 17,
+      "hitPoints": 112,
+      "hitDice": 15,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 18,
+        "dexterity": 16,
+        "constitution": 16,
+        "intelligence": 10,
+        "wisdom": 12,
+        "charisma": 15
+      },
+      "attacks": [
+        {
+          "name": "Trident",
+          "attackBonus": 7,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "A three-pronged iron weapon strikes!"
+        },
+        {
+          "name": "Net",
+          "attackBonus": 7,
+          "damageDiceCount": 0,
+          "damageDieSize": 0,
+          "damageBonus": 0,
+          "damageType": "Bludgeoning",
+          "description": "Heavy weighted net entangles! (DC 15 STR save or restrained)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Crowd Favorite",
+          "description": "When reduces enemy to 0 HP, gains 15 temporary HP.",
+          "type": "Passive"
+        },
+        {
+          "name": "Parry",
+          "description": "Can use reaction to add +3 AC against one melee attack.",
+          "type": "Reaction"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two attacks per turn.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 75,
+      "maxGold": 200,
+      "experienceValue": 1800,
+      "possibleLoot": [ "Champion's Trident", "Gladiator Armor", "Victory Laurel", "Arena Trophy" ],
+      "flavorText": [
+        "The crowd roars! A gladiator champion enters the arena!",
+        "Scarred and deadly - a master of the arena faces you!",
+        "This warrior has killed hundreds - will you be next?"
+      ],
+      "defeatedText": "The champion falls, the crowd's cheers fading to silence."
+    },
+    {
+      "name": "War Elephant",
+      "description": "A massive elephant clad in iron armor, trained for battle.",
+      "type": "Beast",
+      "challengeRating": 8,
+      "armorClass": 16,
+      "hitPoints": 172,
+      "hitDice": 15,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 22,
+        "dexterity": 9,
+        "constitution": 19,
+        "intelligence": 3,
+        "wisdom": 11,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Gore",
+          "attackBonus": 10,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 6,
+          "damageType": "Piercing",
+          "description": "Iron-tipped tusks gore with devastating force!"
+        },
+        {
+          "name": "Stomp",
+          "attackBonus": 10,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Bludgeoning",
+          "description": "Massive feet crush anything beneath!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Trampling Charge",
+          "description": "If moves 20+ feet toward creature and hits with gore, target must succeed DC 18 STR save or be knocked prone. Can make stomp as bonus action against prone creatures.",
+          "type": "Action"
+        },
+        {
+          "name": "Iron Barding",
+          "description": "Resistance to non-magical piercing and slashing damage.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 100,
+      "experienceValue": 1800,
+      "possibleLoot": [ "War Elephant Tusk", "Iron Barding Pieces", "Elephant Hide" ],
+      "flavorText": [
+        "The earth trembles beneath iron-shod feet!",
+        "A trumpeting roar - a war elephant charges!",
+        "Armored and unstoppable - the war beast attacks!"
+      ],
+      "defeatedText": "The mighty war elephant crashes to the ground, its trumpeting silenced."
+    },
+    {
+      "name": "Iron Legion Centurion",
+      "description": "An elite officer leading iron-clad troops, master tactician and warrior.",
+      "type": "Humanoid",
+      "challengeRating": 9,
+      "armorClass": 19,
+      "hitPoints": 127,
+      "hitDice": 15,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 18,
+        "dexterity": 14,
+        "constitution": 18,
+        "intelligence": 14,
+        "wisdom": 13,
+        "charisma": 16
+      },
+      "attacks": [
+        {
+          "name": "Iron Spatha",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Slashing",
+          "description": "A masterwork long sword cuts through defenses!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Tactical Genius",
+          "description": "All allies within 30 feet gain +2 to attack rolls.",
+          "type": "Passive"
+        },
+        {
+          "name": "Rallying Cry",
+          "description": "Once per combat, all allies within 60 feet gain 20 temporary HP.",
+          "type": "Action"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes three attacks per turn.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 300,
+      "experienceValue": 2300,
+      "possibleLoot": [ "Centurion's Spatha", "Officer's Armor", "Legion Crest", "Tactical Maps" ],
+      "flavorText": [
+        "A centurion steps forward, battle-hardened and deadly!",
+        "The legion's finest officer commands the battlefield!",
+        "Years of warfare shine in the centurion's eyes!"
+      ],
+      "defeatedText": "The centurion falls, giving orders to the last breath."
+    },
+    {
+      "name": "Minotaur",
+      "description": "A bull-headed warrior wielding a massive iron axe, rage incarnate.",
+      "type": "Monstrosity",
+      "challengeRating": 8,
+      "armorClass": 14,
+      "hitPoints": 138,
+      "hitDice": 12,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 20,
+        "dexterity": 11,
+        "constitution": 20,
+        "intelligence": 6,
+        "wisdom": 16,
+        "charisma": 9
+      },
+      "attacks": [
+        {
+          "name": "Iron Greataxe",
+          "attackBonus": 9,
+          "damageDiceCount": 2,
+          "damageDieSize": 12,
+          "damageBonus": 5,
+          "damageType": "Slashing",
+          "description": "A massive axe swings with terrible fury!"
+        },
+        {
+          "name": "Gore",
+          "attackBonus": 9,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "Bull horns impale viciously!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Charge",
+          "description": "If moves 10+ feet straight toward target and hits with gore, deals extra 2d8 damage and target must succeed DC 16 STR save or be pushed 10 feet and knocked prone.",
+          "type": "Action"
+        },
+        {
+          "name": "Labyrinthine Recall",
+          "description": "Can perfectly recall any path it has traveled.",
+          "type": "Passive"
+        },
+        {
+          "name": "Reckless",
+          "description": "At start of turn, can gain advantage on melee attacks but attacks against it have advantage.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 50,
+      "maxGold": 150,
+      "experienceValue": 1800,
+      "possibleLoot": [ "Minotaur Horn", "Iron Greataxe", "Beast Hide", "Labyrinth Map" ],
+      "flavorText": [
+        "A bestial roar! A minotaur charges from the shadows!",
+        "Half-man, half-bull, all rage - the minotaur attacks!",
+        "Massive and unstoppable, the maze-dweller has found you!"
+      ],
+      "defeatedText": "The minotaur's roar fades as it collapses, finally at peace."
+    }
+  ]
+}

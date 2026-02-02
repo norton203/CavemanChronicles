@@ -5,30 +5,23 @@
         public Character Player { get; set; }
         private Random _random = new Random();
         private AudioService? _audioService;
+        private MonsterLoaderService? _monsterLoader;
+        private CombatService? _combatService;
 
         public void SetAudioService(AudioService audioService)
         {
             _audioService = audioService;
         }
 
-        public void StartNewGame(string playerName)
+        public void SetMonsterLoader(MonsterLoaderService monsterLoader)
         {
-            Player = new Character
-            {
-                Name = playerName,
-                Level = 1,
-                Experience = 0,
-                Health = 100,
-                MaxHealth = 100,
-                CurrentEra = TechnologyEra.Caveman,
-                Inventory = new List<Item>(),
-                Stats = new CharacterStats
-                {
-                    Strength = 5,
-                    Dexterity = 5,
-                    Intelligence = 5
-                }
-            };
+            _monsterLoader = monsterLoader;
+        }
+
+        public void SetCombatService(CombatService combatService)
+        {
+            _combatService = combatService;
+            _combatService.SetAudioService(_audioService);
         }
 
         public async Task<string> ProcessCommand(string command)
@@ -38,9 +31,15 @@
 
             command = command.ToLower().Trim();
 
+            // Check if in combat
+            if (_combatService?.CurrentCombat != null && _combatService.CurrentCombat.Status == CombatStatus.Ongoing)
+            {
+                return "You're in combat! Use combat commands: 'attack', 'dodge', 'flee'";
+            }
+
             // Basic command parsing
-            if (command.Contains("attack") || command.Contains("fight"))
-                return await HandleAttack(command);
+            if (command.Contains("attack") || command.Contains("fight") || command.Contains("battle"))
+                return await HandleStartCombat();
 
             if (command.Contains("look") || command.Contains("examine"))
                 return HandleLook(command);
@@ -60,46 +59,25 @@
             if (command.Contains("help"))
                 return HandleHelp();
 
-            // Unknown command
             return $"You don't know how to '{command}'. Try 'help' for available commands.";
         }
 
-        private async Task<string> HandleAttack(string command)
+        private async Task<string> HandleStartCombat()
         {
-            // Play attack sound
-            if (_audioService != null)
-                await _audioService.PlaySoundEffect("combat_hit.wav");
+            if (_monsterLoader == null || _combatService == null)
+                return "Combat system not available!";
 
-            // Simple combat simulation
-            int damage = _random.Next(5, 15) + Player.Stats.Strength;
-            int enemyDamage = _random.Next(3, 10);
+            // Get random encounter
+            var monster = _monsterLoader.GetRandomMonster(Player.CurrentEra, Player.Level);
 
-            Player.Health -= enemyDamage;
+            if (monster == null)
+                return "No monsters found for your current era!";
 
-            if (Player.Health <= 0)
-            {
-                Player.Health = 0;
+            // Start combat
+            var combat = _combatService.InitiateCombat(Player, monster);
 
-                // Play game over sound
-                if (_audioService != null)
-                    await _audioService.PlaySoundEffect("game_over.wav");
-
-                return $"You strike with {damage} damage! But the enemy counters for {enemyDamage}!\nYou have been defeated! Game Over.";
-            }
-
-            // Gain experience
-            int expGained = _random.Next(10, 25);
-            Player.Experience += expGained;
-
-            string result = $"You attack dealing {damage} damage! The enemy strikes back for {enemyDamage}.\nYou gained {expGained} XP!";
-
-            // Check for level up
-            if (Player.Experience >= Player.Level * 100)
-            {
-                result += "\n\n" + await LevelUp();
-            }
-
-            return result;
+            // Return combat log
+            return string.Join("\n", combat.CombatLog);
         }
 
         private string HandleLook(string command)

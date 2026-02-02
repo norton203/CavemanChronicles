@@ -1,0 +1,372 @@
+{
+  "era": "BronzeAge",
+  "monsters": [
+    {
+      "name": "Bronze Automaton",
+      "description": "A mechanical guardian crafted from bronze, powered by ancient magic.",
+      "type": "Construct",
+      "challengeRating": 5,
+      "armorClass": 16,
+      "hitPoints": 93,
+      "hitDice": 11,
+      "hitDieSize": 10,
+      "speed": 25,
+      "stats": {
+        "strength": 18,
+        "dexterity": 10,
+        "constitution": 16,
+        "intelligence": 3,
+        "wisdom": 10,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Bronze Fist",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "A heavy bronze fist slams down!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Immutable Form",
+          "description": "Immune to effects that would alter its form.",
+          "type": "Passive"
+        },
+        {
+          "name": "Magic Resistance",
+          "description": "Advantage on saves against spells.",
+          "type": "Passive"
+        },
+        {
+          "name": "Blazing Shell",
+          "description": "When hit by fire damage, body heats up. Next melee attack deals extra 2d6 fire damage.",
+          "type": "Reaction"
+        }
+      ],
+      "minGold": 40,
+      "maxGold": 120,
+      "experienceValue": 900,
+      "possibleLoot": [ "Bronze Plating (3)", "Magical Gears", "Ancient Power Core" ],
+      "flavorText": [
+        "Metal grinds against metal as an automaton activates!",
+        "Ancient magic pulses - a bronze guardian stands to defend!",
+        "The mechanical sentinel's eyes glow with arcane power!"
+      ],
+      "defeatedText": "The automaton's movements slow and stop, magic fading from its core."
+    },
+    {
+      "name": "War Chariot Rider",
+      "description": "An elite warrior mounted on a bronze-reinforced war chariot.",
+      "type": "Humanoid",
+      "challengeRating": 6,
+      "armorClass": 17,
+      "hitPoints": 85,
+      "hitDice": 13,
+      "hitDieSize": 8,
+      "speed": 60,
+      "stats": {
+        "strength": 16,
+        "dexterity": 14,
+        "constitution": 15,
+        "intelligence": 10,
+        "wisdom": 12,
+        "charisma": 13
+      },
+      "attacks": [
+        {
+          "name": "Bronze Spear",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 10,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "A gleaming bronze spear thrusts forward!"
+        },
+        {
+          "name": "Chariot Trample",
+          "attackBonus": 6,
+          "damageDiceCount": 3,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Bludgeoning",
+          "description": "The chariot runs you down!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Charge Attack",
+          "description": "If moves 30+ feet and hits with spear, deals extra 2d8 damage.",
+          "type": "Action"
+        },
+        {
+          "name": "Bronze Armor",
+          "description": "Resistance to non-magical bludgeoning, piercing, and slashing.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 60,
+      "maxGold": 180,
+      "experienceValue": 1100,
+      "possibleLoot": [ "Bronze Spear", "Bronze Armor Pieces", "War Banner", "Chariot Wheel" ],
+      "flavorText": [
+        "Thunder and dust! A war chariot bears down on you!",
+        "The rattle of wheels and armor - a chariot warrior charges!",
+        "Bronze gleams in the sun as an elite rider attacks!"
+      ],
+      "defeatedText": "The chariot crashes and splinters, the warrior tumbling to the ground."
+    },
+    {
+      "name": "Bull of Heaven",
+      "description": "A massive divine bull with bronze-tipped horns, sent as punishment by the gods.",
+      "type": "Beast",
+      "challengeRating": 7,
+      "armorClass": 15,
+      "hitPoints": 142,
+      "hitDice": 15,
+      "hitDieSize": 12,
+      "speed": 50,
+      "stats": {
+        "strength": 23,
+        "dexterity": 11,
+        "constitution": 20,
+        "intelligence": 6,
+        "wisdom": 12,
+        "charisma": 14
+      },
+      "attacks": [
+        {
+          "name": "Gore",
+          "attackBonus": 10,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Piercing",
+          "description": "Divine horns tear through flesh and armor alike!"
+        },
+        {
+          "name": "Trample",
+          "attackBonus": 10,
+          "damageDiceCount": 4,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Bludgeoning",
+          "description": "Massive hooves crush everything beneath them!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Divine Wrath",
+          "description": "All attacks count as magical. Critical hits on 19-20.",
+          "type": "Passive"
+        },
+        {
+          "name": "Earthquake Stomp",
+          "description": "Once per combat, stomps ground. All creatures within 20 feet must succeed DC 16 DEX save or be knocked prone and take 3d8 bludgeoning damage.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 100,
+      "experienceValue": 1450,
+      "possibleLoot": [ "Divine Bull Horn", "Sacred Hide", "Godly Essence" ],
+      "flavorText": [
+        "The earth trembles - a divine bull descends from the heavens!",
+        "Bronze-tipped horns gleam as the Bull of Heaven roars its fury!",
+        "The gods have sent their champion - prepare for divine judgment!"
+      ],
+      "defeatedText": "The divine bull bellows one final time before its spirit returns to the heavens."
+    },
+    {
+      "name": "Bronze Serpent",
+      "description": "A massive serpent with scales like bronze plates, impossibly heavy and strong.",
+      "type": "Beast",
+      "challengeRating": 6,
+      "armorClass": 16,
+      "hitPoints": 95,
+      "hitDice": 10,
+      "hitDieSize": 12,
+      "speed": 30,
+      "stats": {
+        "strength": 19,
+        "dexterity": 14,
+        "constitution": 18,
+        "intelligence": 4,
+        "wisdom": 10,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "Fangs dripping with venom sink deep! (DC 15 CON save or take 4d6 poison damage)"
+        },
+        {
+          "name": "Constrict",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 10,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "Coils wrap around you, crushing with terrible force!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Bronze Scales",
+          "description": "Resistance to bludgeoning, piercing, and slashing from non-magical attacks.",
+          "type": "Passive"
+        },
+        {
+          "name": "Grappler",
+          "description": "When hits with constrict, target is grappled (escape DC 15). While grappled, target is restrained and takes 2d10 crushing damage at start of serpent's turn.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 80,
+      "experienceValue": 1100,
+      "possibleLoot": [ "Bronze Scales (5)", "Serpent Venom Sac", "Massive Fang" ],
+      "flavorText": [
+        "A metallic scraping - a bronze serpent slithers forward!",
+        "Coils thick as tree trunks - a metal serpent prepares to strike!",
+        "The air fills with the smell of hot metal as the serpent attacks!"
+      ],
+      "defeatedText": "The bronze serpent's coils relax as it falls still, scales dulling."
+    },
+    {
+      "name": "Temple Guardian",
+      "description": "An elite warrior sworn to protect sacred places, blessed by the gods.",
+      "type": "Humanoid",
+      "challengeRating": 5,
+      "armorClass": 18,
+      "hitPoints": 75,
+      "hitDice": 10,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 17,
+        "dexterity": 12,
+        "constitution": 16,
+        "intelligence": 11,
+        "wisdom": 14,
+        "charisma": 13
+      },
+      "attacks": [
+        {
+          "name": "Bronze Khopesh",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 3,
+          "damageType": "Slashing",
+          "description": "A curved bronze blade slashes viciously!"
+        },
+        {
+          "name": "Shield Bash",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Bludgeoning",
+          "description": "A heavy bronze shield smashes forward!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Divine Protection",
+          "description": "Once per combat, when reduced to 0 HP, drops to 1 HP instead.",
+          "type": "Passive"
+        },
+        {
+          "name": "Sacred Ground",
+          "description": "While defending temple or sacred area, has advantage on all saving throws.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 50,
+      "maxGold": 150,
+      "experienceValue": 900,
+      "possibleLoot": [ "Bronze Khopesh", "Temple Guardian Armor", "Sacred Amulet", "Blessed Shield" ],
+      "flavorText": [
+        "You have defiled sacred ground! A temple guardian attacks!",
+        "Bronze armor gleaming with divine light - a blessed warrior blocks your path!",
+        "The gods' champion stands ready to defend this holy place!"
+      ],
+      "defeatedText": "The guardian falls, whispering prayers as their duty ends."
+    },
+    {
+      "name": "Sphinx",
+      "description": "A creature with a human head, lion body, and eagle wings - guardian of secrets.",
+      "type": "Monstrosity",
+      "challengeRating": 8,
+      "armorClass": 17,
+      "hitPoints": 136,
+      "hitDice": 16,
+      "hitDieSize": 10,
+      "speed": 40,
+      "stats": {
+        "strength": 18,
+        "dexterity": 15,
+        "constitution": 16,
+        "intelligence": 18,
+        "wisdom": 18,
+        "charisma": 18
+      },
+      "attacks": [
+        {
+          "name": "Claw",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Slashing",
+          "description": "Powerful lion claws rake across you!"
+        },
+        {
+          "name": "Riddle's Curse",
+          "attackBonus": 8,
+          "damageDiceCount": 4,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Psychic",
+          "description": "Mental anguish from failing the riddle! (DC 16 INT save to negate)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Inscrutable",
+          "description": "Immune to divination and mind-reading effects.",
+          "type": "Passive"
+        },
+        {
+          "name": "Magic Weapons",
+          "description": "Attacks count as magical.",
+          "type": "Passive"
+        },
+        {
+          "name": "Spellcasting",
+          "description": "Can cast: Detect Magic, Dispel Magic, Tongues, Legend Lore. Spell save DC 16.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 300,
+      "experienceValue": 1800,
+      "possibleLoot": [ "Sphinx Claw", "Ancient Scroll", "Riddle Stone", "Wing Feather" ],
+      "flavorText": [
+        "A sphinx descends, eyes gleaming with ancient intelligence!",
+        "Answer the riddle or face your doom - the sphinx speaks!",
+        "Wings spread wide, the guardian of mysteries prepares to test you!"
+      ],
+      "defeatedText": "The sphinx's eyes dim as ancient secrets die with it."
+    }
+  ]
+}

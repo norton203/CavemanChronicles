@@ -28,6 +28,7 @@ namespace CavemanChronicles
             builder.Services.AddSingleton<GameService>();
             builder.Services.AddSingleton<SaveService>();
             builder.Services.AddSingleton<MonsterLoaderService>();
+            builder.Services.AddSingleton<CombatService>();
 
             return builder.Build();
         }

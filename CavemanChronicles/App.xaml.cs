@@ -5,15 +5,6 @@
         public App()
         {
             InitializeComponent();
-            // Load monsters on app start
-            Task.Run(async () =>
-            {
-                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
-                if (monsterLoader != null)
-                {
-                    await monsterLoader.LoadAllMonsters();
-                }
-            });
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -26,6 +17,35 @@
             };
 
             return new Window(navigationPage) { Title = "Caveman Chronicles" };
+        }
+
+        protected override async void OnStart()
+        {
+            base.OnStart();
+
+            // Load monsters on app start
+            try
+            {
+                // Get the main page to access services
+                if (Windows.FirstOrDefault()?.Page is NavigationPage navPage)
+                {
+                    var monsterLoader = navPage.Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
+                    if (monsterLoader != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Starting to load monsters...");
+                        await monsterLoader.LoadAllMonsters();
+                        System.Diagnostics.Debug.WriteLine("Monsters loaded successfully!");
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("MonsterLoaderService not found!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading monsters on startup: {ex.Message}");
+            }
         }
     }
 }
