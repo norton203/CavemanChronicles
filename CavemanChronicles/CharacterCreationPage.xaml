@@ -4,24 +4,25 @@
              x:Class="CavemanChronicles.CharacterCreationPage"
              BackgroundColor="Black">
 
-    <Grid>
-        <!-- Background gradient -->
-        <BoxView>
-            <BoxView.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#0a0015" Offset="0.0"/>
-                    <GradientStop Color="#1a0033" Offset="0.5"/>
-                    <GradientStop Color="#0a0015" Offset="1.0"/>
-                </LinearGradientBrush>
-            </BoxView.Background>
-        </BoxView>
+    <ScrollView x:Name="MainScrollView">
+        <Grid Padding="15" RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Header -->
+                <RowDefinition Height="Auto"/>
+                <!-- Main character sheet area -->
+                <RowDefinition Height="Auto"/>
+                <!-- Bottom sections -->
+            </Grid.RowDefinitions>
 
-        <ScrollView x:Name="MainScrollView">
-            <VerticalStackLayout Padding="20" Spacing="20">
-
-                <!-- Title -->
-                <Grid ColumnDefinitions="*,Auto,*" Margin="0,20,0,10">
-                    <BoxView Grid.Column="0" HeightRequest="3" VerticalOptions="Center">
+            <!-- HEADER SECTION -->
+            <Border Grid.Row="0"
+                    Stroke="#FFD700"
+                    StrokeThickness="3"
+                    Padding="15,10"
+                    BackgroundColor="#0a0015">
+                <Grid ColumnDefinitions="*,Auto,*">
+                    <BoxView Grid.Column="0" HeightRequest="2" VerticalOptions="Center">
                         <BoxView.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="Transparent" Offset="0.0"/>
@@ -30,20 +31,15 @@
                         </BoxView.Background>
                     </BoxView>
 
-                    <Border Grid.Column="1"
-                            Stroke="#FFD700"
-                            StrokeThickness="2"
-                            Padding="15,8"
-                            Margin="10,0"
-                            BackgroundColor="#1a0033">
-                        <Label Text="⚔ D20 ⚔"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="16"
-                               FontAttributes="Bold"/>
-                    </Border>
+                    <Label Grid.Column="1"
+                           Text="◆ DUNGEONS &amp; DRAGONS ◆"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           Margin="20,0"/>
 
-                    <BoxView Grid.Column="2" HeightRequest="3" VerticalOptions="Center">
+                    <BoxView Grid.Column="2" HeightRequest="2" VerticalOptions="Center">
                         <BoxView.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                 <GradientStop Color="#FFD700" Offset="0.0"/>
@@ -52,582 +48,1061 @@
                         </BoxView.Background>
                     </BoxView>
                 </Grid>
+            </Border>
 
-                <Label Text="CAVEMAN CHRONICLES"
-                       TextColor="#FFD700"
-                       FontFamily="Courier New"
-                       FontSize="28"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,5"/>
+            <!-- MAIN CHARACTER SHEET AREA -->
+            <Border Grid.Row="1"
+                    Stroke="#00FF00"
+                    StrokeThickness="2"
+                    Padding="15"
+                    BackgroundColor="Black"
+                    Margin="0,10,0,0">
+                <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="15">
 
-                <Label Text="═══ CHARACTER CREATION ═══"
-                       TextColor="#00FFFF"
-                       FontFamily="Courier New"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,20"/>
+                    <!-- TOP ROW: Name, Class, Level, Race -->
+                    <Grid Grid.Row="0" ColumnDefinitions="2*,*,Auto,*" ColumnSpacing="10">
 
-                <!-- Name Entry -->
-                <Border Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ CHARACTER NAME ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                        <!-- Character Name -->
+                        <Border Grid.Column="0"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="CHARACTER NAME"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"/>
+                                <Entry x:Name="NameEntry"
+                                       Placeholder="Enter name..."
+                                       PlaceholderColor="#004400"
+                                       TextColor="#00FF00"
+                                       BackgroundColor="Black"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       MaxLength="20"
+                                       TextChanged="OnNameChanged"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                        <Entry x:Name="NameEntry"
-                               Placeholder="Enter your name..."
-                               PlaceholderColor="#004400"
-                               TextColor="#00FF00"
-                               BackgroundColor="Black"
-                               FontFamily="Courier New"
-                               FontSize="16"
-                               MaxLength="20"
-                               TextChanged="OnNameChanged"/>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- Class -->
+                        <Border Grid.Column="1"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="CLASS"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"/>
+                                <Label x:Name="ClassDisplayLabel"
+                                       Text="---"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="12"
+                                       VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <!-- Race Selection -->
-                <Border Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ SELECT YOUR RACE (SPECIES) ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                        <!-- Level (Hexagonal design) -->
+                        <Border Grid.Column="2"
+                                Stroke="#FFD700"
+                                StrokeThickness="3"
+                                WidthRequest="70"
+                                HeightRequest="70"
+                                BackgroundColor="#1a0033">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="35"/>
+                            </Border.StrokeShape>
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="LEVEL"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="1"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                        <CollectionView x:Name="RaceCollectionView"
-                                        SelectionMode="Single"
-                                        SelectionChanged="OnRaceSelected"
-                                        HeightRequest="250">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Stroke="#00FFFF"
-                                            StrokeThickness="1"
-                                            Padding="10"
-                                            Margin="0,5,0,5"
-                                            BackgroundColor="#001a1a">
-                                        <VerticalStackLayout Spacing="5">
-                                            <Label Text="{Binding Name}"
-                                                   TextColor="#00FFFF"
-                                                   FontFamily="Courier New"
-                                                   FontSize="16"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Description}"
-                                                   TextColor="#00AA00"
-                                                   FontFamily="Courier New"
-                                                   FontSize="12"
-                                                   LineBreakMode="WordWrap"/>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- Species/Race -->
+                        <Border Grid.Column="3"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="SPECIES"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"/>
+                                <Label x:Name="RaceDisplayLabel"
+                                       Text="---"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="12"
+                                       VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
 
-                <!-- Class Selection -->
-                <Border Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ SELECT YOUR CLASS ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                    <!-- SECOND ROW: Background, HP, Initiative, Speed -->
+                    <Grid Grid.Row="1" ColumnDefinitions="2*,*,*,*" ColumnSpacing="10">
 
-                        <CollectionView x:Name="ClassCollectionView"
-                                        SelectionMode="Single"
-                                        SelectionChanged="OnClassSelected"
-                                        HeightRequest="250">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Stroke="#FF4500"
-                                            StrokeThickness="1"
-                                            Padding="10"
-                                            Margin="0,5,0,5"
-                                            BackgroundColor="#1a0a00">
-                                        <VerticalStackLayout Spacing="5">
-                                            <Label Text="{Binding Name}"
-                                                   TextColor="#FF4500"
-                                                   FontFamily="Courier New"
-                                                   FontSize="16"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Description}"
-                                                   TextColor="#00AA00"
-                                                   FontFamily="Courier New"
-                                                   FontSize="12"
-                                                   LineBreakMode="WordWrap"/>
-                                            <Label FontFamily="Courier New" FontSize="11" TextColor="#8B4513">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="Hit Die: " />
-                                                        <Span Text="{Binding HitDie, StringFormat='d{0}'}" />
-                                                        <Span Text=" | Primary: " />
-                                                        <Span Text="{Binding PrimaryAbility}" />
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- Background -->
+                        <Border Grid.Column="0"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="BACKGROUND"
+                                       TextColor="#00AA00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"/>
+                                <Label x:Name="BackgroundDisplayLabel"
+                                       Text="None"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="11"
+                                       VerticalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <!-- Background Selection (Optional) -->
-                <Border Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ SELECT BACKGROUND (OPTIONAL) ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                        <!-- Hit Points -->
+                        <Border Grid.Column="1"
+                                Stroke="#FF4500"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="HIT POINTS"
+                                       TextColor="#FF4500"
+                                       FontFamily="Courier New"
+                                       FontSize="8"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label x:Name="HitPointsLabel"
+                                       Text="--"
+                                       TextColor="#FF4500"
+                                       FontFamily="Courier New"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                        <CollectionView x:Name="BackgroundCollectionView"
-                                        SelectionMode="Single"
-                                        SelectionChanged="OnBackgroundSelected"
-                                        HeightRequest="200">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Stroke="#C0C0C0"
-                                            StrokeThickness="1"
-                                            Padding="10"
-                                            Margin="0,5,0,5"
-                                            BackgroundColor="#0a0a0a">
-                                        <VerticalStackLayout Spacing="5">
-                                            <Label Text="{Binding Name}"
-                                                   TextColor="#C0C0C0"
-                                                   FontFamily="Courier New"
-                                                   FontSize="14"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Description}"
-                                                   TextColor="#00AA00"
-                                                   FontFamily="Courier New"
-                                                   FontSize="11"
-                                                   LineBreakMode="WordWrap"/>
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- Initiative -->
+                        <Border Grid.Column="2"
+                                Stroke="#00FFFF"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="INITIATIVE"
+                                       TextColor="#00FFFF"
+                                       FontFamily="Courier New"
+                                       FontSize="8"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label x:Name="InitiativeLabel"
+                                       Text="+0"
+                                       TextColor="#00FFFF"
+                                       FontFamily="Courier New"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <!-- Ability Scores -->
-                <Border x:Name="AbilityScoresPanel"
-                        Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015"
-                        IsVisible="False">
-                    <VerticalStackLayout Spacing="15">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                            <Label Grid.Column="0"
-                                   Text="◆ ABILITY SCORES ◆"
-                                   TextColor="#FFD700"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="Center"/>
+                        <!-- Speed -->
+                        <Border Grid.Column="3"
+                                Stroke="#FFD700"
+                                StrokeThickness="2"
+                                Padding="8">
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="SPEED"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="8"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="30 ft"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
 
-                            <Border Grid.Column="1"
-                                    Stroke="#00FFFF"
+                    <!-- MAIN CONTENT ROW: Abilities + Class/Race Selection -->
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" ColumnSpacing="15">
+
+                        <!-- LEFT COLUMN: ABILITY SCORES -->
+                        <VerticalStackLayout Grid.Column="0" Spacing="10">
+
+                            <!-- Proficiency Bonus -->
+                            <Border Stroke="#FFD700"
                                     StrokeThickness="2"
-                                    Padding="10,5"
-                                    BackgroundColor="#003333">
+                                    WidthRequest="100"
+                                    Padding="5"
+                                    BackgroundColor="#1a0033">
+                                <VerticalStackLayout Spacing="3">
+                                    <Label Text="PROFICIENCY BONUS"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="7"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="+2"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Strength -->
+                            <Border Stroke="#FF4500"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="STRENGTH"
+                                           TextColor="#FF4500"
+                                           FontFamily="Courier New"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#FF4500"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#1a0000">
+                                        <Entry x:Name="StrengthEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#FF4500"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="StrengthModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#FF4500"/>
+
+                                    <VerticalStackLayout Grid.Row="4" Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF4500"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Saving Throw"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF4500"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Athletics"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Dexterity -->
+                            <Border Stroke="#00FFFF"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="DEXTERITY"
+                                           TextColor="#00FFFF"
+                                           FontFamily="Courier New"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#00FFFF"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#001a1a">
+                                        <Entry x:Name="DexterityEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#00FFFF"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="DexterityModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#00FFFF"/>
+
+                                    <VerticalStackLayout Grid.Row="4" Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#00FFFF"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Saving Throw"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#00FFFF"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Acrobatics"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#00FFFF"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Sleight of Hand"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#00FFFF"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Stealth"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Constitution -->
+                            <Border Stroke="#00FF00"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="CONSTITUTION"
+                                           TextColor="#00FF00"
+                                           FontFamily="Courier New"
+                                           FontSize="9"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#00FF00"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#001a00">
+                                        <Entry x:Name="ConstitutionEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#00FF00"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="ConstitutionModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#00FF00"/>
+
+                                    <Grid Grid.Row="4" ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                        <Ellipse Grid.Column="0"
+                                                WidthRequest="12"
+                                                HeightRequest="12"
+                                                Stroke="#00FF00"
+                                                StrokeThickness="1"/>
+                                        <Label Grid.Column="1"
+                                               Text="Saving Throw"
+                                               TextColor="#00AA00"
+                                               FontFamily="Courier New"
+                                               FontSize="8"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                            <!-- Intelligence -->
+                            <Border Stroke="#9370DB"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="INTELLIGENCE"
+                                           TextColor="#9370DB"
+                                           FontFamily="Courier New"
+                                           FontSize="9"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#9370DB"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#1a001a">
+                                        <Entry x:Name="IntelligenceEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#9370DB"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="IntelligenceModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#9370DB"/>
+
+                                    <VerticalStackLayout Grid.Row="4" Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Saving Throw"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Arcana"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="History"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Investigation"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Nature"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#9370DB"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Religion"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Wisdom -->
+                            <Border Stroke="#FFD700"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="WISDOM"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#FFD700"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#1a1400">
+                                        <Entry x:Name="WisdomEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#FFD700"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="WisdomModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#FFD700"/>
+
+                                    <VerticalStackLayout Grid.Row="4" Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Saving Throw"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Animal Handling"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Insight"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Medicine"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Perception"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FFD700"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Survival"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Charisma -->
+                            <Border Stroke="#FF69B4"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="8"
+                                    BackgroundColor="Black">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5">
+                                    <Label Grid.Row="0"
+                                           Text="CHARISMA"
+                                           TextColor="#FF69B4"
+                                           FontFamily="Courier New"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Border Grid.Row="1"
+                                            Stroke="#FF69B4"
+                                            StrokeThickness="1"
+                                            Padding="5"
+                                            BackgroundColor="#1a0010">
+                                        <Entry x:Name="CharismaEntry"
+                                               Keyboard="Numeric"
+                                               MaxLength="2"
+                                               TextColor="#FF69B4"
+                                               BackgroundColor="Transparent"
+                                               FontFamily="Courier New"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center"
+                                               TextChanged="OnStatChanged"/>
+                                    </Border>
+
+                                    <Label Grid.Row="2"
+                                           x:Name="CharismaModLabel"
+                                           Text="+0"
+                                           TextColor="#FFAA00"
+                                           FontFamily="Courier New"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <BoxView Grid.Row="3" HeightRequest="1" Color="#FF69B4"/>
+
+                                    <VerticalStackLayout Grid.Row="4" Spacing="3">
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF69B4"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Saving Throw"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF69B4"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Deception"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF69B4"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Intimidation"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF69B4"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Performance"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                            <Ellipse Grid.Column="0"
+                                                    WidthRequest="12"
+                                                    HeightRequest="12"
+                                                    Stroke="#FF69B4"
+                                                    StrokeThickness="1"/>
+                                            <Label Grid.Column="1"
+                                                   Text="Persuasion"
+                                                   TextColor="#00AA00"
+                                                   FontFamily="Courier New"
+                                                   FontSize="8"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+
+                            <!-- Heroic Inspiration -->
+                            <Border Stroke="#FFD700"
+                                    StrokeThickness="2"
+                                    WidthRequest="100"
+                                    Padding="10"
+                                    BackgroundColor="#1a0033">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="HEROIC"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="9"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="INSPIRATION"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="9"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="⚔"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           HorizontalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Roll Stats Button -->
+                            <Border Stroke="#00FF00"
+                                    StrokeThickness="2"
+                                    Padding="10"
+                                    BackgroundColor="#003300">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnRollStats"/>
                                 </Border.GestureRecognizers>
                                 <Label Text="🎲 ROLL STATS"
-                                       TextColor="#00FFFF"
+                                       TextColor="#00FF00"
                                        FontFamily="Courier New"
-                                       FontSize="12"
-                                       FontAttributes="Bold"/>
-                            </Border>
-                        </Grid>
-
-                        <!-- Stats Grid -->
-                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" 
-                              RowSpacing="10" ColumnSpacing="10">
-
-                            <!-- Strength -->
-                            <Label Grid.Row="0" Grid.Column="0"
-                                   Text="STR"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"
-                                   WidthRequest="40"/>
-                            <Entry Grid.Row="0" Grid.Column="1"
-                                   x:Name="StrengthEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="0" Grid.Column="2"
-                                   x:Name="StrengthModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   WidthRequest="40"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="0" Grid.Column="3"
-                                   x:Name="StrengthBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-
-                            <!-- Dexterity -->
-                            <Label Grid.Row="1" Grid.Column="0"
-                                   Text="DEX"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                            <Entry Grid.Row="1" Grid.Column="1"
-                                   x:Name="DexterityEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="1" Grid.Column="2"
-                                   x:Name="DexterityModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="1" Grid.Column="3"
-                                   x:Name="DexterityBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-
-                            <!-- Constitution -->
-                            <Label Grid.Row="2" Grid.Column="0"
-                                   Text="CON"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                            <Entry Grid.Row="2" Grid.Column="1"
-                                   x:Name="ConstitutionEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="2" Grid.Column="2"
-                                   x:Name="ConstitutionModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="2" Grid.Column="3"
-                                   x:Name="ConstitutionBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-
-                            <!-- Intelligence -->
-                            <Label Grid.Row="3" Grid.Column="0"
-                                   Text="INT"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                            <Entry Grid.Row="3" Grid.Column="1"
-                                   x:Name="IntelligenceEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="3" Grid.Column="2"
-                                   x:Name="IntelligenceModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="3" Grid.Column="3"
-                                   x:Name="IntelligenceBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-
-                            <!-- Wisdom -->
-                            <Label Grid.Row="4" Grid.Column="0"
-                                   Text="WIS"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                            <Entry Grid.Row="4" Grid.Column="1"
-                                   x:Name="WisdomEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="4" Grid.Column="2"
-                                   x:Name="WisdomModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="4" Grid.Column="3"
-                                   x:Name="WisdomBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-
-                            <!-- Charisma -->
-                            <Label Grid.Row="5" Grid.Column="0"
-                                   Text="CHA"
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"/>
-                            <Entry Grid.Row="5" Grid.Column="1"
-                                   x:Name="CharismaEntry"
-                                   Keyboard="Numeric"
-                                   MaxLength="2"
-                                   TextColor="#00FF00"
-                                   BackgroundColor="Black"
-                                   FontFamily="Courier New"
-                                   HorizontalTextAlignment="Center"
-                                   TextChanged="OnStatChanged"/>
-                            <Label Grid.Row="5" Grid.Column="2"
-                                   x:Name="CharismaModLabel"
-                                   Text="+0"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   VerticalOptions="Center"
-                                   HorizontalTextAlignment="End"/>
-                            <Label Grid.Row="5" Grid.Column="3"
-                                   x:Name="CharismaBonusLabel"
-                                   Text=""
-                                   TextColor="#00AA00"
-                                   FontFamily="Courier New"
-                                   FontSize="12"
-                                   VerticalOptions="Center"/>
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Tech Level & Summary -->
-                <Border x:Name="SummaryPanel"
-                        Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015"
-                        IsVisible="False">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ STARTING DETAILS ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               Margin="0,0,0,10"/>
-
-                        <Grid ColumnDefinitions="Auto,*" RowSpacing="8">
-                            <Label Grid.Row="0" Grid.Column="0"
-                                   Text="Tech Level:"
-                                   TextColor="#00FFFF"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-                            <Label Grid.Row="0" Grid.Column="1"
-                                   Text="CAVEMAN ERA"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"/>
-
-                            <Label Grid.Row="1" Grid.Column="0"
-                                   Text="Level:"
-                                   TextColor="#00FFFF"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-                            <Label Grid.Row="1" Grid.Column="1"
-                                   Text="1"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-
-                            <Label Grid.Row="2" Grid.Column="0"
-                                   Text="Hit Points:"
-                                   TextColor="#00FFFF"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-                            <Label Grid.Row="2" Grid.Column="1"
-                                   x:Name="HitPointsLabel"
-                                   Text="100"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-
-                            <Label Grid.Row="3" Grid.Column="0"
-                                   Text="Starting Gold:"
-                                   TextColor="#00FFFF"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-                            <Label Grid.Row="3" Grid.Column="1"
-                                   x:Name="GoldLabel"
-                                   Text="100 GP"
-                                   TextColor="#FFAA00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"/>
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Optional Backstory -->
-                <Border Stroke="#FFD700" 
-                        StrokeThickness="2"
-                        Padding="15"
-                        BackgroundColor="#0a0015"
-                        x:Name="BackstoryPanel"
-                        IsVisible="False">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="◆ BACKSTORY (OPTIONAL) ◆"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
-
-                        <Editor x:Name="BackstoryEditor"
-                               Placeholder="Tell your character's story... (optional)"
-                               PlaceholderColor="#004400"
-                               TextColor="#00FF00"
-                               BackgroundColor="Black"
-                               FontFamily="Courier New"
-                               FontSize="12"
-                               HeightRequest="120"
-                               MaxLength="500"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <!-- Start Button -->
-                <Border x:Name="StartButton"
-                        Stroke="#FFD700" 
-                        StrokeThickness="3"
-                        Padding="20"
-                        BackgroundColor="Transparent"
-                        IsVisible="False"
-                        Margin="0,10,0,20">
-                    <Grid>
-                        <!-- Glow effect -->
-                        <Border Stroke="#FFD700"
-                                StrokeThickness="4"
-                                Padding="20"
-                                BackgroundColor="Transparent"
-                                Opacity="0.3"
-                                Margin="-3,-3,-3,-3"/>
-
-                        <Border StrokeThickness="0"
-                                Padding="0"
-                                BackgroundColor="Transparent">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Color="#2B1810" Offset="0.0"/>
-                                    <GradientStop Color="#1a0f0a" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnStartAdventure"/>
-                            </Border.GestureRecognizers>
-
-                            <Grid>
-                                <Label Text="⚔ START ADVENTURE ⚔"
-                                       TextColor="#4B2600"
-                                       FontFamily="Courier New"
-                                       FontSize="20"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       Margin="2,2,0,0"/>
-                                <Label Text="⚔ START ADVENTURE ⚔"
-                                       TextColor="#FFD700"
-                                       FontFamily="Courier New"
-                                       FontSize="20"
+                                       FontSize="11"
                                        FontAttributes="Bold"
                                        HorizontalOptions="Center"/>
-                            </Grid>
-                        </Border>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- RIGHT COLUMN: Selection Areas -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="15">
+
+                            <!-- Race Selection -->
+                            <Border Stroke="#00FF00"
+                                    StrokeThickness="2"
+                                    Padding="12"
+                                    BackgroundColor="Black">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="═══ SELECT SPECIES (RACE) ═══"
+                                           TextColor="#00FF00"
+                                           FontFamily="Courier New"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+
+                                    <CollectionView x:Name="RaceCollectionView"
+                                                    SelectionMode="Single"
+                                                    SelectionChanged="OnRaceSelected"
+                                                    HeightRequest="180">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Stroke="#00AA00"
+                                                        StrokeThickness="1"
+                                                        Padding="8"
+                                                        Margin="0,3"
+                                                        BackgroundColor="Black">
+                                                    <VerticalStackLayout Spacing="3">
+                                                        <Label Text="{Binding Name}"
+                                                               TextColor="#00FF00"
+                                                               FontFamily="Courier New"
+                                                               FontSize="13"
+                                                               FontAttributes="Bold"/>
+                                                        <Label Text="{Binding Description}"
+                                                               TextColor="#00AA00"
+                                                               FontFamily="Courier New"
+                                                               FontSize="10"
+                                                               LineBreakMode="WordWrap"/>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Class Selection -->
+                            <Border Stroke="#FFD700"
+                                    StrokeThickness="2"
+                                    Padding="12"
+                                    BackgroundColor="Black">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="═══ SELECT CLASS ═══"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+
+                                    <CollectionView x:Name="ClassCollectionView"
+                                                    SelectionMode="Single"
+                                                    SelectionChanged="OnClassSelected"
+                                                    HeightRequest="200">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Stroke="#AA8800"
+                                                        StrokeThickness="1"
+                                                        Padding="8"
+                                                        Margin="0,3"
+                                                        BackgroundColor="Black">
+                                                    <VerticalStackLayout Spacing="3">
+                                                        <Label Text="{Binding Name}"
+                                                               TextColor="#FFD700"
+                                                               FontFamily="Courier New"
+                                                               FontSize="13"
+                                                               FontAttributes="Bold"/>
+                                                        <Label Text="{Binding Description}"
+                                                               TextColor="#AA8800"
+                                                               FontFamily="Courier New"
+                                                               FontSize="10"
+                                                               LineBreakMode="WordWrap"/>
+                                                        <Label FontFamily="Courier New" FontSize="9" TextColor="#666600">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="Hit Die: d" />
+                                                                    <Span Text="{Binding HitDie}" />
+                                                                    <Span Text=" | " />
+                                                                    <Span Text="{Binding PrimaryAbility}" />
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Background Selection -->
+                            <Border Stroke="#00FFFF"
+                                    StrokeThickness="2"
+                                    Padding="12"
+                                    BackgroundColor="Black">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="═══ SELECT BACKGROUND (OPTIONAL) ═══"
+                                           TextColor="#00FFFF"
+                                           FontFamily="Courier New"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"/>
+
+                                    <CollectionView x:Name="BackgroundCollectionView"
+                                                    SelectionMode="Single"
+                                                    SelectionChanged="OnBackgroundSelected"
+                                                    HeightRequest="150">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Stroke="#00AAAA"
+                                                        StrokeThickness="1"
+                                                        Padding="8"
+                                                        Margin="0,3"
+                                                        BackgroundColor="Black">
+                                                    <VerticalStackLayout Spacing="3">
+                                                        <Label Text="{Binding Name}"
+                                                               TextColor="#00FFFF"
+                                                               FontFamily="Courier New"
+                                                               FontSize="12"
+                                                               FontAttributes="Bold"/>
+                                                        <Label Text="{Binding Description}"
+                                                               TextColor="#00AAAA"
+                                                               FontFamily="Courier New"
+                                                               FontSize="9"
+                                                               LineBreakMode="WordWrap"/>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </VerticalStackLayout>
                     </Grid>
-                </Border>
 
-                <!-- Instructions -->
-                <Label Text="Your adventure begins in the Caveman Era. As you level up, technology will advance through the ages!"
-                       TextColor="#8B4513"
-                       FontFamily="Courier New"
-                       FontSize="12"
-                       LineBreakMode="WordWrap"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       Margin="0,0,0,40"/>
+                    <!-- BACKSTORY SECTION (Optional) -->
+                    <Border Grid.Row="3"
+                            x:Name="BackstoryPanel"
+                            Stroke="#9370DB"
+                            StrokeThickness="2"
+                            Padding="12"
+                            BackgroundColor="Black"
+                            IsVisible="False"
+                            Margin="0,10,0,0">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="BACKSTORY &amp; PERSONALITY (OPTIONAL)"
+                                   TextColor="#9370DB"
+                                   FontFamily="Courier New"
+                                   FontSize="11"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
 
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+                            <Editor x:Name="BackstoryEditor"
+                                   Placeholder="Write your character's backstory..."
+                                   PlaceholderColor="#330033"
+                                   TextColor="#9370DB"
+                                   BackgroundColor="Black"
+                                   FontFamily="Courier New"
+                                   FontSize="11"
+                                   HeightRequest="100"
+                                   MaxLength="500"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- BOTTOM SECTION: Start Button -->
+            <Border Grid.Row="2"
+                    x:Name="StartButton"
+                    Stroke="#FFD700"
+                    StrokeThickness="3"
+                    Padding="20"
+                    IsVisible="False"
+                    Margin="0,15,0,20">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#2B1810" Offset="0.0"/>
+                        <GradientStop Color="#1a0f0a" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStartAdventure"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0"
+                           Text="⚔ "
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="28"
+                           VerticalOptions="Center"/>
+                    <Label Grid.Column="1"
+                           Text="BEGIN ADVENTURE"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                    <Label Grid.Column="2"
+                           Text=" ⚔"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="28"
+                           VerticalOptions="Center"/>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </ScrollView>
 </ContentPage>

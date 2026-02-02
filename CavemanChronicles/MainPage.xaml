@@ -3,120 +3,240 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="CavemanChronicles.MainPage"
-             BackgroundColor="{StaticResource RetroBackground}">
+             BackgroundColor="Black">
 
-    <Grid Padding="10" RowSpacing="5">
-        <Grid.RowDefinitions>
-            <!-- Status Bar -->
-            <RowDefinition Height="60"/>
-            <!-- Graphics Area -->
-            <RowDefinition Height="200"/>
-            <!-- Game Text Area -->
-            <RowDefinition Height="*"/>
-            <!-- Command Input -->
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid>
+        <!-- Background gradient -->
+        <BoxView>
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#0a0015" Offset="0.0"/>
+                    <GradientStop Color="#1a0033" Offset="0.5"/>
+                    <GradientStop Color="#0a0015" Offset="1.0"/>
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
 
-        <!-- STATUS BAR -->
-        <Border Grid.Row="0" 
-                Stroke="{StaticResource RetroGreen}" 
-                StrokeThickness="2"
-                Padding="10">
-            <Grid ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+        <Grid Padding="10" RowSpacing="8">
+            <Grid.RowDefinitions>
+                <!-- Status Bar -->
+                <RowDefinition Height="Auto"/>
+                <!-- Graphics Area -->
+                <RowDefinition Height="200"/>
+                <!-- Game Text Area -->
+                <RowDefinition Height="*"/>
+                <!-- Command Input -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <StackLayout Grid.Column="0">
-                    <Label x:Name="CharacterNameLabel" 
-                           Text="HERO" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="16"
-                           FontAttributes="Bold"/>
-                    <Label x:Name="EraLabel" 
-                           Text="CAVEMAN ERA" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="12"/>
-                </StackLayout>
+            <!-- STATUS BAR -->
+            <Border Grid.Row="0" 
+                    Stroke="#FFD700" 
+                    StrokeThickness="3"
+                    Padding="12"
+                    BackgroundColor="#0a0015">
+                <Grid ColumnSpacing="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <StackLayout Grid.Column="1">
-                    <Label Text="LEVEL" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="12"/>
-                    <Label x:Name="LevelLabel" 
-                           Text="1" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="16"
-                           FontAttributes="Bold"/>
-                </StackLayout>
+                    <!-- Character Info -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="3">
+                        <Label x:Name="CharacterNameLabel" 
+                               Text="HERO" 
+                               TextColor="#FFD700"
+                               FontFamily="Courier New"
+                               FontSize="16"
+                               FontAttributes="Bold"/>
+                        <Label x:Name="EraLabel" 
+                               Text="CAVEMAN ERA" 
+                               TextColor="#00FFFF"
+                               FontFamily="Courier New"
+                               FontSize="12"/>
+                    </VerticalStackLayout>
 
-                <StackLayout Grid.Column="2">
-                    <Label Text="HP" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="12"/>
-                    <Label x:Name="HealthLabel" 
-                           Text="100/100" 
-                           Style="{StaticResource RetroText}"
-                           FontSize="16"
-                           FontAttributes="Bold"/>
-                </StackLayout>
-            </Grid>
-        </Border>
+                    <!-- Level -->
+                    <Border Grid.Column="1"
+                            Stroke="#FF4500"
+                            StrokeThickness="2"
+                            Padding="10,5"
+                            BackgroundColor="#1a0a00"
+                            VerticalOptions="Center">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="LEVEL" 
+                                   TextColor="#FF4500"
+                                   FontFamily="Courier New"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"/>
+                            <Label x:Name="LevelLabel" 
+                                   Text="1" 
+                                   TextColor="#FFD700"
+                                   FontFamily="Courier New"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
 
-        <!-- GRAPHICS AREA (SkiaSharp Canvas) -->
-        <Border Grid.Row="1" 
-                Stroke="{StaticResource RetroGreen}" 
-                StrokeThickness="2"
-                Margin="0,5,0,0">
-            <skia:SKCanvasView x:Name="GraphicsCanvas"
-                              PaintSurface="OnCanvasViewPaintSurface"
-                              BackgroundColor="Black"/>
-        </Border>
+                    <!-- Health -->
+                    <Border Grid.Column="2"
+                            Stroke="#00FF00"
+                            StrokeThickness="2"
+                            Padding="10,5"
+                            BackgroundColor="#001a00"
+                            VerticalOptions="Center">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="HP" 
+                                   TextColor="#00FF00"
+                                   FontFamily="Courier New"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"/>
+                            <Label x:Name="HealthLabel" 
+                                   Text="100/100" 
+                                   TextColor="#00FF00"
+                                   FontFamily="Courier New"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
 
-        <!-- GAME TEXT AREA -->
-        <Border Grid.Row="2" 
-                Stroke="{StaticResource RetroGreen}" 
-                StrokeThickness="2"
-                Margin="0,5,0,0">
-            <ScrollView x:Name="GameTextScroll">
-                <Label x:Name="GameTextLabel" 
-                       Text="Welcome to Caveman Chronicles!&#x0a;&#x0a;You awaken in a primitive cave. The smell of smoke and dirt fills your nostrils. You are level 1, wielding only a crude stone...&#x0a;&#x0a;What will you do?"
-                       Style="{StaticResource RetroText}"
-                       Padding="10"
-                       LineBreakMode="WordWrap"/>
-            </ScrollView>
-        </Border>
+            <!-- GRAPHICS AREA (SkiaSharp Canvas) -->
+            <Border Grid.Row="1" 
+                    Stroke="#00FFFF" 
+                    StrokeThickness="2"
+                    Margin="0,5,0,0"
+                    BackgroundColor="Black">
+                <Grid>
+                    <!-- Inner glow effect -->
+                    <Border Stroke="#00FFFF"
+                            StrokeThickness="1"
+                            Margin="2"
+                            Opacity="0.3"/>
 
-        <!-- COMMAND INPUT -->
-        <Border Grid.Row="3" 
-                Stroke="{StaticResource RetroGreen}" 
-                StrokeThickness="2"
-                Margin="0,5,0,0"
-                Padding="10">
-            <Grid ColumnSpacing="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <skia:SKCanvasView x:Name="GraphicsCanvas"
+                                      PaintSurface="OnCanvasViewPaintSurface"
+                                      BackgroundColor="Black"
+                                      Margin="4"/>
+                </Grid>
+            </Border>
 
-                <Label Grid.Column="0" 
-                       Text=">" 
-                       Style="{StaticResource RetroText}"
-                       FontSize="16"
-                       VerticalOptions="Center"/>
+            <!-- GAME TEXT AREA -->
+            <Border Grid.Row="2" 
+                    Stroke="#FFD700" 
+                    StrokeThickness="2"
+                    Margin="0,5,0,0"
+                    BackgroundColor="Black">
+                <Grid>
+                    <!-- Decorative corner accents -->
+                    <Grid>
+                        <!-- Top-left corner -->
+                        <BoxView WidthRequest="20" HeightRequest="2" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="Start" 
+                                 VerticalOptions="Start"
+                                 Margin="0"/>
+                        <BoxView WidthRequest="2" HeightRequest="20" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="Start" 
+                                 VerticalOptions="Start"
+                                 Margin="0"/>
 
-                <Entry Grid.Column="1" 
-                       x:Name="CommandEntry"
-                       Placeholder="enter command..."
-                       PlaceholderColor="#004400"
-                       TextColor="{StaticResource RetroGreen}"
-                       BackgroundColor="Black"
-                       FontFamily="Courier New"
-                       FontSize="14"
-                       Completed="OnCommandEntered"/>
-            </Grid>
-        </Border>
+                        <!-- Top-right corner -->
+                        <BoxView WidthRequest="20" HeightRequest="2" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="End" 
+                                 VerticalOptions="Start"
+                                 Margin="0"/>
+                        <BoxView WidthRequest="2" HeightRequest="20" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="End" 
+                                 VerticalOptions="Start"
+                                 Margin="0"/>
+
+                        <!-- Bottom-left corner -->
+                        <BoxView WidthRequest="20" HeightRequest="2" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="Start" 
+                                 VerticalOptions="End"
+                                 Margin="0"/>
+                        <BoxView WidthRequest="2" HeightRequest="20" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="Start" 
+                                 VerticalOptions="End"
+                                 Margin="0"/>
+
+                        <!-- Bottom-right corner -->
+                        <BoxView WidthRequest="20" HeightRequest="2" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="End" 
+                                 VerticalOptions="End"
+                                 Margin="0"/>
+                        <BoxView WidthRequest="2" HeightRequest="20" 
+                                 Color="#FFD700" 
+                                 HorizontalOptions="End" 
+                                 VerticalOptions="End"
+                                 Margin="0"/>
+                    </Grid>
+
+                    <ScrollView x:Name="GameTextScroll" Margin="5">
+                        <Label x:Name="GameTextLabel" 
+                               Text="Welcome to Caveman Chronicles!&#x0a;&#x0a;You awaken in a primitive cave. The smell of smoke and dirt fills your nostrils. You are level 1, wielding only a crude stone...&#x0a;&#x0a;What will you do?"
+                               TextColor="#00FF00"
+                               BackgroundColor="Black"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               Padding="10"
+                               LineBreakMode="WordWrap"/>
+                    </ScrollView>
+                </Grid>
+            </Border>
+
+            <!-- COMMAND INPUT -->
+            <Border Grid.Row="3" 
+                    Stroke="#00FFFF" 
+                    StrokeThickness="2"
+                    Margin="0,5,0,0"
+                    Padding="0"
+                    BackgroundColor="#001a1a">
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Prompt indicator -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="#003333"
+                            Padding="15,12"
+                            WidthRequest="50">
+                        <Label Text=">" 
+                               TextColor="#00FFFF"
+                               FontFamily="Courier New"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+                    </Border>
+
+                    <!-- Input field -->
+                    <Entry Grid.Column="1" 
+                           x:Name="CommandEntry"
+                           Placeholder="enter command..."
+                           PlaceholderColor="#004444"
+                           TextColor="#00FFFF"
+                           BackgroundColor="#001a1a"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           VerticalOptions="Center"
+                           Completed="OnCommandEntered"
+                           Margin="10,0,10,0"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>

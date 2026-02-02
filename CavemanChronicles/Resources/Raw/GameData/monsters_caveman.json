@@ -1,0 +1,268 @@
+{
+  "era": "Caveman",
+  "monsters": [
+    {
+      "name": "Dire Rat",
+      "description": "A massive rat with razor-sharp teeth and matted, diseased fur.",
+      "type": "Beast",
+      "challengeRating": 0,
+      "armorClass": 12,
+      "hitPoints": 7,
+      "hitDice": 2,
+      "hitDieSize": 6,
+      "speed": 30,
+      "stats": {
+        "strength": 10,
+        "dexterity": 15,
+        "constitution": 11,
+        "intelligence": 2,
+        "wisdom": 10,
+        "charisma": 4
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 4,
+          "damageDiceCount": 1,
+          "damageDieSize": 4,
+          "damageBonus": 2,
+          "damageType": "Piercing",
+          "description": "The rat lunges with disease-ridden fangs."
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Pack Tactics",
+          "description": "Advantage on attacks if an ally is within 5 feet of target.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 5,
+      "experienceValue": 50,
+      "possibleLoot": [ "Rat Pelt", "Sharp Teeth" ],
+      "flavorText": [
+        "A massive rat squeaks aggressively from the shadows!",
+        "You hear scratching... a dire rat emerges, eyes gleaming with hunger!",
+        "The smell hits you first - then you see the enormous rat!"
+      ],
+      "defeatedText": "The dire rat squeals one final time and collapses."
+    },
+    {
+      "name": "Cave Wolf",
+      "description": "A feral wolf adapted to cave life, with pale fur and acute senses.",
+      "type": "Beast",
+      "challengeRating": 1,
+      "armorClass": 13,
+      "hitPoints": 11,
+      "hitDice": 2,
+      "hitDieSize": 8,
+      "speed": 40,
+      "stats": {
+        "strength": 12,
+        "dexterity": 15,
+        "constitution": 12,
+        "intelligence": 3,
+        "wisdom": 12,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 4,
+          "damageDiceCount": 2,
+          "damageDieSize": 4,
+          "damageBonus": 2,
+          "damageType": "Piercing",
+          "description": "The wolf's jaws snap shut with terrible force."
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Pack Tactics",
+          "description": "Advantage on attacks if an ally is within 5 feet of target.",
+          "type": "Passive"
+        },
+        {
+          "name": "Keen Hearing and Smell",
+          "description": "Advantage on Perception checks using hearing or smell.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 10,
+      "experienceValue": 100,
+      "possibleLoot": [ "Wolf Pelt", "Sharp Fang", "Wolf Claw" ],
+      "flavorText": [
+        "A low growl echoes through the cave... a wolf emerges from the darkness!",
+        "Yellow eyes gleam in the shadows - a cave wolf stalks forward!",
+        "You hear panting and padding paws. A wolf blocks your path!"
+      ],
+      "defeatedText": "The wolf whimpers and falls still, its hunting days over."
+    },
+    {
+      "name": "Sabertooth Cat",
+      "description": "A prehistoric predator with massive curved fangs and powerful muscles.",
+      "type": "Beast",
+      "challengeRating": 2,
+      "armorClass": 12,
+      "hitPoints": 52,
+      "hitDice": 7,
+      "hitDieSize": 10,
+      "speed": 40,
+      "stats": {
+        "strength": 18,
+        "dexterity": 14,
+        "constitution": 15,
+        "intelligence": 3,
+        "wisdom": 12,
+        "charisma": 8
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 10,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "The sabertooth's massive fangs pierce deep!"
+        },
+        {
+          "name": "Claw",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Slashing",
+          "description": "Razor-sharp claws rake across you!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Pounce",
+          "description": "If it moves 20+ feet straight toward a creature and hits with claw, target must succeed DC 14 STR save or be knocked prone.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 20,
+      "experienceValue": 200,
+      "possibleLoot": [ "Sabertooth Pelt", "Sabertooth Fang", "Large Claw" ],
+      "flavorText": [
+        "A deafening roar! A sabertooth cat leaps into view, fangs bared!",
+        "The ground trembles as a massive predator stalks toward you!",
+        "You spot movement - then see the unmistakable silhouette of a sabertooth!"
+      ],
+      "defeatedText": "The mighty sabertooth falls, its reign as apex predator ended."
+    },
+    {
+      "name": "Rival Caveman",
+      "description": "A member of a hostile tribe, armed with crude weapons and fierce determination.",
+      "type": "Humanoid",
+      "challengeRating": 1,
+      "armorClass": 12,
+      "hitPoints": 16,
+      "hitDice": 3,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 15,
+        "dexterity": 12,
+        "constitution": 14,
+        "intelligence": 8,
+        "wisdom": 11,
+        "charisma": 9
+      },
+      "attacks": [
+        {
+          "name": "Stone Axe",
+          "attackBonus": 4,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 2,
+          "damageType": "Slashing",
+          "description": "A crude but deadly stone axe swings at you!"
+        },
+        {
+          "name": "Thrown Rock",
+          "attackBonus": 3,
+          "damageDiceCount": 1,
+          "damageDieSize": 6,
+          "damageBonus": 1,
+          "damageType": "Bludgeoning",
+          "description": "A heavy rock hurtles through the air!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Tribal Fury",
+          "description": "When reduced below half HP, gains advantage on next attack.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 5,
+      "maxGold": 25,
+      "experienceValue": 100,
+      "possibleLoot": [ "Stone Axe", "Hide Armor", "Bone Necklace", "Dried Meat" ],
+      "flavorText": [
+        "A rival caveman emerges, beating his chest and roaring a challenge!",
+        "War paint and fury - another tribe's warrior blocks your path!",
+        "Grunts and aggressive gestures - this caveman means to fight!"
+      ],
+      "defeatedText": "The rival caveman falls, defeated in combat."
+    },
+    {
+      "name": "Giant Cave Spider",
+      "description": "An enormous arachnid that lurks in dark corners, weaving deadly webs.",
+      "type": "Beast",
+      "challengeRating": 1,
+      "armorClass": 14,
+      "hitPoints": 26,
+      "hitDice": 4,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 14,
+        "dexterity": 16,
+        "constitution": 12,
+        "intelligence": 2,
+        "wisdom": 11,
+        "charisma": 4
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 5,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "Venomous fangs sink into flesh! (DC 11 CON save or take 2d8 poison damage)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Web Walker",
+          "description": "Ignores movement restrictions from webbing.",
+          "type": "Passive"
+        },
+        {
+          "name": "Web Sense",
+          "description": "Knows location of any creature touching the same web.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 15,
+      "experienceValue": 100,
+      "possibleLoot": [ "Spider Silk", "Venom Gland", "Chitin Plate" ],
+      "flavorText": [
+        "You feel sticky strands - too late! A massive spider descends!",
+        "Eight legs skitter in the darkness... the spider attacks!",
+        "Web everywhere... and at its center, a giant spider waits!"
+      ],
+      "defeatedText": "The spider's legs curl inward as it expires, venom dripping from its fangs."
+    }
+  ]
+}

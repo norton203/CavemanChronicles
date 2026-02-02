@@ -5,6 +5,15 @@
         public App()
         {
             InitializeComponent();
+            // Load monsters on app start
+            Task.Run(async () =>
+            {
+                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
+                if (monsterLoader != null)
+                {
+                    await monsterLoader.LoadAllMonsters();
+                }
+            });
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

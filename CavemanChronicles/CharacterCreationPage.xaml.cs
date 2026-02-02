@@ -29,7 +29,10 @@ namespace CavemanChronicles
 
             if (_selectedRace != null)
             {
-                UpdateRacialBonuses();
+                // Update display label
+                RaceDisplayLabel.Text = _selectedRace.Name.ToUpper();
+
+                UpdateStatModifiers();
                 CheckIfCanProceed();
 
                 // Auto-scroll
@@ -47,21 +50,34 @@ namespace CavemanChronicles
 
             if (_selectedClass != null)
             {
-                AbilityScoresPanel.IsVisible = true;
+                // Update display label
+                ClassDisplayLabel.Text = _selectedClass.Name.ToUpper();
+
                 RollInitialStats();
+                UpdateSummary();
                 CheckIfCanProceed();
 
                 await Task.Delay(100);
-                await MainScrollView.ScrollToAsync(AbilityScoresPanel, ScrollToPosition.MakeVisible, true);
+                await MainScrollView.ScrollToAsync(BackgroundCollectionView, ScrollToPosition.MakeVisible, true);
             }
         }
 
         private void OnBackgroundSelected(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.Count == 0)
+            {
+                _selectedBackground = null;
+                BackgroundDisplayLabel.Text = "NONE";
                 return;
+            }
 
             _selectedBackground = e.CurrentSelection[0] as BackgroundData;
+
+            if (_selectedBackground != null)
+            {
+                BackgroundDisplayLabel.Text = _selectedBackground.Name.ToUpper();
+            }
+
             CheckIfCanProceed();
         }
 
@@ -103,43 +119,44 @@ namespace CavemanChronicles
             CheckIfCanProceed();
         }
 
-        private void UpdateRacialBonuses()
-        {
-            if (_selectedRace == null) return;
-
-            StrengthBonusLabel.Text = _selectedRace.StrengthBonus != 0 ? $"(+{_selectedRace.StrengthBonus} race)" : "";
-            DexterityBonusLabel.Text = _selectedRace.DexterityBonus != 0 ? $"(+{_selectedRace.DexterityBonus} race)" : "";
-
-            // Constitution bonus (from race)
-            ConstitutionBonusLabel.Text = ""; // Races don't typically give CON in this system
-
-            IntelligenceBonusLabel.Text = _selectedRace.IntelligenceBonus != 0 ? $"(+{_selectedRace.IntelligenceBonus} race)" : "";
-
-            // Wisdom and Charisma (not in current race system, can expand later)
-            WisdomBonusLabel.Text = "";
-            CharismaBonusLabel.Text = "";
-        }
-
         private void UpdateStatModifiers()
         {
             // Update modifier labels as stats change
             if (int.TryParse(StrengthEntry.Text, out int str))
-                StrengthModLabel.Text = FormatModifier(CalculateModifier(str + (_selectedRace?.StrengthBonus ?? 0)));
+            {
+                int totalStr = str + (_selectedRace?.StrengthBonus ?? 0);
+                StrengthModLabel.Text = FormatModifier(CalculateModifier(totalStr));
+            }
 
             if (int.TryParse(DexterityEntry.Text, out int dex))
-                DexterityModLabel.Text = FormatModifier(CalculateModifier(dex + (_selectedRace?.DexterityBonus ?? 0)));
+            {
+                int totalDex = dex + (_selectedRace?.DexterityBonus ?? 0);
+                DexterityModLabel.Text = FormatModifier(CalculateModifier(totalDex));
+
+                // Update initiative
+                InitiativeLabel.Text = FormatModifier(CalculateModifier(totalDex));
+            }
 
             if (int.TryParse(ConstitutionEntry.Text, out int con))
+            {
                 ConstitutionModLabel.Text = FormatModifier(CalculateModifier(con));
+            }
 
             if (int.TryParse(IntelligenceEntry.Text, out int intel))
-                IntelligenceModLabel.Text = FormatModifier(CalculateModifier(intel + (_selectedRace?.IntelligenceBonus ?? 0)));
+            {
+                int totalInt = intel + (_selectedRace?.IntelligenceBonus ?? 0);
+                IntelligenceModLabel.Text = FormatModifier(CalculateModifier(totalInt));
+            }
 
             if (int.TryParse(WisdomEntry.Text, out int wis))
+            {
                 WisdomModLabel.Text = FormatModifier(CalculateModifier(wis));
+            }
 
             if (int.TryParse(CharismaEntry.Text, out int cha))
+            {
                 CharismaModLabel.Text = FormatModifier(CalculateModifier(cha));
+            }
         }
 
         private int CalculateModifier(int score)
@@ -166,12 +183,6 @@ namespace CavemanChronicles
                 int totalHP = baseHP + conMod + (_selectedRace?.HealthBonus ?? 0);
                 HitPointsLabel.Text = Math.Max(1, totalHP).ToString(); // Minimum 1 HP
             }
-
-            // Starting gold (varies by class, using simple calculation)
-            int startingGold = _random.Next(50, 150);
-            GoldLabel.Text = $"{startingGold} GP";
-
-            SummaryPanel.IsVisible = true;
         }
 
         private void OnNameChanged(object sender, TextChangedEventArgs e)
@@ -191,7 +202,6 @@ namespace CavemanChronicles
             if (hasName && hasRace && hasClass && hasStats)
             {
                 BackstoryPanel.IsVisible = true;
-                SummaryPanel.IsVisible = true;
                 StartButton.IsVisible = true;
 
                 // Auto-scroll to start button when it appears
