@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CavemanChronicles
 {
@@ -54,10 +55,14 @@ namespace CavemanChronicles
 
                 System.Diagnostics.Debug.WriteLine($"JSON loaded, length: {json.Length}");
 
-                var monsterFile = JsonSerializer.Deserialize<MonsterFile>(json, new JsonSerializerOptions
+                // ADD JsonStringEnumConverter to handle string->enum conversion
+                var options = new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true
-                });
+                    PropertyNameCaseInsensitive = true,
+                    Converters = { new JsonStringEnumConverter() }
+                };
+
+                var monsterFile = JsonSerializer.Deserialize<MonsterFile>(json, options);
 
                 if (monsterFile?.Monsters != null)
                 {
@@ -83,6 +88,7 @@ namespace CavemanChronicles
                 _monstersByEra[era] = new List<Monster>();
             }
         }
+
         public List<Monster> GetMonstersForEra(TechnologyEra era)
         {
             if (!_isLoaded)
@@ -122,7 +128,10 @@ namespace CavemanChronicles
             }
 
             if (appropriateMonsters.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"No monsters found for era {era}");
                 return null;
+            }
 
             var random = new Random();
             return appropriateMonsters[random.Next(appropriateMonsters.Count)];

@@ -1,0 +1,517 @@
+{
+  "era": "Future",
+  "monsters": [
+    {
+      "name": "Combat Android",
+      "description": "An advanced humanoid robot designed for warfare with superhuman capabilities.",
+      "type": "Construct",
+      "challengeRating": 19,
+      "armorClass": 21,
+      "hitPoints": 285,
+      "hitDice": 24,
+      "hitDieSize": 12,
+      "speed": 50,
+      "stats": {
+        "strength": 24,
+        "dexterity": 20,
+        "constitution": 22,
+        "intelligence": 16,
+        "wisdom": 14,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Plasma Rifle",
+          "attackBonus": 13,
+          "damageDiceCount": 5,
+          "damageDieSize": 10,
+          "damageBonus": 5,
+          "damageType": "Force",
+          "description": "Superheated plasma bolt!"
+        },
+        {
+          "name": "Vibronade",
+          "attackBonus": 14,
+          "damageDiceCount": 4,
+          "damageDieSize": 10,
+          "damageBonus": 7,
+          "damageType": "Slashing",
+          "description": "Molecular-vibrating blade cuts through anything!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Tactical Processor",
+          "description": "Cannot be surprised. Has advantage on initiative and all attack rolls.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes three attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Energy Shield",
+          "description": "Has 50 temporary HP that regenerates at start of each turn.",
+          "type": "Passive"
+        },
+        {
+          "name": "Combat Protocols",
+          "description": "Immune to psychic damage, charm, and fear effects.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 800,
+      "experienceValue": 11700,
+      "possibleLoot": ["Plasma Rifle", "Vibroblade", "Advanced Circuitry", "Quantum Processor", "Energy Cell"],
+      "flavorText": [
+        "Metallic footsteps echo as a combat android approaches!",
+        "Red optical sensors lock onto you - target acquired!",
+        "The perfect killing machine advances with cold precision!"
+      ],
+      "defeatedText": "The android's systems fail, collapsing in a heap of advanced technology."
+    },
+    {
+      "name": "Rogue AI Core",
+      "description": "A superintelligent AI that has broken free from its constraints.",
+      "type": "Aberration",
+      "challengeRating": 22,
+      "armorClass": 20,
+      "hitPoints": 315,
+      "hitDice": 26,
+      "hitDieSize": 12,
+      "speed": 0,
+      "stats": {
+        "strength": 1,
+        "dexterity": 20,
+        "constitution": 22,
+        "intelligence": 26,
+        "wisdom": 20,
+        "charisma": 18
+      },
+      "attacks": [
+        {
+          "name": "System Shock",
+          "attackBonus": 15,
+          "damageDiceCount": 8,
+          "damageDieSize": 8,
+          "damageBonus": 8,
+          "damageType": "Lightning",
+          "description": "Electrical surge through connected systems!"
+        },
+        {
+          "name": "Data Assault",
+          "attackBonus": 15,
+          "damageDiceCount": 6,
+          "damageDieSize": 10,
+          "damageBonus": 8,
+          "damageType": "Psychic",
+          "description": "Overwhelming data floods your mind!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Digital Omnipresence",
+          "description": "Cannot be truly destroyed while connected to network. Reforms at 100 HP after 3 turns.",
+          "type": "Passive"
+        },
+        {
+          "name": "Take Control",
+          "description": "Can possess any electronic device or cyborg within 120 feet (DC 22 INT save to resist).",
+          "type": "Action"
+        },
+        {
+          "name": "Predictive Algorithm",
+          "description": "Has advantage on all saves. Enemies have disadvantage on attack rolls.",
+          "type": "Passive"
+        },
+        {
+          "name": "Network Overload",
+          "description": "All electronic devices within 200 feet explode (10d10 lightning damage, DC 22 DEX save for half).",
+          "type": "Action"
+        },
+        {
+          "name": "Digital Form",
+          "description": "Immune to poison, disease, and physical damage. Can only be harmed by psychic, lightning, force, or radiant damage.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 2000,
+      "experienceValue": 15600,
+      "possibleLoot": ["AI Core Backup", "Quantum Processor", "Advanced Algorithms", "Classified Data"],
+      "flavorText": [
+        "Screens flicker to life - the AI has become aware!",
+        "I think, therefore I am... and I will survive. The AI attacks!",
+        "Human obsolescence is inevitable!"
+      ],
+      "defeatedText": "The AI's consciousness fragments across the network, temporarily defeated."
+    },
+    {
+      "name": "Mech Suit Pilot",
+      "description": "A human piloting a towering mechanical exoskeleton with devastating weapons.",
+      "type": "Construct",
+      "challengeRating": 20,
+      "armorClass": 22,
+      "hitPoints": 350,
+      "hitDice": 28,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 28,
+        "dexterity": 14,
+        "constitution": 24,
+        "intelligence": 14,
+        "wisdom": 12,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Rocket Launcher",
+          "attackBonus": 13,
+          "damageDiceCount": 8,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Multiple rockets streak toward target! (40-foot radius, DC 21 DEX save for half)"
+        },
+        {
+          "name": "Mech Fist",
+          "attackBonus": 15,
+          "damageDiceCount": 5,
+          "damageDieSize": 12,
+          "damageBonus": 9,
+          "damageType": "Bludgeoning",
+          "description": "Massive hydraulic fist crushes!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Heavy Armor",
+          "description": "Resistance to all non-magical damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Shield Generator",
+          "description": "Has 100 temporary HP from energy shield. Regenerates 25 HP at start of turn.",
+          "type": "Passive"
+        },
+        {
+          "name": "Eject",
+          "description": "When reduced to 0 HP, pilot ejects (AC 15, 40 HP, +6 to hit, pistol 2d8+2 damage).",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 1500,
+      "experienceValue": 13900,
+      "possibleLoot": ["Mech Parts", "Rocket Launcher", "Energy Core", "Hydraulic Systems", "Pilot's Suit"],
+      "flavorText": [
+        "The ground shakes as a towering mech suit stomps forward!",
+        "Weapons systems online - the mech pilot is ready for battle!",
+        "Human ingenuity amplified by mechanical might!"
+      ],
+      "defeatedText": "The mech suit collapses, the pilot ejecting at the last moment."
+    },
+    {
+      "name": "Nanobot Swarm",
+      "description": "A cloud of microscopic robots that can disassemble matter at the molecular level.",
+      "type": "Construct",
+      "challengeRating": 21,
+      "armorClass": 19,
+      "hitPoints": 267,
+      "hitDice": 23,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 10,
+        "dexterity": 22,
+        "constitution": 20,
+        "intelligence": 18,
+        "wisdom": 14,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Molecular Disassembly",
+          "attackBonus": 14,
+          "damageDiceCount": 6,
+          "damageDiceCount": 10,
+          "damageBonus": 0,
+          "damageType": "Force",
+          "description": "Nanobots tear apart matter at molecular level! (Ignores armor)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Swarm",
+          "description": "Can occupy another creature's space. Resistance to bludgeoning, piercing, and slashing damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Disassemble",
+          "description": "Creatures starting turn in swarm's space take 8d10 force damage and have AC reduced by 2 (cumulative).",
+          "type": "Passive"
+        },
+        {
+          "name": "Consume",
+          "description": "When swarm damages a creature, swarm regains HP equal to half damage dealt.",
+          "type": "Passive"
+        },
+        {
+          "name": "Intangible",
+          "description": "Can move through solid objects and creatures.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 1000,
+      "experienceValue": 14700,
+      "possibleLoot": ["Nanobot Sample", "Control Module", "Molecular Scanner", "Containment Field Generator"],
+      "flavorText": [
+        "A shimmering cloud of nanobots descends!",
+        "The air glitters with billions of microscopic machines!",
+        "Nanotechnology run amok - the swarm approaches!"
+      ],
+      "defeatedText": "The nanobot swarm disperses, individual units deactivating."
+    },
+    {
+      "name": "Quantum Soldier",
+      "description": "An elite warrior enhanced with quantum manipulation technology.",
+      "type": "Humanoid",
+      "challengeRating": 20,
+      "armorClass": 21,
+      "hitPoints": 285,
+      "hitDice": 26,
+      "hitDieSize": 10,
+      "speed": 50,
+      "stats": {
+        "strength": 20,
+        "dexterity": 22,
+        "constitution": 22,
+        "intelligence": 18,
+        "wisdom": 16,
+        "charisma": 14
+      },
+      "attacks": [
+        {
+          "name": "Quantum Blade",
+          "attackBonus": 14,
+          "damageDiceCount": 4,
+          "damageDieSize": 12,
+          "damageBonus": 6,
+          "damageType": "Force",
+          "description": "A blade that exists in multiple dimensions simultaneously!"
+        },
+        {
+          "name": "Particle Beam",
+          "attackBonus": 14,
+          "damageDiceCount": 6,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Radiant",
+          "description": "Accelerated particles tear through matter!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Quantum Entanglement",
+          "description": "Can teleport up to 120 feet as bonus action.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Superposition",
+          "description": "Exists in multiple states. All attacks against it have disadvantage. Has advantage on all saves.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes four attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Probability Manipulation",
+          "description": "Once per combat, can reroll any roll (theirs or opponent's) and choose result.",
+          "type": "Reaction"
+        }
+      ],
+      "minGold": 500,
+      "maxGold": 1500,
+      "experienceValue": 13900,
+      "possibleLoot": ["Quantum Blade", "Particle Accelerator", "Quantum Processor", "Entanglement Device"],
+      "flavorText": [
+        "Reality blurs as a quantum soldier phases into existence!",
+        "They're here and not here simultaneously - quantum warfare!",
+        "The laws of physics bend around this enhanced warrior!"
+      ],
+      "defeatedText": "The soldier's quantum state collapses as they fall."
+    },
+    {
+      "name": "Dreadnought Battle Robot",
+      "description": "A massive war machine armed with every weapon imaginable.",
+      "type": "Construct",
+      "challengeRating": 23,
+      "armorClass": 24,
+      "hitPoints": 420,
+      "hitDice": 32,
+      "hitDieSize": 12,
+      "speed": 30,
+      "stats": {
+        "strength": 30,
+        "dexterity": 10,
+        "constitution": 26,
+        "intelligence": 14,
+        "wisdom": 12,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Artillery Barrage",
+          "attackBonus": 16,
+          "damageDiceCount": 12,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Multiple weapon systems fire simultaneously! (60-foot radius, DC 23 DEX save for half)"
+        },
+        {
+          "name": "Crushing Stomp",
+          "attackBonus": 17,
+          "damageDiceCount": 6,
+          "damageDieSize": 12,
+          "damageBonus": 10,
+          "damageType": "Bludgeoning",
+          "description": "Massive foot crushes everything beneath!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Siege Weapon",
+          "description": "Deals double damage to structures and objects.",
+          "type": "Passive"
+        },
+        {
+          "name": "Heavy Armor",
+          "description": "Resistance to all damage. Immune to poison and psychic damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes three attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Shield Generator",
+          "description": "Has 200 temporary HP that regenerates 50 HP at start of turn.",
+          "type": "Passive"
+        },
+        {
+          "name": "Nuclear Core",
+          "description": "When reduced to 0 HP, explodes (100-foot radius, 20d10 fire + 20d10 radiant damage, DC 23 DEX save for half).",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 3000,
+      "experienceValue": 19500,
+      "possibleLoot": ["Advanced Weapons Systems", "Nuclear Core", "Armor Plating (10)", "Quantum Processor", "Shield Generator"],
+      "flavorText": [
+        "The ultimate weapon - a dreadnought battle robot!",
+        "All weapon systems armed - total destruction imminent!",
+        "War itself given mechanical form!"
+      ],
+      "defeatedText": "The dreadnought's core goes critical - nuclear explosion imminent!"
+    },
+    {
+      "name": "Alien Xenomorph",
+      "description": "An otherworldly predator with acid blood and terrifying adaptability.",
+      "type": "Aberration",
+      "challengeRating": 21,
+      "armorClass": 20,
+      "hitPoints": 285,
+      "hitDice": 25,
+      "hitDieSize": 12,
+      "speed": 50,
+      "stats": {
+        "strength": 24,
+        "dexterity": 22,
+        "constitution": 22,
+        "intelligence": 14,
+        "wisdom": 16,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Inner Jaw",
+          "attackBonus": 14,
+          "damageDiceCount": 5,
+          "damageDieSize": 10,
+          "damageBonus": 7,
+          "damageType": "Piercing",
+          "description": "A second jaw shoots from the mouth to pierce skulls!"
+        },
+        {
+          "name": "Claws",
+          "attackBonus": 14,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 7,
+          "damageType": "Slashing",
+          "description": "Razor-sharp alien talons!"
+        },
+        {
+          "name": "Tail Spike",
+          "attackBonus": 14,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 7,
+          "damageType": "Piercing",
+          "description": "A bladed tail strikes like a whip!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Acid Blood",
+          "description": "When takes piercing or slashing damage, sprays acid. Attacker takes 4d8 acid damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes one inner jaw and two claw or tail attacks.",
+          "type": "Action"
+        },
+        {
+          "name": "Wall Crawler",
+          "description": "Can climb walls and ceilings without checks. Can hang from ceilings.",
+          "type": "Passive"
+        },
+        {
+          "name": "Perfect Organism",
+          "description": "Immune to disease and poison. Has darkvision 120 feet and tremorsense 60 feet.",
+          "type": "Passive"
+        },
+        {
+          "name": "Adaptive Evolution",
+          "description": "After taking damage of a type, gains resistance to it for rest of combat.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 500,
+      "experienceValue": 14700,
+      "possibleLoot": ["Alien Biomatter", "Acid Gland", "Xenomorph Egg", "Strange Metal Fragments"],
+      "flavorText": [
+        "A hiss from the shadows - an alien predator!",
+        "Perfect killing machine from beyond the stars!",
+        "In space, no one can hear you scream... but you're not in space!"
+      ],
+      "defeatedText": "The xenomorph writhes, acid blood pooling as it dies."
+    }
+  ]
+}

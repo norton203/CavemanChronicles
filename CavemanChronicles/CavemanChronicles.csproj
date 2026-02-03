@@ -59,7 +59,12 @@
     <ItemGroup>
       <Content Remove="Resources\Raw\GameData\monsters_bronzeage.json" />
       <Content Remove="Resources\raw\GameData\monsters_caveman.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_future.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_industrial.json" />
       <Content Remove="Resources\Raw\GameData\monsters_ironage.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_medieval.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_modern.json" />
+      <Content Remove="Resources\Raw\GameData\monsters_renaissance.json" />
       <Content Remove="Resources\Raw\GameData\monsters_stoneage.json" />
     </ItemGroup>
 
@@ -82,6 +87,9 @@
 
     <ItemGroup>
       <MauiXaml Update="CharacterCreationPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
+      <MauiXaml Update="CombatPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>
       <MauiXaml Update="LoadGamePage.xaml">

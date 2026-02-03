@@ -7,6 +7,7 @@
         private AudioService? _audioService;
         private MonsterLoaderService? _monsterLoader;
         private CombatService? _combatService;
+        private INavigation? _navigation;
 
         public void SetAudioService(AudioService audioService)
         {
@@ -21,7 +22,31 @@
         public void SetCombatService(CombatService combatService)
         {
             _combatService = combatService;
-            _combatService.SetAudioService(_audioService);
+        }
+
+        public void SetNavigation(INavigation navigation)
+        {
+            _navigation = navigation;
+        }
+
+        public void StartNewGame(string playerName)
+        {
+            Player = new Character
+            {
+                Name = playerName,
+                Level = 1,
+                Experience = 0,
+                Health = 100,
+                MaxHealth = 100,
+                CurrentEra = TechnologyEra.Caveman,
+                Inventory = new List<Item>(),
+                Stats = new CharacterStats
+                {
+                    Strength = 5,
+                    Dexterity = 5,
+                    Intelligence = 5
+                }
+            };
         }
 
         public async Task<string> ProcessCommand(string command)
@@ -31,15 +56,9 @@
 
             command = command.ToLower().Trim();
 
-            // Check if in combat
-            if (_combatService?.CurrentCombat != null && _combatService.CurrentCombat.Status == CombatStatus.Ongoing)
-            {
-                return "You're in combat! Use combat commands: 'attack', 'dodge', 'flee'";
-            }
-
             // Basic command parsing
             if (command.Contains("attack") || command.Contains("fight") || command.Contains("battle"))
-                return await HandleStartCombat();
+                return await HandleAttack(command);
 
             if (command.Contains("look") || command.Contains("examine"))
                 return HandleLook(command);
@@ -59,25 +78,67 @@
             if (command.Contains("help"))
                 return HandleHelp();
 
+            // Unknown command
             return $"You don't know how to '{command}'. Try 'help' for available commands.";
         }
 
-        private async Task<string> HandleStartCombat()
+        private async Task<string> HandleAttack(string command)
         {
+            // Check if we have required services
             if (_monsterLoader == null || _combatService == null)
-                return "Combat system not available!";
+            {
+                return "Combat system not fully initialized!";
+            }
 
-            // Get random encounter
-            var monster = _monsterLoader.GetRandomMonster(Player.CurrentEra, Player.Level);
-
-            if (monster == null)
+            // Load monsters for current era
+            var monsters = _monsterLoader.GetMonstersByEra(Player.CurrentEra);
+            if (monsters == null || monsters.Count == 0)
+            {
                 return "No monsters found for your current era!";
+            }
 
-            // Start combat
-            var combat = _combatService.InitiateCombat(Player, monster);
+            // Select random monster(s) for encounter
+            int encounterSize = _random.Next(1, 4); // 1-3 enemies
+            var enemyList = new List<Monster>();
 
-            // Return combat log
-            return string.Join("\n", combat.CombatLog);
+            for (int i = 0; i < encounterSize; i++)
+            {
+                var randomMonster = monsters[_random.Next(monsters.Count)];
+                // Create a copy so each enemy is independent
+                var enemy = new Monster
+                {
+                    Name = randomMonster.Name,
+                    Description = randomMonster.Description,
+                    Type = randomMonster.Type,
+                    ChallengeRating = randomMonster.ChallengeRating,
+                    ArmorClass = randomMonster.ArmorClass,
+                    HitPoints = randomMonster.HitPoints,
+                    MaxHitPoints = randomMonster.HitPoints,
+                    HitDice = randomMonster.HitDice,
+                    HitDieSize = randomMonster.HitDieSize,
+                    Speed = randomMonster.Speed,
+                    Stats = randomMonster.Stats,
+                    Attacks = randomMonster.Attacks,
+                    SpecialAbilities = randomMonster.SpecialAbilities,
+                    MinGold = randomMonster.MinGold,
+                    MaxGold = randomMonster.MaxGold,
+                    ExperienceValue = randomMonster.ExperienceValue,
+                    PossibleLoot = randomMonster.PossibleLoot,
+                    FlavorText = randomMonster.FlavorText,
+                    DefeatedText = randomMonster.DefeatedText
+                };
+                enemyList.Add(enemy);
+            }
+
+            // Launch visual combat page
+            if (_navigation != null && _audioService != null)
+            {
+                var combatPage = new CombatPage(Player, enemyList, _combatService, _audioService);
+                await _navigation.PushAsync(combatPage);
+                return ""; // Combat page handles everything
+            }
+
+            return "Unable to start combat (navigation not set up).";
         }
 
         private string HandleLook(string command)
@@ -118,6 +179,7 @@
                    $"Era: {Player.CurrentEra}\n" +
                    $"Health: {Player.Health}/{Player.MaxHealth}\n" +
                    $"Experience: {Player.Experience}/{Player.Level * 100}\n" +
+                   $"Gold: {Player.Gold} GP\n" +
                    $"Strength: {Player.Stats.Strength}\n" +
                    $"Dexterity: {Player.Stats.Dexterity}\n" +
                    $"Intelligence: {Player.Stats.Intelligence}";
@@ -128,7 +190,6 @@
             int healAmount = _random.Next(20, 40);
             Player.Health = Math.Min(Player.Health + healAmount, Player.MaxHealth);
 
-            // Optional: Play rest sound
             if (_audioService != null)
                 await _audioService.PlaySoundEffect("button_click.wav");
 
@@ -137,7 +198,6 @@
 
         private async Task<string> HandleExplore()
         {
-            // Random exploration outcomes
             int outcome = _random.Next(1, 4);
 
             return outcome switch
@@ -159,7 +219,6 @@
 
             Player.Inventory.Add(item);
 
-            // Optional: Play item found sound
             if (_audioService != null)
                 await _audioService.PlaySoundEffect("button_click.wav");
 
@@ -186,67 +245,13 @@
         private string HandleHelp()
         {
             return "=== AVAILABLE COMMANDS ===\n" +
-                   "attack / fight - Engage in combat\n" +
+                   "attack / fight / battle - Start combat\n" +
                    "look / examine - Observe surroundings\n" +
                    "inventory / items - Check inventory\n" +
                    "stats / status - View character stats\n" +
                    "rest / sleep - Recover health\n" +
                    "explore / search - Search for items\n" +
                    "help - Show this message";
-        }
-
-        private async Task<string> LevelUp()
-        {
-            // Play level up sound
-            if (_audioService != null)
-                await _audioService.PlaySoundEffect("level_up.wav");
-
-            Player.Level++;
-            Player.Experience = 0;
-            Player.MaxHealth += 10;
-            Player.Health = Player.MaxHealth;
-            Player.Stats.Strength++;
-            Player.Stats.Dexterity++;
-            Player.Stats.Intelligence++;
-
-            UpdateTechnologyEra();
-
-            string message = $"*** LEVEL UP! ***\nYou are now level {Player.Level}!";
-
-            if (HasEraChanged())
-            {
-                message += $"\n\nYou have advanced to the {Player.CurrentEra} ERA!\nNew technologies are now available!";
-            }
-
-            return message;
-        }
-
-        private bool HasEraChanged()
-        {
-            var oldEra = GetEraForLevel(Player.Level - 1);
-            var newEra = GetEraForLevel(Player.Level);
-            return oldEra != newEra;
-        }
-
-        private void UpdateTechnologyEra()
-        {
-            Player.CurrentEra = GetEraForLevel(Player.Level);
-        }
-
-        private TechnologyEra GetEraForLevel(int level)
-        {
-            return level switch
-            {
-                <= 5 => TechnologyEra.Caveman,
-                <= 10 => TechnologyEra.StoneAge,
-                <= 15 => TechnologyEra.BronzeAge,
-                <= 20 => TechnologyEra.IronAge,
-                <= 25 => TechnologyEra.Medieval,
-                <= 30 => TechnologyEra.Renaissance,
-                <= 35 => TechnologyEra.Industrial,
-                <= 40 => TechnologyEra.Modern,
-                _ => TechnologyEra.Future
-            };
         }
     }
 }

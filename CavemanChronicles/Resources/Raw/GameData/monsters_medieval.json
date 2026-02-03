@@ -1,0 +1,444 @@
+{
+  "era": "Medieval",
+  "monsters": [
+    {
+      "name": "Knight in Plate Armor",
+      "description": "A heavily armored warrior sworn to a lord, wielding a longsword and shield.",
+      "type": "Humanoid",
+      "challengeRating": 9,
+      "armorClass": 20,
+      "hitPoints": 135,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 18,
+        "dexterity": 11,
+        "constitution": 18,
+        "intelligence": 10,
+        "wisdom": 12,
+        "charisma": 14
+      },
+      "attacks": [
+        {
+          "name": "Longsword",
+          "attackBonus": 8,
+          "damageDiceCount": 1,
+          "damageDieSize": 10,
+          "damageBonus": 4,
+          "damageType": "Slashing",
+          "description": "A masterwork steel longsword strikes with precision!"
+        },
+        {
+          "name": "Shield Bash",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "The heavy shield crashes into you!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Second Wind",
+          "description": "Once per combat, can heal 2d10+9 HP as a bonus action.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Action Surge",
+          "description": "Once per combat, can take an additional action on their turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Heavy Armor Master",
+          "description": "Resistance to non-magical bludgeoning, piercing, and slashing damage.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 300,
+      "experienceValue": 2300,
+      "possibleLoot": ["Steel Longsword", "Plate Armor Piece", "Knight's Shield", "Noble Crest"],
+      "flavorText": [
+        "Steel clanks as a fully armored knight steps forward!",
+        "A knight in shining plate armor levels their sword at you!",
+        "The flower of chivalry stands ready - a true knight challenges you!"
+      ],
+      "defeatedText": "The knight falls with a crash of metal, honor intact even in defeat."
+    },
+    {
+      "name": "Young Red Dragon",
+      "description": "A fearsome dragon with crimson scales and the ability to breathe devastating fire.",
+      "type": "Dragon",
+      "challengeRating": 12,
+      "armorClass": 18,
+      "hitPoints": 178,
+      "hitDice": 17,
+      "hitDieSize": 10,
+      "speed": 40,
+      "stats": {
+        "strength": 23,
+        "dexterity": 10,
+        "constitution": 21,
+        "intelligence": 14,
+        "wisdom": 11,
+        "charisma": 19
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 10,
+          "damageDiceCount": 2,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Piercing",
+          "description": "Massive jaws filled with razor teeth clamp down!"
+        },
+        {
+          "name": "Claw",
+          "attackBonus": 10,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 6,
+          "damageType": "Slashing",
+          "description": "Dagger-like claws rake across you!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Fire Breath",
+          "description": "Recharge 5-6: Exhales fire in 30-foot cone. DC 17 DEX save or take 16d6 fire damage (half on success).",
+          "type": "Action"
+        },
+        {
+          "name": "Frightful Presence",
+          "description": "Creatures within 120 feet must succeed DC 16 WIS save or be frightened for 1 minute.",
+          "type": "Action"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes one bite and two claw attacks per turn.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 500,
+      "maxGold": 1500,
+      "experienceValue": 3900,
+      "possibleLoot": ["Dragon Scale (5)", "Dragon Tooth", "Dragon Blood Vial", "Treasure Hoard Key"],
+      "flavorText": [
+        "Wings beat the air - a red dragon descends with a roar!",
+        "Flames lick the edges of its maw as the dragon prepares to strike!",
+        "The ancient enemy of knights appears - a red dragon!"
+      ],
+      "defeatedText": "The dragon's roar fades to a whimper as it collapses, treasure unclaimed."
+    },
+    {
+      "name": "Necromancer",
+      "description": "A dark wizard who commands the forces of death and undeath.",
+      "type": "Humanoid",
+      "challengeRating": 10,
+      "armorClass": 15,
+      "hitPoints": 99,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 9,
+        "dexterity": 14,
+        "constitution": 12,
+        "intelligence": 19,
+        "wisdom": 12,
+        "charisma": 16
+      },
+      "attacks": [
+        {
+          "name": "Withering Touch",
+          "attackBonus": 8,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Necrotic",
+          "description": "Life-draining energy flows from skeletal fingers!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Spellcasting",
+          "description": "Can cast: Ray of Sickness, Blindness/Deafness, Animate Dead, Blight, Cloudkill, Circle of Death. Spell save DC 16, +8 to hit.",
+          "type": "Action"
+        },
+        {
+          "name": "Summon Undead",
+          "description": "Once per combat, summons 2d4 skeletons or zombies to fight.",
+          "type": "Action"
+        },
+        {
+          "name": "Undead Fortitude",
+          "description": "When reduced to 0 HP, can make DC 15 CON save to drop to 1 HP instead (once per day).",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 150,
+      "maxGold": 500,
+      "experienceValue": 2900,
+      "possibleLoot": ["Necromancer's Robes", "Spellbook of Death", "Soul Gem", "Bone Wand"],
+      "flavorText": [
+        "A dark figure emerges, surrounded by an aura of death!",
+        "Skeletal hands weave patterns in the air - a necromancer!",
+        "The temperature drops as death magic fills the air!"
+      ],
+      "defeatedText": "The necromancer's dark magic dissipates as they fall, their undead servants crumbling to dust."
+    },
+    {
+      "name": "Veteran Archer",
+      "description": "A master bowman with years of experience, deadly at any range.",
+      "type": "Humanoid",
+      "challengeRating": 9,
+      "armorClass": 17,
+      "hitPoints": 112,
+      "hitDice": 15,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 14,
+        "dexterity": 20,
+        "constitution": 14,
+        "intelligence": 11,
+        "wisdom": 16,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Longbow",
+          "attackBonus": 9,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "An arrow flies true, seeking vital areas!"
+        },
+        {
+          "name": "Shortsword",
+          "attackBonus": 9,
+          "damageDiceCount": 1,
+          "damageDieSize": 6,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "A quick blade thrust in close combat!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Sharpshooter",
+          "description": "Can choose to take -5 to attack roll for +10 damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes three longbow attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Evasion",
+          "description": "When makes DEX save, takes no damage on success and half on failure.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 75,
+      "maxGold": 250,
+      "experienceValue": 2300,
+      "possibleLoot": ["Masterwork Longbow", "Quiver of Arrows (20)", "Archer's Bracers", "Lucky Charm"],
+      "flavorText": [
+        "An arrow nocks - a veteran archer has you in their sights!",
+        "Calm and deadly, the archer draws their bow!",
+        "Years of practice show in every movement - a master archer!"
+      ],
+      "defeatedText": "The archer's bow falls from their hands as they slump to the ground."
+    },
+    {
+      "name": "Vampire Spawn",
+      "description": "A lesser vampire, servant to a vampire lord, hungering for blood.",
+      "type": "Undead",
+      "challengeRating": 10,
+      "armorClass": 15,
+      "hitPoints": 82,
+      "hitDice": 11,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 16,
+        "constitution": 16,
+        "intelligence": 11,
+        "wisdom": 10,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Claws",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 4,
+          "damageBonus": 3,
+          "damageType": "Slashing",
+          "description": "Razor-sharp claws slash viciously!"
+        },
+        {
+          "name": "Bite",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 6,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "Fangs pierce flesh, draining blood! (Plus 2d6 necrotic damage, target max HP reduced by damage taken)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Regeneration",
+          "description": "Regains 10 HP at start of turn if has at least 1 HP. Only radiant damage or sunlight prevents this.",
+          "type": "Passive"
+        },
+        {
+          "name": "Spider Climb",
+          "description": "Can climb walls and ceilings without checks.",
+          "type": "Passive"
+        },
+        {
+          "name": "Vampire Weaknesses",
+          "description": "Takes 20 radiant damage when in sunlight. Cannot enter homes without invitation.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 100,
+      "experienceValue": 2900,
+      "possibleLoot": ["Vampire Fang", "Cursed Amulet", "Blood Vial", "Torn Noble Clothing"],
+      "flavorText": [
+        "A pale figure emerges from the shadows, fangs bared!",
+        "Red eyes gleam with unholy hunger - a vampire spawn!",
+        "The undead predator hisses and prepares to feed!"
+      ],
+      "defeatedText": "The vampire spawn crumbles to ash, its unlife ended."
+    },
+    {
+      "name": "War Priest",
+      "description": "A holy warrior who channels divine power in service of their god.",
+      "type": "Humanoid",
+      "challengeRating": 11,
+      "armorClass": 19,
+      "hitPoints": 143,
+      "hitDice": 17,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 10,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 19,
+        "charisma": 14
+      },
+      "attacks": [
+        {
+          "name": "Blessed Mace",
+          "attackBonus": 7,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Bludgeoning",
+          "description": "A holy mace glows with radiant energy! (Plus 2d8 radiant damage)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Spellcasting",
+          "description": "Can cast: Sacred Flame, Cure Wounds, Spiritual Weapon, Spirit Guardians, Guardian of Faith, Flame Strike. Spell save DC 16, +8 to hit.",
+          "type": "Action"
+        },
+        {
+          "name": "Channel Divinity: Turn Undead",
+          "description": "All undead within 30 feet must make DC 16 WIS save or be turned for 1 minute.",
+          "type": "Action"
+        },
+        {
+          "name": "Divine Strike",
+          "description": "Once per turn, deals extra 2d8 radiant damage on weapon hit.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 400,
+      "experienceValue": 3450,
+      "possibleLoot": ["Holy Symbol", "Blessed Mace", "Priest's Vestments", "Prayer Book"],
+      "flavorText": [
+        "Divine light surrounds a war priest as they advance!",
+        "A holy warrior calls upon their god's power!",
+        "Prayers and steel combine - a war priest enters battle!"
+      ],
+      "defeatedText": "The war priest's prayers fade as they fall, still clutching their holy symbol."
+    },
+    {
+      "name": "Siege Engine Operator",
+      "description": "A trained soldier manning a trebuchet or ballista, raining destruction from afar.",
+      "type": "Humanoid",
+      "challengeRating": 9,
+      "armorClass": 16,
+      "hitPoints": 105,
+      "hitDice": 14,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 14,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Ballista Bolt",
+          "attackBonus": 6,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Piercing",
+          "description": "A massive bolt the size of a spear flies at you!"
+        },
+        {
+          "name": "War Hammer",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 10,
+          "damageBonus": 3,
+          "damageType": "Bludgeoning",
+          "description": "A heavy hammer swings in close combat!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Siege Weapon Expert",
+          "description": "Ballista attacks deal double damage to structures and objects.",
+          "type": "Passive"
+        },
+        {
+          "name": "Reload",
+          "description": "Must use bonus action to reload ballista after firing.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 60,
+      "maxGold": 180,
+      "experienceValue": 2300,
+      "possibleLoot": ["Ballista Bolt", "War Hammer", "Siege Tools", "Engineering Manual"],
+      "flavorText": [
+        "The creak of machinery - a siege weapon aims at you!",
+        "An engineer cranks the ballista, targeting you!",
+        "The siege operator grins as they load another massive bolt!"
+      ],
+      "defeatedText": "The siege operator falls, their weapon left unmanned."
+    }
+  ]
+}

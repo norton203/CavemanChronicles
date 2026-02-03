@@ -1,0 +1,463 @@
+{
+  "era": "Renaissance",
+  "monsters": [
+    {
+      "name": "Musketeer",
+      "description": "An elite soldier wielding both rapier and early firearm with deadly skill.",
+      "type": "Humanoid",
+      "challengeRating": 13,
+      "armorClass": 17,
+      "hitPoints": 135,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 14,
+        "dexterity": 18,
+        "constitution": 14,
+        "intelligence": 12,
+        "wisdom": 13,
+        "charisma": 16
+      },
+      "attacks": [
+        {
+          "name": "Musket",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 12,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "A thunderous crack as black powder propels a lead ball!"
+        },
+        {
+          "name": "Rapier",
+          "attackBonus": 8,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Piercing",
+          "description": "A lightning-quick thrust with an elegant blade!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Riposte",
+          "description": "When enemy misses melee attack, can make rapier attack as reaction.",
+          "type": "Reaction"
+        },
+        {
+          "name": "Reload",
+          "description": "Must spend bonus action reloading musket after firing.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Duelist",
+          "description": "Has advantage on attack rolls when fighting a single opponent.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 150,
+      "maxGold": 400,
+      "experienceValue": 4900,
+      "possibleLoot": ["Musket", "Rapier", "Powder Horn", "Fancy Hat with Plume"],
+      "flavorText": [
+        "A musketeer in a plumed hat draws both gun and sword!",
+        "En garde! The musketeer challenges with style!",
+        "Gunpowder smoke and steel - a true Renaissance warrior!"
+      ],
+      "defeatedText": "The musketeer salutes with their rapier before falling."
+    },
+    {
+      "name": "Alchemist",
+      "description": "A master of early chemistry, creating explosive and toxic compounds.",
+      "type": "Humanoid",
+      "challengeRating": 12,
+      "armorClass": 14,
+      "hitPoints": 110,
+      "hitDice": 17,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 10,
+        "dexterity": 16,
+        "constitution": 13,
+        "intelligence": 19,
+        "wisdom": 14,
+        "charisma": 11
+      },
+      "attacks": [
+        {
+          "name": "Alchemical Fire",
+          "attackBonus": 8,
+          "damageDiceCount": 4,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Fire",
+          "description": "A flask of volatile chemicals explodes! (10-foot radius)"
+        },
+        {
+          "name": "Acid Splash",
+          "attackBonus": 8,
+          "damageDiceCount": 3,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Acid",
+          "description": "Corrosive liquid burns through armor!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Experimental Elixir",
+          "description": "Can drink elixir as bonus action: heal 3d8+4 HP, gain +2 AC for 3 turns, or become invisible for 1 turn.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Alchemical Savant",
+          "description": "All acid and fire damage increased by 1d6.",
+          "type": "Passive"
+        },
+        {
+          "name": "Smoke Screen",
+          "description": "Can create 20-foot radius heavily obscured area as action.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 350,
+      "experienceValue": 4200,
+      "possibleLoot": ["Alchemical Formulas", "Potions (3)", "Acid Vials (2)", "Fire Bombs (2)"],
+      "flavorText": [
+        "Glass vials clink as an alchemist prepares their concoctions!",
+        "The smell of sulfur fills the air - an alchemist is near!",
+        "Science and magic blur as the alchemist attacks!"
+      ],
+      "defeatedText": "The alchemist's vials shatter as they fall, releasing colorful fumes."
+    },
+    {
+      "name": "Clockwork Guardian",
+      "description": "An intricate mechanical construct powered by springs and gears.",
+      "type": "Construct",
+      "challengeRating": 14,
+      "armorClass": 18,
+      "hitPoints": 195,
+      "hitDice": 17,
+      "hitDieSize": 10,
+      "speed": 25,
+      "stats": {
+        "strength": 20,
+        "dexterity": 12,
+        "constitution": 18,
+        "intelligence": 3,
+        "wisdom": 10,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Clockwork Fist",
+          "attackBonus": 9,
+          "damageDiceCount": 3,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Bludgeoning",
+          "description": "Gears whir as a bronze fist strikes with mechanical precision!"
+        },
+        {
+          "name": "Blade Saw",
+          "attackBonus": 9,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 5,
+          "damageType": "Slashing",
+          "description": "A spinning saw blade extends from its arm!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Immutable Form",
+          "description": "Immune to any effect that would alter its form.",
+          "type": "Passive"
+        },
+        {
+          "name": "Self-Repair",
+          "description": "At start of turn, regains 10 HP if has at least 1 HP.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two attacks per turn.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 200,
+      "experienceValue": 5700,
+      "possibleLoot": ["Clockwork Gears (5)", "Spring Mechanism", "Brass Plating", "Inventor's Notes"],
+      "flavorText": [
+        "Ticking fills the air as a clockwork guardian activates!",
+        "Bronze and brass gleam as the mechanical construct attacks!",
+        "Precision engineering given deadly purpose!"
+      ],
+      "defeatedText": "The clockwork guardian's gears grind to a halt as it collapses."
+    },
+    {
+      "name": "Plague Doctor",
+      "description": "A mysterious physician whose very presence brings disease and death.",
+      "type": "Humanoid",
+      "challengeRating": 11,
+      "armorClass": 15,
+      "hitPoints": 117,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 10,
+        "dexterity": 14,
+        "constitution": 14,
+        "intelligence": 17,
+        "wisdom": 16,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Infected Cane",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 2,
+          "damageType": "Bludgeoning",
+          "description": "A disease-laden cane strikes! (DC 15 CON save or poisoned for 3 turns)"
+        },
+        {
+          "name": "Miasma Cloud",
+          "attackBonus": 7,
+          "damageDiceCount": 5,
+          "damageDieSize": 6,
+          "damageBonus": 0,
+          "damageType": "Poison",
+          "description": "Releases toxic vapors! (15-foot cone, DC 16 CON save for half)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Plague Aura",
+          "description": "Creatures starting turn within 10 feet take 2d6 poison damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Immunity",
+          "description": "Immune to poison damage and disease.",
+          "type": "Passive"
+        },
+        {
+          "name": "Physician's Touch",
+          "description": "Can cast Cure Wounds or Inflict Wounds (3d10 necrotic damage, DC 15 CON save for half).",
+          "type": "Action"
+        }
+      ],
+      "minGold": 80,
+      "maxGold": 250,
+      "experienceValue": 3450,
+      "possibleLoot": ["Plague Mask", "Medical Instruments", "Disease Samples", "Herbal Remedies"],
+      "flavorText": [
+        "A figure in a beaked mask emerges from poisonous mist!",
+        "The plague doctor's eyes gleam darkly behind glass lenses!",
+        "Disease incarnate walks among the living!"
+      ],
+      "defeatedText": "The plague doctor's mask cracks as they fall, releasing final toxic fumes."
+    },
+    {
+      "name": "Gargoyle Sentinel",
+      "description": "A stone creature that comes to life to defend ancient buildings.",
+      "type": "Elemental",
+      "challengeRating": 13,
+      "armorClass": 17,
+      "hitPoints": 142,
+      "hitDice": 15,
+      "hitDieSize": 10,
+      "speed": 30,
+      "stats": {
+        "strength": 17,
+        "dexterity": 13,
+        "constitution": 18,
+        "intelligence": 8,
+        "wisdom": 12,
+        "charisma": 9
+      },
+      "attacks": [
+        {
+          "name": "Bite",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "Stone jaws snap shut!"
+        },
+        {
+          "name": "Claws",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Slashing",
+          "description": "Stone talons rake across you!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "False Appearance",
+          "description": "While motionless, indistinguishable from stone statue.",
+          "type": "Passive"
+        },
+        {
+          "name": "Flyby",
+          "description": "Can fly 60 feet without provoking opportunity attacks.",
+          "type": "Passive"
+        },
+        {
+          "name": "Damage Resistance",
+          "description": "Resistance to non-magical bludgeoning, piercing, and slashing damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes one bite and two claw attacks.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 150,
+      "experienceValue": 4900,
+      "possibleLoot": ["Stone Fragment", "Gargoyle Heart", "Ancient Mortar"],
+      "flavorText": [
+        "Stone grinds against stone as the gargoyle comes to life!",
+        "What you thought was a statue spreads its wings!",
+        "The guardian awakens - a gargoyle attacks!"
+      ],
+      "defeatedText": "The gargoyle returns to lifeless stone, crumbling."
+    },
+    {
+      "name": "Noble Duelist",
+      "description": "A master swordsman from a wealthy family, undefeated in countless duels.",
+      "type": "Humanoid",
+      "challengeRating": 14,
+      "armorClass": 18,
+      "hitPoints": 153,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 40,
+      "stats": {
+        "strength": 14,
+        "dexterity": 20,
+        "constitution": 16,
+        "intelligence": 14,
+        "wisdom": 15,
+        "charisma": 18
+      },
+      "attacks": [
+        {
+          "name": "Masterwork Rapier",
+          "attackBonus": 10,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "A perfect strike to a vital point!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Riposte Master",
+          "description": "When enemy misses melee attack, automatically makes rapier attack that deals double damage.",
+          "type": "Reaction"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes three rapier attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Uncanny Dodge",
+          "description": "When hit, can use reaction to halve damage.",
+          "type": "Reaction"
+        },
+        {
+          "name": "Disarming Strike",
+          "description": "On critical hit, target drops weapon.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 200,
+      "maxGold": 600,
+      "experienceValue": 5700,
+      "possibleLoot": ["Masterwork Rapier", "Noble's Cloak", "Dueling Trophy", "Family Ring"],
+      "flavorText": [
+        "A noble draws their blade with a flourish and a smile!",
+        "The greatest swordsman of the age stands before you!",
+        "En garde! The dueling master assumes a perfect stance!"
+      ],
+      "defeatedText": "The duelist acknowledges your skill with a bow before falling."
+    },
+    {
+      "name": "Artillery Crew",
+      "description": "Soldiers operating an early cannon, raining explosive destruction.",
+      "type": "Humanoid",
+      "challengeRating": 12,
+      "armorClass": 16,
+      "hitPoints": 120,
+      "hitDice": 16,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 13,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Cannon Fire",
+          "attackBonus": 7,
+          "damageDiceCount": 8,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Bludgeoning",
+          "description": "An explosive cannonball detonates! (15-foot radius, DC 17 DEX save for half)"
+        },
+        {
+          "name": "Sword",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Slashing",
+          "description": "Close combat with military blades!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Reload",
+          "description": "Must spend full turn reloading cannon after firing.",
+          "type": "Action"
+        },
+        {
+          "name": "Crew",
+          "description": "Represents 3-4 soldiers. When reduced below 60 HP, loses multiattack.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 300,
+      "experienceValue": 4200,
+      "possibleLoot": ["Gunpowder (10)", "Cannonballs (3)", "Military Uniforms", "Ramrod"],
+      "flavorText": [
+        "The cannon's fuse is lit - incoming!",
+        "Artillery crew loads and aims their devastating weapon!",
+        "Thunder and smoke - the age of gunpowder has arrived!"
+      ],
+      "defeatedText": "The artillery crew falls, their cannon left smoking and unmanned."
+    }
+  ]
+}

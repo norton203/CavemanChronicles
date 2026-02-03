@@ -1,35 +1,43 @@
-﻿// Add to existing Monster.cs - make sure properties have setters
-namespace CavemanChronicles
+﻿namespace CavemanChronicles
 {
     public class Monster
     {
-        public string Name { get; set; } = "";
-        public string Description { get; set; } = "";
+        public string Name { get; set; }
+        public string Description { get; set; }
         public MonsterType Type { get; set; }
         public TechnologyEra Era { get; set; }
+
+        // Combat Stats
         public int ChallengeRating { get; set; }
         public int ArmorClass { get; set; }
         public int HitPoints { get; set; }
+        public int MaxHitPoints { get; set; }
         public int HitDice { get; set; }
         public int HitDieSize { get; set; }
         public int Speed { get; set; }
 
-        public MonsterStats Stats { get; set; } = new MonsterStats();
-        public List<MonsterAttack> Attacks { get; set; } = new List<MonsterAttack>();
-        public List<MonsterAbility> SpecialAbilities { get; set; } = new List<MonsterAbility>();
+        // Ability Scores
+        public MonsterStats Stats { get; set; }
 
+        // Attacks and Abilities
+        public List<MonsterAttack> Attacks { get; set; }
+        public List<MonsterAbility> SpecialAbilities { get; set; }
+
+        // Loot and Rewards
         public int MinGold { get; set; }
         public int MaxGold { get; set; }
         public int ExperienceValue { get; set; }
-        public List<string> PossibleLoot { get; set; } = new List<string>();
+        public List<string> PossibleLoot { get; set; }
 
-        public List<string> FlavorText { get; set; } = new List<string>();
-        public string DefeatedText { get; set; } = "";
+        // Flavor Text
+        public List<string> FlavorText { get; set; }
+        public string DefeatedText { get; set; }
 
+        // ADDED METHOD
         public string GetRandomFlavorText()
         {
             if (FlavorText == null || FlavorText.Count == 0)
-                return $"A {Name} appears!";
+                return $"The {Name} prepares to attack!";
 
             var random = new Random();
             return FlavorText[random.Next(FlavorText.Count)];
@@ -45,34 +53,35 @@ namespace CavemanChronicles
         public int Wisdom { get; set; }
         public int Charisma { get; set; }
 
-        public int StrengthMod => (Strength - 10) / 2;
-        public int DexterityMod => (Dexterity - 10) / 2;
-        public int ConstitutionMod => (Constitution - 10) / 2;
-        public int IntelligenceMod => (Intelligence - 10) / 2;
-        public int WisdomMod => (Wisdom - 10) / 2;
-        public int CharismaMod => (Charisma - 10) / 2;
+        // Calculated modifiers
+        public int StrengthMod => CalculateModifier(Strength);
+        public int DexterityMod => CalculateModifier(Dexterity);
+        public int ConstitutionMod => CalculateModifier(Constitution);
+        public int IntelligenceMod => CalculateModifier(Intelligence);
+        public int WisdomMod => CalculateModifier(Wisdom);
+        public int CharismaMod => CalculateModifier(Charisma);
+
+        private int CalculateModifier(int score)
+        {
+            return (score - 10) / 2;
+        }
     }
 
     public class MonsterAttack
     {
-        public string Name { get; set; } = "";
+        public string Name { get; set; }
         public int AttackBonus { get; set; }
         public int DamageDiceCount { get; set; }
         public int DamageDieSize { get; set; }
         public int DamageBonus { get; set; }
         public DamageType DamageType { get; set; }
-        public string Description { get; set; } = "";
-
-        public string GetDamageString()
-        {
-            return $"{DamageDiceCount}d{DamageDieSize}+{DamageBonus} {DamageType}";
-        }
+        public string Description { get; set; }
     }
 
     public class MonsterAbility
     {
-        public string Name { get; set; } = "";
-        public string Description { get; set; } = "";
+        public string Name { get; set; }
+        public string Description { get; set; }
         public AbilityType Type { get; set; }
     }
 
@@ -81,8 +90,8 @@ namespace CavemanChronicles
         Beast,
         Humanoid,
         Undead,
-        Construct,
         Dragon,
+        Construct,
         Elemental,
         Aberration,
         Monstrosity
@@ -90,25 +99,26 @@ namespace CavemanChronicles
 
     public enum DamageType
     {
-        Bludgeoning,
-        Piercing,
         Slashing,
+        Piercing,
+        Bludgeoning,
         Fire,
         Cold,
         Lightning,
         Poison,
         Acid,
-        Psychic,
-        Radiant,
+        Thunder,
+        Force,
         Necrotic,
-        Force
+        Radiant,
+        Psychic
     }
 
     public enum AbilityType
     {
         Passive,
         Action,
-        Reaction,
-        BonusAction
+        BonusAction,
+        Reaction
     }
 }

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             x:Class="CavemanChronicles.CombatPage"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto,Auto" Padding="10" RowSpacing="5">
+
+        <!-- ERA DISPLAY -->
+        <Border Grid.Row="0"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                Padding="10"
+                BackgroundColor="Black">
+            <Label x:Name="EraLabel"
+                   Text="CAVEMAN ERA BATTLE"
+                   TextColor="#FFD700"
+                   FontFamily="Courier New"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+        </Border>
+
+        <!-- ENEMY DISPLAY AREA -->
+        <Border Grid.Row="1"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                BackgroundColor="Black"
+                Margin="0,5,0,0">
+            <Grid RowDefinitions="*,Auto">
+
+                <!-- Enemy Graphics Canvas -->
+                <skia:SKCanvasView x:Name="EnemyCanvas"
+                                  Grid.Row="0"
+                                  PaintSurface="OnEnemyCanvasPaint"
+                                  BackgroundColor="Black"
+                                  HeightRequest="250"/>
+
+                <!-- Enemy Stats Container -->
+                <ScrollView Grid.Row="1" 
+                           Orientation="Horizontal"
+                           HeightRequest="100">
+                    <HorizontalStackLayout x:Name="EnemyStatsContainer"
+                                          Spacing="10"
+                                          Padding="10"/>
+                </ScrollView>
+            </Grid>
+        </Border>
+
+        <!-- COMBAT LOG -->
+        <Border Grid.Row="2"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                Padding="10"
+                BackgroundColor="Black"
+                HeightRequest="120"
+                Margin="0,5,0,0">
+            <ScrollView x:Name="CombatLogScroll">
+                <Label x:Name="CombatLogLabel"
+                       TextColor="{StaticResource RetroGreen}"
+                       FontFamily="Courier New"
+                       FontSize="12"
+                       LineBreakMode="WordWrap"/>
+            </ScrollView>
+        </Border>
+
+        <!-- PLAYER STATUS -->
+        <Border Grid.Row="3"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                Padding="10"
+                BackgroundColor="Black"
+                Margin="0,5,0,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <!-- Player Sprite -->
+                <skia:SKCanvasView x:Name="PlayerCanvas"
+                                  Grid.Column="0"
+                                  WidthRequest="80"
+                                  HeightRequest="80"
+                                  PaintSurface="OnPlayerCanvasPaint"
+                                  BackgroundColor="Black"/>
+
+                <!-- Player Stats -->
+                <VerticalStackLayout Grid.Column="1" 
+                                    Spacing="5"
+                                    Padding="10,0">
+                    <Label x:Name="PlayerNameLabel"
+                           Text="HERO"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="16"
+                           FontAttributes="Bold"/>
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Label Grid.Column="0"
+                               Text="HP:"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="14"/>
+
+                        <!-- HP Bar -->
+                        <Border Grid.Column="1"
+                               Stroke="{StaticResource RetroGreen}"
+                               StrokeThickness="1"
+                               HeightRequest="20"
+                               BackgroundColor="Black">
+                            <ProgressBar x:Name="PlayerHPBar"
+                                       Progress="1.0"
+                                       ProgressColor="#00FF00"
+                                       BackgroundColor="Black"/>
+                        </Border>
+
+                        <Label Grid.Column="2"
+                               x:Name="PlayerHPLabel"
+                               Text="100/100"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               WidthRequest="80"
+                               HorizontalTextAlignment="End"/>
+                    </Grid>
+
+                    <Label x:Name="PlayerStatusLabel"
+                           Text="Ready to fight!"
+                           TextColor="#FFAA00"
+                           FontFamily="Courier New"
+                           FontSize="12"/>
+                </VerticalStackLayout>
+
+                <!-- Turn Indicator -->
+                <Border Grid.Column="2"
+                       x:Name="TurnIndicator"
+                       Stroke="#FFD700"
+                       StrokeThickness="3"
+                       Padding="15,10"
+                       BackgroundColor="#332200"
+                       IsVisible="True">
+                    <Label Text="YOUR&#x0a;TURN"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ACTION BUTTONS -->
+        <Grid Grid.Row="4"
+              ColumnDefinitions="*,*,*,*"
+              ColumnSpacing="10"
+              Margin="0,5,0,0"
+              HeightRequest="70">
+
+            <!-- Attack Button -->
+            <Border Grid.Column="0"
+                    x:Name="AttackButton"
+                    Stroke="#FF0000"
+                    StrokeThickness="2"
+                    Padding="10"
+                    BackgroundColor="#330000">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAttackClicked"/>
+                </Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="⚔"
+                           TextColor="#FF0000"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="ATTACK"
+                           TextColor="#FF0000"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Defend Button -->
+            <Border Grid.Column="1"
+                    x:Name="DefendButton"
+                    Stroke="#0000FF"
+                    StrokeThickness="2"
+                    Padding="10"
+                    BackgroundColor="#000033">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDefendClicked"/>
+                </Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="🛡"
+                           TextColor="#0000FF"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="DEFEND"
+                           TextColor="#0000FF"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Item Button (disabled for now) -->
+            <Border Grid.Column="2"
+                    x:Name="ItemButton"
+                    Stroke="#666666"
+                    StrokeThickness="2"
+                    Padding="10"
+                    BackgroundColor="#111111"
+                    Opacity="0.5">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="💊"
+                           TextColor="#666666"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="ITEM"
+                           TextColor="#666666"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Flee Button -->
+            <Border Grid.Column="3"
+                    x:Name="FleeButton"
+                    Stroke="#FFAA00"
+                    StrokeThickness="2"
+                    Padding="10"
+                    BackgroundColor="#332200">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFleeClicked"/>
+                </Border.GestureRecognizers>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="🏃"
+                           TextColor="#FFAA00"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="FLEE"
+                           TextColor="#FFAA00"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Target Selection Overlay (hidden by default) -->
+        <Grid x:Name="TargetSelectionOverlay"
+              Grid.RowSpan="5"
+              BackgroundColor="#000000AA"
+              IsVisible="False">
+            <Border Stroke="{StaticResource RetroGreen}"
+                    StrokeThickness="3"
+                    Padding="20"
+                    BackgroundColor="Black"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="350">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="SELECT TARGET"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <ScrollView HeightRequest="250">
+                        <VerticalStackLayout x:Name="TargetButtonsContainer"
+                                           Spacing="10"/>
+                    </ScrollView>
+
+                    <Border Stroke="#FF0000"
+                           StrokeThickness="2"
+                           Padding="10"
+                           BackgroundColor="#330000">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancelTargetSelection"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="✕ CANCEL"
+                               TextColor="#FF0000"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

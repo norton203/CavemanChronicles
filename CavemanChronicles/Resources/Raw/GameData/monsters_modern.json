@@ -1,0 +1,478 @@
+{
+  "era": "Modern",
+  "monsters": [
+    {
+      "name": "Special Forces Operative",
+      "description": "An elite soldier with cutting-edge training and equipment.",
+      "type": "Humanoid",
+      "challengeRating": 16,
+      "armorClass": 19,
+      "hitPoints": 195,
+      "hitDice": 23,
+      "hitDieSize": 8,
+      "speed": 35,
+      "stats": {
+        "strength": 16,
+        "dexterity": 20,
+        "constitution": 18,
+        "intelligence": 14,
+        "wisdom": 16,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Assault Rifle",
+          "attackBonus": 10,
+          "damageDiceCount": 3,
+          "damageDieSize": 8,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "Three-round burst of high-velocity rounds!"
+        },
+        {
+          "name": "Combat Knife",
+          "attackBonus": 10,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 5,
+          "damageType": "Piercing",
+          "description": "Silent and deadly blade work!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Tactical Training",
+          "description": "Has advantage on initiative rolls and cannot be surprised.",
+          "type": "Passive"
+        },
+        {
+          "name": "Evasion",
+          "description": "Takes no damage on successful DEX save, half on failure.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two rifle attacks or three knife attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Flashbang",
+          "description": "Throws flashbang grenade (15-foot radius, DC 17 CON save or blinded/deafened for 2 turns).",
+          "type": "Action"
+        }
+      ],
+      "minGold": 200,
+      "maxGold": 600,
+      "experienceValue": 7800,
+      "possibleLoot": ["Assault Rifle", "Combat Knife", "Tactical Vest", "Night Vision Goggles", "Encrypted Radio"],
+      "flavorText": [
+        "A laser sight appears on your chest - professional killer!",
+        "Silent and deadly, the operative strikes from the shadows!",
+        "Military precision meets lethal force!"
+      ],
+      "defeatedText": "The operative's mission ends in failure as they fall."
+    },
+    {
+      "name": "Combat Drone",
+      "description": "An armed aerial drone with advanced targeting systems.",
+      "type": "Construct",
+      "challengeRating": 15,
+      "armorClass": 18,
+      "hitPoints": 142,
+      "hitDice": 15,
+      "hitDieSize": 10,
+      "speed": 50,
+      "stats": {
+        "strength": 10,
+        "dexterity": 20,
+        "constitution": 16,
+        "intelligence": 14,
+        "wisdom": 12,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Machine Gun",
+          "attackBonus": 10,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Piercing",
+          "description": "Rapid-fire from an onboard weapon!"
+        },
+        {
+          "name": "Missile",
+          "attackBonus": 10,
+          "damageDiceCount": 6,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Guided missile strikes! (20-foot radius, DC 18 DEX save for half)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Aerial Mobility",
+          "description": "Can fly. Ranged attacks against it have disadvantage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Thermal Imaging",
+          "description": "Can see invisible creatures and has advantage on Perception checks.",
+          "type": "Passive"
+        },
+        {
+          "name": "Self-Destruct",
+          "description": "When reduced to 0 HP, explodes (15-foot radius, 6d8 fire damage, DC 17 DEX save for half).",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 400,
+      "experienceValue": 6600,
+      "possibleLoot": ["Drone Components", "Targeting Computer", "Advanced Circuitry", "Military-Grade Battery"],
+      "flavorText": [
+        "A whirring sound overhead - an armed drone!",
+        "Targeting systems lock on - drone attack imminent!",
+        "The future of warfare descends from the sky!"
+      ],
+      "defeatedText": "The drone spirals from the sky, systems failing."
+    },
+    {
+      "name": "Cyborg Enforcer",
+      "description": "A human enhanced with extensive cybernetic implants.",
+      "type": "Humanoid",
+      "challengeRating": 17,
+      "armorClass": 20,
+      "hitPoints": 232,
+      "hitDice": 21,
+      "hitDieSize": 10,
+      "speed": 40,
+      "stats": {
+        "strength": 22,
+        "dexterity": 16,
+        "constitution": 22,
+        "intelligence": 14,
+        "wisdom": 12,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Arm Cannon",
+          "attackBonus": 11,
+          "damageDiceCount": 4,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Force",
+          "description": "Energy weapon built into cybernetic arm!"
+        },
+        {
+          "name": "Hydraulic Fist",
+          "attackBonus": 12,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Bludgeoning",
+          "description": "Hydraulic-powered punch shatters bone!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Cybernetic Enhancements",
+          "description": "Has darkvision 120 ft, advantage on STR and CON saves, immune to poison and disease.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two arm cannon or three fist attacks per turn.",
+          "type": "Action"
+        },
+        {
+          "name": "Adaptive Armor",
+          "description": "After taking damage of a type, gains resistance to it until end of next turn.",
+          "type": "Passive"
+        },
+        {
+          "name": "Combat Stims",
+          "description": "Once per combat, heals 60 HP and gains +5 to all rolls for 3 turns.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 300,
+      "maxGold": 800,
+      "experienceValue": 9100,
+      "possibleLoot": ["Cybernetic Parts (3)", "Power Cell", "Neural Interface", "Combat Stims (2)"],
+      "flavorText": [
+        "More machine than human, the cyborg advances!",
+        "Hydraulics hiss as cybernetic systems activate!",
+        "The line between man and machine has been crossed!"
+      ],
+      "defeatedText": "The cyborg's systems fail with a shower of sparks."
+    },
+    {
+      "name": "Bioweapon Subject",
+      "description": "A human mutated by experimental biological weapons.",
+      "type": "Monstrosity",
+      "challengeRating": 16,
+      "armorClass": 16,
+      "hitPoints": 225,
+      "hitDice": 20,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 22,
+        "dexterity": 16,
+        "constitution": 22,
+        "intelligence": 6,
+        "wisdom": 10,
+        "charisma": 6
+      },
+      "attacks": [
+        {
+          "name": "Mutated Claw",
+          "attackBonus": 11,
+          "damageDiceCount": 3,
+          "damageDieSize": 10,
+          "damageBonus": 6,
+          "damageType": "Slashing",
+          "description": "Grotesque claws tear through flesh!"
+        },
+        {
+          "name": "Toxic Bite",
+          "attackBonus": 11,
+          "damageDiceCount": 2,
+          "damageDieSize": 12,
+          "damageBonus": 6,
+          "damageType": "Piercing",
+          "description": "Disease-ridden fangs! (DC 18 CON save or poisoned and take 2d8 poison damage per turn)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Regeneration",
+          "description": "Regains 15 HP at start of turn if has at least 1 HP.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes one bite and two claw attacks.",
+          "type": "Action"
+        },
+        {
+          "name": "Adaptive Evolution",
+          "description": "After taking damage of a type, gains resistance to it.",
+          "type": "Passive"
+        },
+        {
+          "name": "Viral Spores",
+          "description": "Releases spores (20-foot radius, DC 18 CON save or 5d8 poison damage and infected).",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 200,
+      "experienceValue": 7800,
+      "possibleLoot": ["Bioweapon Sample", "Mutated Tissue", "Research Notes", "Antiviral Serum"],
+      "flavorText": [
+        "A twisted abomination lurches forward!",
+        "Flesh bubbles and shifts - science gone wrong!",
+        "What was once human is now a monster!"
+      ],
+      "defeatedText": "The mutant's unstable biology finally collapses."
+    },
+    {
+      "name": "Hacker Collective",
+      "description": "A group of elite hackers operating sophisticated cyber warfare.",
+      "type": "Humanoid",
+      "challengeRating": 14,
+      "armorClass": 15,
+      "hitPoints": 120,
+      "hitDice": 16,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 10,
+        "dexterity": 16,
+        "constitution": 14,
+        "intelligence": 20,
+        "wisdom": 14,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Taser",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 0,
+          "damageType": "Lightning",
+          "description": "Electric shock! (DC 15 CON save or stunned for 1 turn)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "System Hack",
+          "description": "Can disable electronic devices, security systems, or cybernetics within 60 feet (DC 18 INT save to resist).",
+          "type": "Action"
+        },
+        {
+          "name": "Deploy Malware",
+          "description": "Target with cybernetics takes 4d10 psychic damage and has disadvantage on attacks for 3 turns.",
+          "type": "Action"
+        },
+        {
+          "name": "Countermeasures",
+          "description": "Has advantage on saves against technology-based attacks.",
+          "type": "Passive"
+        },
+        {
+          "name": "Emergency Disconnect",
+          "description": "Can teleport to any computer system within 120 feet as reaction when hit.",
+          "type": "Reaction"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 400,
+      "experienceValue": 5700,
+      "possibleLoot": ["Laptop", "Encrypted USB Drives (3)", "Hacking Tools", "Bitcoin Wallet"],
+      "flavorText": [
+        "Screens flicker as the hackers breach your systems!",
+        "You're not fighting people - you're fighting code!",
+        "The digital battlefield is their domain!"
+      ],
+      "defeatedText": "The hackers' systems crash as they're disconnected."
+    },
+    {
+      "name": "SWAT Team",
+      "description": "A heavily armed police tactical unit.",
+      "type": "Humanoid",
+      "challengeRating": 15,
+      "armorClass": 19,
+      "hitPoints": 180,
+      "hitDice": 20,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 16,
+        "dexterity": 16,
+        "constitution": 16,
+        "intelligence": 12,
+        "wisdom": 14,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Coordinated Fire",
+          "attackBonus": 8,
+          "damageDiceCount": 8,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Piercing",
+          "description": "Multiple officers fire simultaneously! (All targets in 30-foot cone)"
+        },
+        {
+          "name": "Flashbang",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 0,
+          "damageType": "Thunder",
+          "description": "Stun grenade! (15-foot radius, DC 16 CON save or blinded/deafened 2 turns)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Team Tactics",
+          "description": "Represents 4-5 officers. Has advantage on attacks. Loses advantage below 90 HP.",
+          "type": "Passive"
+        },
+        {
+          "name": "Breach and Clear",
+          "description": "Can move up to speed and ignore cover on attacks this turn.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Shield Wall",
+          "description": "+2 AC when not moving.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 200,
+      "maxGold": 500,
+      "experienceValue": 6600,
+      "possibleLoot": ["Tactical Rifles (4)", "Bulletproof Vests (4)", "Flashbangs (3)", "Police Badge"],
+      "flavorText": [
+        "Breach! Breach! Breach! The SWAT team storms in!",
+        "Heavily armored officers take tactical positions!",
+        "Law enforcement's finest - fully armed and ready!"
+      ],
+      "defeatedText": "The tactical team falls, their coordinated assault broken."
+    },
+    {
+      "name": "Military Tank",
+      "description": "A modern main battle tank with devastating firepower.",
+      "type": "Construct",
+      "challengeRating": 18,
+      "armorClass": 22,
+      "hitPoints": 285,
+      "hitDice": 22,
+      "hitDieSize": 12,
+      "speed": 40,
+      "stats": {
+        "strength": 26,
+        "dexterity": 10,
+        "constitution": 24,
+        "intelligence": 10,
+        "wisdom": 10,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Main Cannon",
+          "attackBonus": 12,
+          "damageDiceCount": 10,
+          "damageDieSize": 10,
+          "damageBonus": 0,
+          "damageType": "Force",
+          "description": "High-explosive shell! (30-foot radius, DC 20 DEX save for half)"
+        },
+        {
+          "name": "Machine Gun",
+          "attackBonus": 10,
+          "damageDiceCount": 6,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Piercing",
+          "description": "Rapid-fire suppression!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Heavy Armor",
+          "description": "Resistance to all damage except force damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Crush",
+          "description": "Can move through creatures' spaces. Creatures take 4d10 bludgeoning damage (DC 20 DEX save to avoid).",
+          "type": "Passive"
+        },
+        {
+          "name": "Crew",
+          "description": "Requires crew to operate. If crew eliminated, tank is disabled.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 1000,
+      "experienceValue": 10400,
+      "possibleLoot": ["Tank Parts", "Ammunition", "Military Radio", "Classified Documents"],
+      "flavorText": [
+        "The ground shakes - a tank is approaching!",
+        "Armor plating and massive firepower combined!",
+        "Modern military might in steel form!"
+      ],
+      "defeatedText": "The tank explodes in a ball of flame, turret blown clear."
+    }
+  ]
+}

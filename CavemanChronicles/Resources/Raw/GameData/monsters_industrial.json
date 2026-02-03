@@ -1,0 +1,458 @@
+{
+  "era": "Industrial",
+  "monsters": [
+    {
+      "name": "Steam Golem",
+      "description": "A massive mechanical construct powered by a coal-fired steam engine.",
+      "type": "Construct",
+      "challengeRating": 15,
+      "armorClass": 20,
+      "hitPoints": 232,
+      "hitDice": 19,
+      "hitDieSize": 12,
+      "speed": 30,
+      "stats": {
+        "strength": 24,
+        "dexterity": 9,
+        "constitution": 22,
+        "intelligence": 3,
+        "wisdom": 10,
+        "charisma": 1
+      },
+      "attacks": [
+        {
+          "name": "Slam",
+          "attackBonus": 11,
+          "damageDiceCount": 3,
+          "damageDieSize": 12,
+          "damageBonus": 7,
+          "damageType": "Bludgeoning",
+          "description": "A massive piston-driven fist crashes down!"
+        },
+        {
+          "name": "Steam Blast",
+          "attackBonus": 10,
+          "damageDiceCount": 6,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Superheated steam erupts! (30-foot cone, DC 18 DEX save for half)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Immutable Form",
+          "description": "Immune to any effect that would alter its form.",
+          "type": "Passive"
+        },
+        {
+          "name": "Boiler Explosion",
+          "description": "When reduced to 0 HP, explodes. All within 20 feet take 8d10 fire damage (DC 18 DEX save for half).",
+          "type": "Passive"
+        },
+        {
+          "name": "Heavy Armor",
+          "description": "Resistance to non-magical bludgeoning, piercing, and slashing damage.",
+          "type": "Passive"
+        },
+        {
+          "name": "Multiattack",
+          "description": "Makes two slam attacks per turn.",
+          "type": "Action"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 300,
+      "experienceValue": 6600,
+      "possibleLoot": ["Steam Engine Parts", "Coal (10)", "Iron Plating (5)", "Pressure Valve"],
+      "flavorText": [
+        "Steam hisses as a towering golem of iron and brass activates!",
+        "The ground shakes with each step of the steam-powered giant!",
+        "Industrial might given form - a steam golem attacks!"
+      ],
+      "defeatedText": "The steam golem's boiler ruptures in a final explosion of steam and fire."
+    },
+    {
+      "name": "Factory Foreman",
+      "description": "A brutal overseer commanding workers through fear and industrial weapons.",
+      "type": "Humanoid",
+      "challengeRating": 14,
+      "armorClass": 17,
+      "hitPoints": 168,
+      "hitDice": 19,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 18,
+        "dexterity": 13,
+        "constitution": 18,
+        "intelligence": 12,
+        "wisdom": 14,
+        "charisma": 16
+      },
+      "attacks": [
+        {
+          "name": "Sledgehammer",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 10,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "A massive industrial hammer swings!"
+        },
+        {
+          "name": "Revolver",
+          "attackBonus": 6,
+          "damageDiceCount": 2,
+          "damageDieSize": 8,
+          "damageBonus": 1,
+          "damageType": "Piercing",
+          "description": "Six shots from a heavy revolver!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Rally Workers",
+          "description": "Summons 2d4 factory workers (AC 12, 15 HP each, +4 to hit, 1d6+2 damage).",
+          "type": "Action"
+        },
+        {
+          "name": "Intimidating Presence",
+          "description": "Creatures within 30 feet have disadvantage on attacks unless DC 16 WIS save succeeds.",
+          "type": "Passive"
+        },
+        {
+          "name": "Brutal",
+          "description": "Critical hits on 19-20.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 150,
+      "maxGold": 400,
+      "experienceValue": 5700,
+      "possibleLoot": ["Industrial Sledgehammer", "Heavy Revolver", "Foreman's Whistle", "Company Scrip"],
+      "flavorText": [
+        "A whistle blares - the foreman demands order through violence!",
+        "The overseer's shadow falls over you, hammer raised!",
+        "Back to work! The brutal foreman attacks!"
+      ],
+      "defeatedText": "The foreman's whistle falls silent as they collapse."
+    },
+    {
+      "name": "Soot Elemental",
+      "description": "A living manifestation of industrial pollution and toxic smoke.",
+      "type": "Elemental",
+      "challengeRating": 13,
+      "armorClass": 15,
+      "hitPoints": 142,
+      "hitDice": 15,
+      "hitDieSize": 10,
+      "speed": 40,
+      "stats": {
+        "strength": 16,
+        "dexterity": 18,
+        "constitution": 18,
+        "intelligence": 6,
+        "wisdom": 10,
+        "charisma": 8
+      },
+      "attacks": [
+        {
+          "name": "Choking Touch",
+          "attackBonus": 8,
+          "damageDiceCount": 4,
+          "damageDieSize": 8,
+          "damageBonus": 4,
+          "damageType": "Poison",
+          "description": "Toxic soot invades your lungs!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Smoke Form",
+          "description": "Can become gaseous, gaining resistance to all damage and ability to move through small spaces.",
+          "type": "BonusAction"
+        },
+        {
+          "name": "Pollution Aura",
+          "description": "Creatures within 15 feet take 2d6 poison damage at start of their turn.",
+          "type": "Passive"
+        },
+        {
+          "name": "Obscuring Presence",
+          "description": "Area within 20 feet is lightly obscured.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 100,
+      "experienceValue": 4900,
+      "possibleLoot": ["Soot Sample", "Pollution Crystal", "Ashes"],
+      "flavorText": [
+        "Black smoke coalesces into a vaguely humanoid form!",
+        "The stench of factories given life - a soot elemental!",
+        "Industrial waste becomes a living nightmare!"
+      ],
+      "defeatedText": "The elemental dissipates into harmless smoke."
+    },
+    {
+      "name": "Locomotive Behemoth",
+      "description": "A possessed or runaway train engine, unstoppable and deadly.",
+      "type": "Construct",
+      "challengeRating": 16,
+      "armorClass": 19,
+      "hitPoints": 267,
+      "hitDice": 21,
+      "hitDieSize": 12,
+      "speed": 60,
+      "stats": {
+        "strength": 26,
+        "dexterity": 10,
+        "constitution": 24,
+        "intelligence": 6,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Crushing Charge",
+          "attackBonus": 12,
+          "damageDiceCount": 6,
+          "damageDieSize": 10,
+          "damageBonus": 8,
+          "damageType": "Bludgeoning",
+          "description": "The locomotive charges! (Target knocked prone on hit, DC 20 STR save to avoid)"
+        },
+        {
+          "name": "Steam Blast",
+          "attackBonus": 11,
+          "damageDiceCount": 5,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Superheated steam erupts from the smokestack! (40-foot line, DC 19 DEX save for half)"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Unstoppable",
+          "description": "Cannot be grappled, restrained, or knocked prone. Ignores difficult terrain.",
+          "type": "Passive"
+        },
+        {
+          "name": "Momentum",
+          "description": "Gains +2 to damage for each consecutive turn spent moving (max +10).",
+          "type": "Passive"
+        },
+        {
+          "name": "Heavy Armor",
+          "description": "Resistance to non-magical damage.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 0,
+      "maxGold": 500,
+      "experienceValue": 7800,
+      "possibleLoot": ["Locomotive Parts", "Coal (20)", "Steam Engine Core", "Iron Plating (10)"],
+      "flavorText": [
+        "The shriek of a steam whistle - a runaway locomotive!",
+        "Steel and steam combine in unstoppable fury!",
+        "All aboard the train to destruction!"
+      ],
+      "defeatedText": "The locomotive derails in a catastrophic crash of metal and steam."
+    },
+    {
+      "name": "Saboteur",
+      "description": "A radical or spy skilled in explosives and industrial destruction.",
+      "type": "Humanoid",
+      "challengeRating": 13,
+      "armorClass": 16,
+      "hitPoints": 117,
+      "hitDice": 18,
+      "hitDieSize": 8,
+      "speed": 35,
+      "stats": {
+        "strength": 12,
+        "dexterity": 18,
+        "constitution": 14,
+        "intelligence": 16,
+        "wisdom": 13,
+        "charisma": 12
+      },
+      "attacks": [
+        {
+          "name": "Dynamite",
+          "attackBonus": 8,
+          "damageDiceCount": 6,
+          "damageDieSize": 6,
+          "damageBonus": 0,
+          "damageType": "Fire",
+          "description": "Throws dynamite stick! (15-foot radius, DC 16 DEX save for half)"
+        },
+        {
+          "name": "Wrench",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 4,
+          "damageType": "Bludgeoning",
+          "description": "A heavy wrench swings in close combat!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Sabotage",
+          "description": "Can disable or destroy machinery within 5 feet as action (DC 18 INT check to resist).",
+          "type": "Action"
+        },
+        {
+          "name": "Evasion",
+          "description": "Takes no damage on successful DEX save, half on failure.",
+          "type": "Passive"
+        },
+        {
+          "name": "Cunning Action",
+          "description": "Can Dash, Disengage, or Hide as bonus action.",
+          "type": "BonusAction"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 300,
+      "experienceValue": 4900,
+      "possibleLoot": ["Dynamite (5)", "Detonator", "Tools", "Manifesto"],
+      "flavorText": [
+        "A figure in worker's clothes lights a fuse!",
+        "The saboteur grins as explosives are readied!",
+        "One person's terrorist is another's freedom fighter!"
+      ],
+      "defeatedText": "The saboteur's final explosive fails to detonate as they fall."
+    },
+    {
+      "name": "Iron Baron",
+      "description": "A ruthless industrialist backed by wealth, influence, and hired guns.",
+      "type": "Humanoid",
+      "challengeRating": 15,
+      "armorClass": 18,
+      "hitPoints": 195,
+      "hitDice": 23,
+      "hitDieSize": 8,
+      "speed": 30,
+      "stats": {
+        "strength": 14,
+        "dexterity": 16,
+        "constitution": 18,
+        "intelligence": 18,
+        "wisdom": 16,
+        "charisma": 20
+      },
+      "attacks": [
+        {
+          "name": "Pistol",
+          "attackBonus": 8,
+          "damageDiceCount": 2,
+          "damageDiceCount": 10,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "A gilded pistol fires!"
+        },
+        {
+          "name": "Cane Strike",
+          "attackBonus": 7,
+          "damageDiceCount": 2,
+          "damageDieSize": 6,
+          "damageBonus": 2,
+          "damageType": "Bludgeoning",
+          "description": "A solid gold cane swings!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Hire Mercenaries",
+          "description": "Summons 3 bodyguards (AC 15, 30 HP each, +6 to hit, 2d6+2 damage).",
+          "type": "Action"
+        },
+        {
+          "name": "Bribe",
+          "description": "Target makes DC 18 WIS save or is charmed for 1 minute.",
+          "type": "Action"
+        },
+        {
+          "name": "Monopoly",
+          "description": "Allies gain +2 to all rolls while within 30 feet.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 500,
+      "maxGold": 2000,
+      "experienceValue": 6600,
+      "possibleLoot": ["Gilded Pistol", "Gold Cane", "Stock Certificates", "Deed to Factory", "Bags of Gold (3)"],
+      "flavorText": [
+        "A baron in fine clothes sneers from behind hired protection!",
+        "Money talks - and this industrialist has plenty!",
+        "The rich get richer, and you're in the way!"
+      ],
+      "defeatedText": "The baron's empire crumbles as they fall, gold scattering."
+    },
+    {
+      "name": "Gatling Gun Crew",
+      "description": "Soldiers operating an early machine gun with devastating firepower.",
+      "type": "Humanoid",
+      "challengeRating": 14,
+      "armorClass": 17,
+      "hitPoints": 142,
+      "hitDice": 17,
+      "hitDieSize": 8,
+      "speed": 25,
+      "stats": {
+        "strength": 16,
+        "dexterity": 14,
+        "constitution": 16,
+        "intelligence": 11,
+        "wisdom": 12,
+        "charisma": 10
+      },
+      "attacks": [
+        {
+          "name": "Gatling Gun",
+          "attackBonus": 7,
+          "damageDiceCount": 8,
+          "damageDieSize": 8,
+          "damageBonus": 0,
+          "damageType": "Piercing",
+          "description": "Rapid-fire bullets spray death! (Attacks all targets in 40-foot cone)"
+        },
+        {
+          "name": "Bayonet",
+          "attackBonus": 6,
+          "damageDiceCount": 1,
+          "damageDieSize": 8,
+          "damageBonus": 3,
+          "damageType": "Piercing",
+          "description": "Close combat with fixed bayonets!"
+        }
+      ],
+      "specialAbilities": [
+        {
+          "name": "Crew",
+          "description": "Represents 2-3 soldiers. When reduced below 70 HP, loses multiattack capability.",
+          "type": "Passive"
+        },
+        {
+          "name": "Suppressive Fire",
+          "description": "Targets hit must succeed DC 15 WIS save or have disadvantage on attacks next turn.",
+          "type": "Passive"
+        }
+      ],
+      "minGold": 100,
+      "maxGold": 350,
+      "experienceValue": 5700,
+      "possibleLoot": ["Gatling Gun Parts", "Ammunition (100)", "Military Uniforms", "Field Manual"],
+      "flavorText": [
+        "The crank turns - a gatling gun opens fire!",
+        "Brass casings rain down as the machine gun roars!",
+        "The industrial age brings industrial death!"
+      ],
+      "defeatedText": "The gun crew falls, their weapon falling silent."
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 ﻿using SkiaSharp;
-using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
@@ -12,31 +11,22 @@ namespace CavemanChronicles
         private readonly MonsterLoaderService _monsterLoader;
         private readonly AudioService _audioService;
         private List<string> _gameTextHistory = new List<string>();
-        private bool _monstersLoaded = false;
 
-        // Constructor with dependency injection
-        public MainPage(Character character,
-                       GameService gameService,
-                       CombatService combatService,
-                       MonsterLoaderService monsterLoader,
-                       AudioService audioService)
+        public MainPage(Character character, GameService gameService, CombatService combatService,
+                       MonsterLoaderService monsterLoader, AudioService audioService)
         {
             InitializeComponent();
 
-            // Store services
             _gameService = gameService;
             _combatService = combatService;
             _monsterLoader = monsterLoader;
             _audioService = audioService;
 
-            // Set up game service
             _gameService.Player = character;
             _gameService.SetAudioService(_audioService);
             _gameService.SetMonsterLoader(_monsterLoader);
             _gameService.SetCombatService(_combatService);
-
-            // Check if monsters are already loaded, if not load them
-            EnsureMonstersLoaded();
+            _gameService.SetNavigation(Navigation); // SET NAVIGATION
 
             // Add welcome message with race info
             var raceStats = RaceData.GetRaceStats(character.Race);
@@ -45,49 +35,27 @@ namespace CavemanChronicles
             _gameTextHistory.Add("You awaken in a primitive cave. The smell of smoke and dirt fills your nostrils.");
             _gameTextHistory.Add($"As a {raceStats.Name}, you possess unique strengths that will aid your journey through the ages.");
             _gameTextHistory.Add("");
-            _gameTextHistory.Add("Type 'help' to see available commands.");
+            _gameTextHistory.Add("Type 'help' to see available commands, or 'attack' to start combat!");
 
             GameTextLabel.Text = string.Join("\n\n", _gameTextHistory);
             UpdateUI();
         }
 
-        private async void EnsureMonstersLoaded()
-        {
-            try
-            {
-                System.Diagnostics.Debug.WriteLine("Ensuring monsters are loaded...");
-                await _monsterLoader.LoadAllMonsters();
-                _monstersLoaded = true;
-                System.Diagnostics.Debug.WriteLine($"Monsters loaded! Total: {_monsterLoader.GetTotalMonsterCount()}");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error loading monsters: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
-            }
-        }
-
+        // Rest of MainPage code remains the same...
         private void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
             var canvas = e.Surface.Canvas;
             var info = e.Info;
 
             canvas.Clear(SKColors.Black);
-
-            // Draw pixel art character in center
             DrawPixelCharacter(canvas, info.Width / 2, info.Height / 2);
-
-            // Draw decorative border (retro CRT effect)
             DrawRetroBorder(canvas, info.Width, info.Height);
         }
 
         private void DrawPixelCharacter(SKCanvas canvas, float centerX, float centerY)
         {
-            // Pixel size (makes it look retro/chunky)
             int pixelSize = 8;
 
-            // Simple caveman sprite (8x8 grid)
-            // 1 = skin color, 2 = hair/beard, 0 = transparent
             int[,] cavemanSprite = new int[,]
             {
                 { 0, 0, 2, 2, 2, 2, 0, 0 },
@@ -100,19 +68,17 @@ namespace CavemanChronicles
                 { 0, 1, 1, 0, 0, 1, 1, 0 }
             };
 
-            // Color palette based on tech era and race
             SKColor skinColor = GetColorForRace(_gameService.Player?.Race ?? Race.Human,
                                                 _gameService.Player?.CurrentEra ?? TechnologyEra.Caveman);
             SKColor hairColor = SKColors.SaddleBrown;
 
             var paint = new SKPaint();
 
-            // Draw the sprite
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    if (cavemanSprite[y, x] == 0) continue; // Transparent
+                    if (cavemanSprite[y, x] == 0) continue;
 
                     paint.Color = cavemanSprite[y, x] == 1 ? skinColor : hairColor;
 
@@ -126,7 +92,6 @@ namespace CavemanChronicles
 
         private SKColor GetColorForRace(Race race, TechnologyEra era)
         {
-            // Base color varies by era
             SKColor baseColor = era switch
             {
                 TechnologyEra.Caveman => SKColors.BurlyWood,
@@ -141,7 +106,6 @@ namespace CavemanChronicles
                 _ => SKColors.BurlyWood
             };
 
-            // Slight tint based on race
             return race switch
             {
                 Race.Elf => AdjustColor(baseColor, 1.1f, 1.0f, 0.9f),
@@ -171,7 +135,6 @@ namespace CavemanChronicles
                 IsAntialias = false
             };
 
-            // Draw scanline effect
             paint.StrokeWidth = 1;
             for (int y = 0; y < height; y += 4)
             {
@@ -182,76 +145,35 @@ namespace CavemanChronicles
 
         private async void OnCommandEntered(object sender, EventArgs e)
         {
-            var command = CommandEntry.Text?.Trim().ToLower();
+            var command = CommandEntry.Text?.Trim();
             if (string.IsNullOrEmpty(command)) return;
 
-            // Add command to history
             AppendGameText($"> {command}");
 
-            // Check if in combat
-            if (_combatService.CurrentCombat != null && _combatService.CurrentCombat.Status == CombatStatus.Ongoing)
+            string response = await _gameService.ProcessCommand(command);
+
+            // Only append response if not empty (combat page handles its own display)
+            if (!string.IsNullOrEmpty(response))
             {
-                await HandleCombatCommand(command);
-            }
-            else
-            {
-                // Process regular command
-                string response = await _gameService.ProcessCommand(command);
                 AppendGameText(response);
             }
 
-            // Clear input
             CommandEntry.Text = string.Empty;
-
-            // Update UI
             UpdateUI();
-
-            // Redraw graphics
             GraphicsCanvas.InvalidateSurface();
         }
 
-        private async Task HandleCombatCommand(string command)
+        protected override void OnAppearing()
         {
-            List<string> turnLog;
-
-            if (command.Contains("attack") || command.Contains("fight") || command.Contains("hit"))
-            {
-                turnLog = await _combatService.ProcessPlayerAction(CombatActionType.MeleeAttack);
-            }
-            else if (command.Contains("dodge"))
-            {
-                turnLog = await _combatService.ProcessPlayerAction(CombatActionType.Dodge);
-            }
-            else if (command.Contains("flee") || command.Contains("run") || command.Contains("escape"))
-            {
-                turnLog = await _combatService.ProcessPlayerAction(CombatActionType.Flee);
-            }
-            else
-            {
-                AppendGameText("In combat! Commands: 'attack', 'dodge', 'flee'");
-                return;
-            }
-
-            // Display turn results
-            foreach (var line in turnLog)
-            {
-                AppendGameText(line);
-            }
-
-            // Check if combat ended
-            if (_combatService.CurrentCombat?.Status != CombatStatus.Ongoing)
-            {
-                _combatService.EndCombat();
-                AppendGameText("");
-                AppendGameText("Combat has ended. You can continue your adventure.");
-            }
+            base.OnAppearing();
+            // Refresh UI when returning from combat
+            UpdateUI();
         }
 
         private async void AppendGameText(string text)
         {
             _gameTextHistory.Add(text);
 
-            // Keep only last 50 lines
             if (_gameTextHistory.Count > 50)
             {
                 _gameTextHistory.RemoveAt(0);
@@ -259,7 +181,6 @@ namespace CavemanChronicles
 
             GameTextLabel.Text = string.Join("\n\n", _gameTextHistory);
 
-            // Auto-scroll to bottom
             await Task.Delay(50);
             await GameTextScroll.ScrollToAsync(GameTextLabel, ScrollToPosition.End, true);
         }
