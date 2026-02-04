@@ -1,16 +1,15 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace CavemanChronicles
 {
     public class MonsterLoaderService
     {
-        private Dictionary<TechnologyEra, List<Monster>> _monstersByEra;
+        private Dictionary<TechnologyEra, List<Monster>> _monsterCache;
         private bool _isLoaded = false;
 
         public MonsterLoaderService()
         {
-            _monstersByEra = new Dictionary<TechnologyEra, List<Monster>>();
+            _monsterCache = new Dictionary<TechnologyEra, List<Monster>>();
         }
 
         public async Task LoadAllMonsters()
@@ -21,18 +20,17 @@ namespace CavemanChronicles
             try
             {
                 // Load monsters for each era
-                await LoadMonstersForEra("monsters_caveman.json", TechnologyEra.Caveman);
-                await LoadMonstersForEra("monsters_stoneage.json", TechnologyEra.StoneAge);
-                await LoadMonstersForEra("monsters_bronzeage.json", TechnologyEra.BronzeAge);
-                await LoadMonstersForEra("monsters_ironage.json", TechnologyEra.IronAge);
-                await LoadMonstersForEra("monsters_medieval.json", TechnologyEra.Medieval);
-                await LoadMonstersForEra("monsters_renaissance.json", TechnologyEra.Renaissance);
-                await LoadMonstersForEra("monsters_industrial.json", TechnologyEra.Industrial);
-                await LoadMonstersForEra("monsters_modern.json", TechnologyEra.Modern);
-                await LoadMonstersForEra("monsters_future.json", TechnologyEra.Future);
+                await LoadMonstersForEra(TechnologyEra.Caveman, "GameData\\monsters_caveman.json");
+                await LoadMonstersForEra(TechnologyEra.StoneAge, "GameData\\monsters_stoneage.json");
+                await LoadMonstersForEra(TechnologyEra.BronzeAge, "GameData\\monsters_bronzeage.json");
+                await LoadMonstersForEra(TechnologyEra.IronAge, "GameData\\monsters_ironage.json");
+                await LoadMonstersForEra(TechnologyEra.Medieval, "GameData\\monsters_medieval.json");
+                await LoadMonstersForEra(TechnologyEra.Renaissance, "GameData\\monsters_renaissance.json");
+                await LoadMonstersForEra(TechnologyEra.Industrial, "GameData\\monsters_industrial.json");
+                await LoadMonstersForEra(TechnologyEra.Modern, "GameData\\monsters_modern.json");
+                await LoadMonstersForEra(TechnologyEra.Future, "GameData\\monsters_future.json");
 
                 _isLoaded = true;
-                System.Diagnostics.Debug.WriteLine($"Loaded {GetTotalMonsterCount()} monsters across all eras.");
             }
             catch (Exception ex)
             {
@@ -40,127 +38,127 @@ namespace CavemanChronicles
             }
         }
 
-        private async Task LoadMonstersForEra(string fileName, TechnologyEra era)
+        private async Task LoadMonstersForEra(TechnologyEra era, string fileName)
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine($"Attempting to load {fileName} for era {era}...");
-
-                var filePath = Path.Combine("GameData", fileName);
-                System.Diagnostics.Debug.WriteLine($"Full path: {filePath}");
-
-                using var stream = await FileSystem.OpenAppPackageFileAsync(filePath);
+                // Try to load from embedded resource
+                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
 
-                System.Diagnostics.Debug.WriteLine($"JSON loaded, length: {json.Length}");
-
-                // ADD JsonStringEnumConverter to handle string->enum conversion
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
-                    Converters = { new JsonStringEnumConverter() }
+                    Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
                 };
 
-                var monsterFile = JsonSerializer.Deserialize<MonsterFile>(json, options);
+                var monsterData = JsonSerializer.Deserialize<MonsterDataFile>(json, options);
 
-                if (monsterFile?.Monsters != null)
+                if (monsterData?.Monsters != null)
                 {
-                    _monstersByEra[era] = monsterFile.Monsters;
-                    System.Diagnostics.Debug.WriteLine($"✓ Loaded {monsterFile.Monsters.Count} monsters for {era}");
+                    // Set the Era property for each monster
+                    foreach (var monster in monsterData.Monsters)
+                    {
+                        monster.Era = era;
+                        monster.MaxHitPoints = monster.HitPoints; // Initialize MaxHitPoints
+                    }
+
+                    _monsterCache[era] = monsterData.Monsters;
+                    System.Diagnostics.Debug.WriteLine($"Loaded {monsterData.Monsters.Count} monsters for {era}");
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine($"✗ MonsterFile or Monsters list is null for {fileName}");
-                    _monstersByEra[era] = new List<Monster>();
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"✗ File not found: {fileName}");
-                System.Diagnostics.Debug.WriteLine($"  Error: {ex.Message}");
-                _monstersByEra[era] = new List<Monster>();
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"✗ Error loading {fileName}: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"  Stack: {ex.StackTrace}");
-                _monstersByEra[era] = new List<Monster>();
+                System.Diagnostics.Debug.WriteLine($"Error loading {fileName}: {ex.Message}");
+                // Initialize empty list for this era so it doesn't crash
+                _monsterCache[era] = new List<Monster>();
             }
         }
 
-        public List<Monster> GetMonstersForEra(TechnologyEra era)
+        // GET MONSTERS BY ERA - THE MISSING METHOD
+        public List<Monster> GetMonstersByEra(TechnologyEra era)
         {
             if (!_isLoaded)
             {
-                System.Diagnostics.Debug.WriteLine("Warning: Monsters not loaded yet!");
+                System.Diagnostics.Debug.WriteLine("Warning: Monsters not loaded yet. Call LoadAllMonsters() first.");
                 return new List<Monster>();
             }
 
-            return _monstersByEra.ContainsKey(era) ? _monstersByEra[era] : new List<Monster>();
+            if (_monsterCache.ContainsKey(era))
+            {
+                return _monsterCache[era];
+            }
+
+            System.Diagnostics.Debug.WriteLine($"No monsters found for era: {era}");
+            return new List<Monster>();
         }
 
-        public List<Monster> GetMonstersForEra(TechnologyEra era, int minCR, int maxCR)
+        public Monster GetRandomMonster(TechnologyEra era)
         {
-            return GetMonstersForEra(era)
-                .Where(m => m.ChallengeRating >= minCR && m.ChallengeRating <= maxCR)
-                .ToList();
-        }
+            var monsters = GetMonstersByEra(era);
 
-        public Monster? GetRandomMonster(TechnologyEra era, int playerLevel)
-        {
-            if (!_isLoaded)
-            {
-                System.Diagnostics.Debug.WriteLine("Warning: Monsters not loaded yet!");
+            if (monsters == null || monsters.Count == 0)
                 return null;
-            }
-
-            // Get appropriate CR range (player level-based)
-            int minCR = Math.Max(0, (playerLevel - 2) / 5);
-            int maxCR = (playerLevel + 2) / 5;
-
-            var appropriateMonsters = GetMonstersForEra(era, minCR, maxCR);
-
-            if (appropriateMonsters.Count == 0)
-            {
-                // Fallback to any monster from the era
-                appropriateMonsters = GetMonstersForEra(era);
-            }
-
-            if (appropriateMonsters.Count == 0)
-            {
-                System.Diagnostics.Debug.WriteLine($"No monsters found for era {era}");
-                return null;
-            }
 
             var random = new Random();
-            return appropriateMonsters[random.Next(appropriateMonsters.Count)];
-        }
+            var selectedMonster = monsters[random.Next(monsters.Count)];
 
-        public Monster? GetMonsterByName(string name, TechnologyEra era)
-        {
-            return GetMonstersForEra(era)
-                .FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public int GetTotalMonsterCount()
-        {
-            return _monstersByEra.Values.Sum(list => list.Count);
-        }
-
-        public List<Monster> GetAllMonsters()
-        {
-            var allMonsters = new List<Monster>();
-            foreach (var monsterList in _monstersByEra.Values)
+            // Create a copy so we don't modify the cached version
+            return new Monster
             {
-                allMonsters.AddRange(monsterList);
-            }
-            return allMonsters;
+                Name = selectedMonster.Name,
+                Description = selectedMonster.Description,
+                Type = selectedMonster.Type,
+                Era = selectedMonster.Era,
+                ChallengeRating = selectedMonster.ChallengeRating,
+                ArmorClass = selectedMonster.ArmorClass,
+                HitPoints = selectedMonster.HitPoints,
+                MaxHitPoints = selectedMonster.HitPoints,
+                HitDice = selectedMonster.HitDice,
+                HitDieSize = selectedMonster.HitDieSize,
+                Speed = selectedMonster.Speed,
+                Stats = selectedMonster.Stats,
+                Attacks = selectedMonster.Attacks,
+                SpecialAbilities = selectedMonster.SpecialAbilities,
+                MinGold = selectedMonster.MinGold,
+                MaxGold = selectedMonster.MaxGold,
+                ExperienceValue = selectedMonster.ExperienceValue,
+                PossibleLoot = selectedMonster.PossibleLoot,
+                FlavorText = selectedMonster.FlavorText,
+                DefeatedText = selectedMonster.DefeatedText
+            };
         }
+
+        public List<Monster> GetMonstersByType(MonsterType type)
+        {
+            var result = new List<Monster>();
+
+            foreach (var monsterList in _monsterCache.Values)
+            {
+                result.AddRange(monsterList.Where(m => m.Type == type));
+            }
+
+            return result;
+        }
+
+        public List<Monster> GetMonstersByChallengeRating(int minCR, int maxCR)
+        {
+            var result = new List<Monster>();
+
+            foreach (var monsterList in _monsterCache.Values)
+            {
+                result.AddRange(monsterList.Where(m => m.ChallengeRating >= minCR && m.ChallengeRating <= maxCR));
+            }
+
+            return result;
+        }
+
+        public bool IsLoaded => _isLoaded;
     }
 
     // Helper class for JSON deserialization
-    public class MonsterFile
+    public class MonsterDataFile
     {
         public string Era { get; set; }
         public List<Monster> Monsters { get; set; }
