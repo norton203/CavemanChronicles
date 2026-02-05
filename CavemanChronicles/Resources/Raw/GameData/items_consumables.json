@@ -1,0 +1,113 @@
+{
+  "category": "Consumables",
+  "items": [
+    {
+      "id": "health_potion_minor",
+      "name": "Minor Health Potion",
+      "description": "Restores 25 HP",
+      "itemType": "Consumable",
+      "rarity": "Common",
+      "value": 25,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 99,
+      "iconEmoji": "🧪",
+      "effect": {
+        "type": "HealHP",
+        "value": 25,
+        "duration": 0,
+        "description": "Restores 25 hit points"
+      }
+    },
+    {
+      "id": "health_potion_moderate",
+      "name": "Moderate Health Potion",
+      "description": "Restores 50 HP",
+      "itemType": "Consumable",
+      "rarity": "Uncommon",
+      "value": 50,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 99,
+      "iconEmoji": "🧪",
+      "effect": {
+        "type": "HealHP",
+        "value": 50,
+        "duration": 0,
+        "description": "Restores 50 hit points"
+      }
+    },
+    {
+      "id": "health_potion_major",
+      "name": "Major Health Potion",
+      "description": "Restores 100 HP",
+      "itemType": "Consumable",
+      "rarity": "Rare",
+      "value": 100,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 99,
+      "iconEmoji": "🧪",
+      "effect": {
+        "type": "HealHP",
+        "value": 100,
+        "duration": 0,
+        "description": "Restores 100 hit points"
+      }
+    },
+    {
+      "id": "strength_potion",
+      "name": "Potion of Strength",
+      "description": "Increases Strength by 2 for 10 turns",
+      "itemType": "Consumable",
+      "rarity": "Uncommon",
+      "value": 75,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 20,
+      "iconEmoji": "💪",
+      "effect": {
+        "type": "BuffStrength",
+        "value": 2,
+        "duration": 10,
+        "description": "+2 Strength for 10 turns"
+      }
+    },
+    {
+      "id": "dexterity_potion",
+      "name": "Potion of Agility",
+      "description": "Increases Dexterity by 2 for 10 turns",
+      "itemType": "Consumable",
+      "rarity": "Uncommon",
+      "value": 75,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 20,
+      "iconEmoji": "🏃",
+      "effect": {
+        "type": "BuffDexterity",
+        "value": 2,
+        "duration": 10,
+        "description": "+2 Dexterity for 10 turns"
+      }
+    },
+    {
+      "id": "constitution_potion",
+      "name": "Potion of Fortitude",
+      "description": "Increases Constitution by 2 for 10 turns",
+      "itemType": "Consumable",
+      "rarity": "Uncommon",
+      "value": 75,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 20,
+      "iconEmoji": "🛡️",
+      "effect": {
+        "type": "BuffConstitution",
+        "value": 2,
+        "duration": 10,
+        "description": "+2 Constitution for 10 turns"
+      }
+    }
+  ]
+}

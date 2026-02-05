@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CavemanChronicles.InventoryPage"
+             BackgroundColor="Black"
+             Title="INVENTORY">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="10" RowSpacing="10">
+
+        <!-- HEADER -->
+        <Border Grid.Row="0"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                Padding="10"
+                BackgroundColor="Black">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <Label Grid.Column="0"
+                       Text="INVENTORY"
+                       TextColor="#FFD700"
+                       FontFamily="Courier New"
+                       FontSize="24"
+                       FontAttributes="Bold"/>
+                
+                <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="0,0,20,0">
+                    <Label x:Name="WeightLabel"
+                           Text="Weight: 0/100"
+                           TextColor="{StaticResource RetroGreen}"
+                           FontFamily="Courier New"
+                           FontSize="12"/>
+                    <Label x:Name="GoldLabel"
+                           Text="Gold: 0 GP"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="12"/>
+                </VerticalStackLayout>
+
+                <Border Grid.Column="2"
+                       Stroke="#FF0000"
+                       StrokeThickness="2"
+                       Padding="10"
+                       BackgroundColor="#330000">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="✕ CLOSE"
+                           TextColor="#FF0000"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- FILTER TABS -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal" HeightRequest="50">
+            <HorizontalStackLayout Spacing="10">
+                
+                <Border x:Name="AllTab"
+                       Stroke="{StaticResource RetroGreen}"
+                       StrokeThickness="2"
+                       Padding="15,10"
+                       BackgroundColor="#003300">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAllTabClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="ALL"
+                           TextColor="{StaticResource RetroGreen}"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"/>
+                </Border>
+
+                <Border x:Name="ConsumablesTab"
+                       Stroke="#888888"
+                       StrokeThickness="2"
+                       Padding="15,10"
+                       BackgroundColor="#111111">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConsumablesTabClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="🧪 CONSUMABLES"
+                           TextColor="#888888"
+                           FontFamily="Courier New"
+                           FontSize="14"/>
+                </Border>
+
+                <Border x:Name="WeaponsTab"
+                       Stroke="#888888"
+                       StrokeThickness="2"
+                       Padding="15,10"
+                       BackgroundColor="#111111">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnWeaponsTabClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="⚔️ WEAPONS"
+                           TextColor="#888888"
+                           FontFamily="Courier New"
+                           FontSize="14"/>
+                </Border>
+
+                <Border x:Name="ArmorTab"
+                       Stroke="#888888"
+                       StrokeThickness="2"
+                       Padding="15,10"
+                       BackgroundColor="#111111">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnArmorTabClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="🛡️ ARMOR"
+                           TextColor="#888888"
+                           FontFamily="Courier New"
+                           FontSize="14"/>
+                </Border>
+
+                <Border x:Name="QuestTab"
+                       Stroke="#888888"
+                       StrokeThickness="2"
+                       Padding="15,10"
+                       BackgroundColor="#111111">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnQuestTabClicked"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="📜 QUEST"
+                           TextColor="#888888"
+                           FontFamily="Courier New"
+                           FontSize="14"/>
+                </Border>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- ITEM LIST -->
+        <Border Grid.Row="2"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                BackgroundColor="Black">
+            <ScrollView>
+                <VerticalStackLayout x:Name="ItemListContainer"
+                                    Spacing="5"
+                                    Padding="10">
+                    <!-- Item cards will be added dynamically -->
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+
+        <!-- EQUIPMENT PANEL -->
+        <Border Grid.Row="3"
+                Stroke="{StaticResource RetroGreen}"
+                StrokeThickness="2"
+                Padding="10"
+                BackgroundColor="Black"
+                HeightRequest="120">
+            <Grid ColumnDefinitions="*,*,*">
+                
+                <!-- Main Hand -->
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="MAIN HAND"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Border x:Name="MainHandSlot"
+                           Stroke="{StaticResource RetroGreen}"
+                           StrokeThickness="2"
+                           Padding="10"
+                           BackgroundColor="#001100"
+                           HeightRequest="60">
+                        <Label x:Name="MainHandLabel"
+                               Text="Empty"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="10"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Chest -->
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="ARMOR"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Border x:Name="ChestSlot"
+                           Stroke="{StaticResource RetroGreen}"
+                           StrokeThickness="2"
+                           Padding="10"
+                           BackgroundColor="#001100"
+                           HeightRequest="60">
+                        <Label x:Name="ChestLabel"
+                               Text="Empty"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="10"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Off Hand -->
+                <VerticalStackLayout Grid.Column="2" Spacing="5">
+                    <Label Text="OFF HAND"
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Border x:Name="OffHandSlot"
+                           Stroke="{StaticResource RetroGreen}"
+                           StrokeThickness="2"
+                           Padding="10"
+                           BackgroundColor="#001100"
+                           HeightRequest="60">
+                        <Label x:Name="OffHandLabel"
+                               Text="Empty"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="10"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!-- ITEM DETAIL OVERLAY (Hidden by default) -->
+        <Grid x:Name="ItemDetailOverlay"
+              Grid.RowSpan="4"
+              BackgroundColor="#000000CC"
+              IsVisible="False">
+            <Border Stroke="{StaticResource RetroGreen}"
+                    StrokeThickness="3"
+                    Padding="20"
+                    BackgroundColor="Black"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="350"
+                    MaxHeightRequest="500">
+                <VerticalStackLayout Spacing="15">
+                    
+                    <!-- Item Header -->
+                    <Grid ColumnDefinitions="Auto,*">
+                        <Label Grid.Column="0"
+                               x:Name="DetailIconLabel"
+                               Text="🧪"
+                               FontSize="40"
+                               VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="5" Margin="15,0,0,0">
+                            <Label x:Name="DetailNameLabel"
+                                   Text="Item Name"
+                                   TextColor="#FFD700"
+                                   FontFamily="Courier New"
+                                   FontSize="18"
+                                   FontAttributes="Bold"/>
+                            <Label x:Name="DetailRarityLabel"
+                                   Text="Common"
+                                   TextColor="{StaticResource RetroGreen}"
+                                   FontFamily="Courier New"
+                                   FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Item Description -->
+                    <Label x:Name="DetailDescriptionLabel"
+                           Text="Item description goes here"
+                           TextColor="{StaticResource RetroGreen}"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           LineBreakMode="WordWrap"/>
+
+                    <!-- Item Stats -->
+                    <Label x:Name="DetailStatsLabel"
+                           Text=""
+                           TextColor="#00FFFF"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           LineBreakMode="WordWrap"/>
+
+                    <!-- Item Value/Weight -->
+                    <Grid ColumnDefinitions="*,*">
+                        <Label Grid.Column="0"
+                               x:Name="DetailValueLabel"
+                               Text="Value: 0 GP"
+                               TextColor="#FFD700"
+                               FontFamily="Courier New"
+                               FontSize="12"/>
+                        <Label Grid.Column="1"
+                               x:Name="DetailWeightLabel"
+                               Text="Weight: 0"
+                               TextColor="{StaticResource RetroGreen}"
+                               FontFamily="Courier New"
+                               FontSize="12"
+                               HorizontalOptions="End"/>
+                    </Grid>
+
+                    <!-- Action Buttons -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        
+                        <Border Grid.Column="0"
+                               x:Name="UseEquipButton"
+                               Stroke="#00FF00"
+                               StrokeThickness="2"
+                               Padding="15,10"
+                               BackgroundColor="#003300">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnUseEquipClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label x:Name="UseEquipButtonLabel"
+                                   Text="USE"
+                                   TextColor="#00FF00"
+                                   FontFamily="Courier New"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                               Stroke="#FF0000"
+                               StrokeThickness="2"
+                               Padding="15,10"
+                               BackgroundColor="#330000">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDropClicked"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="DROP"
+                                   TextColor="#FF0000"
+                                   FontFamily="Courier New"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Close Button -->
+                    <Border Stroke="#888888"
+                           StrokeThickness="2"
+                           Padding="15,10"
+                           BackgroundColor="#222222">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCloseDetailClicked"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="✕ CLOSE"
+                               TextColor="#888888"
+                               FontFamily="Courier New"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

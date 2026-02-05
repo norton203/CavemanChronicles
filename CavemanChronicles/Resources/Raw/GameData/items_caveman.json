@@ -1,0 +1,98 @@
+{
+  "era": "Caveman",
+  "items": [
+    {
+      "id": "wooden_club",
+      "name": "Wooden Club",
+      "description": "A heavy wooden club for bashing",
+      "itemType": "Weapon",
+      "rarity": "Common",
+      "era": "Caveman",
+      "value": 5,
+      "weight": 5,
+      "isStackable": false,
+      "iconEmoji": "🏏",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 0,
+        "damageDiceCount": 1,
+        "damageDieSize": 6,
+        "damageBonus": 0,
+        "damageType": "Bludgeoning"
+      }
+    },
+    {
+      "id": "sharp_rock",
+      "name": "Sharp Rock",
+      "description": "A jagged stone for cutting",
+      "itemType": "Weapon",
+      "rarity": "Common",
+      "era": "Caveman",
+      "value": 3,
+      "weight": 2,
+      "isStackable": false,
+      "iconEmoji": "🪨",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 0,
+        "damageDiceCount": 1,
+        "damageDieSize": 4,
+        "damageBonus": 0,
+        "damageType": "Slashing"
+      }
+    },
+    {
+      "id": "bone_spear",
+      "name": "Bone Spear",
+      "description": "A sharpened bone tied to a stick",
+      "itemType": "Weapon",
+      "rarity": "Common",
+      "era": "Caveman",
+      "value": 8,
+      "weight": 3,
+      "isStackable": false,
+      "iconEmoji": "🦴",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 0,
+        "damageDiceCount": 1,
+        "damageDieSize": 6,
+        "damageBonus": 0,
+        "damageType": "Piercing"
+      }
+    },
+    {
+      "id": "hide_armor",
+      "name": "Hide Armor",
+      "description": "Animal hide providing basic protection",
+      "itemType": "Armor",
+      "rarity": "Common",
+      "era": "Caveman",
+      "value": 10,
+      "weight": 8,
+      "isStackable": false,
+      "iconEmoji": "🦴",
+      "equipmentSlot": "Chest",
+      "equipmentStats": {
+        "armorClass": 12
+      }
+    },
+    {
+      "id": "fur_cloak",
+      "name": "Fur Cloak",
+      "description": "Warm fur cloak for protection against the elements",
+      "itemType": "Armor",
+      "rarity": "Common",
+      "era": "Caveman",
+      "value": 15,
+      "weight": 5,
+      "isStackable": false,
+      "iconEmoji": "🧥",
+      "equipmentSlot": "Back",
+      "equipmentStats": {
+        "armorClass": 1,
+        "constitutionBonus": 1
+      }
+    }
+  ]
+}

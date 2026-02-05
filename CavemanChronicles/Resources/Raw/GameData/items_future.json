@@ -1,0 +1,124 @@
+{
+  "era": "Future",
+  "items": [
+    {
+      "id": "plasma_rifle",
+      "name": "Plasma Rifle",
+      "description": "Advanced energy weapon firing superheated plasma",
+      "itemType": "Weapon",
+      "rarity": "Legendary",
+      "era": "Future",
+      "value": 2000,
+      "weight": 3,
+      "isStackable": false,
+      "iconEmoji": "⚡",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 5,
+        "damageDiceCount": 4,
+        "damageDieSize": 10,
+        "damageBonus": 5,
+        "damageType": "Force",
+        "specialProperties": ["Ranged", "Energy", "Overcharge"]
+      }
+    },
+    {
+      "id": "energy_shield",
+      "name": "Personal Energy Shield",
+      "description": "Advanced force field protection",
+      "itemType": "Armor",
+      "rarity": "Legendary",
+      "era": "Future",
+      "value": 3000,
+      "weight": 2,
+      "isStackable": false,
+      "iconEmoji": "🛡️",
+      "equipmentSlot": "Chest",
+      "equipmentStats": {
+        "armorClass": 20,
+        "specialProperties": ["Energy Absorption", "Regenerating"]
+      }
+    },
+    {
+      "id": "nanite_injector",
+      "name": "Nanite Repair Injector",
+      "description": "Advanced medical nanobots for instant healing",
+      "itemType": "Consumable",
+      "rarity": "Epic",
+      "era": "Future",
+      "value": 500,
+      "weight": 1,
+      "isStackable": true,
+      "maxStackSize": 10,
+      "iconEmoji": "💉",
+      "effect": {
+        "type": "HealHP",
+        "value": 200,
+        "duration": 0,
+        "description": "Restores 200 HP instantly"
+      }
+    },
+    {
+      "id": "gravity_hammer",
+      "name": "Gravity Hammer",
+      "description": "Weapon that manipulates gravitational forces",
+      "itemType": "Weapon",
+      "rarity": "Epic",
+      "era": "Future",
+      "value": 1800,
+      "weight": 6,
+      "isStackable": false,
+      "iconEmoji": "🔨",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 4,
+        "damageDiceCount": 3,
+        "damageDieSize": 12,
+        "damageBonus": 3,
+        "damageType": "Force",
+        "strengthBonus": 2,
+        "specialProperties": ["Gravity Pulse", "Area Effect"]
+      }
+    },
+    {
+      "id": "neural_enhancer",
+      "name": "Neural Enhancer Implant",
+      "description": "Cybernetic implant that boosts mental capabilities",
+      "itemType": "Accessory",
+      "rarity": "Epic",
+      "era": "Future",
+      "value": 2500,
+      "weight": 0,
+      "isStackable": false,
+      "iconEmoji": "🧠",
+      "equipmentSlot": "Head",
+      "equipmentStats": {
+        "intelligenceBonus": 3,
+        "wisdomBonus": 2,
+        "specialProperties": ["Enhanced Cognition"]
+      }
+    },
+    {
+      "id": "quantum_blade",
+      "name": "Quantum Phase Blade",
+      "description": "Blade that phases between dimensions",
+      "itemType": "Weapon",
+      "rarity": "Legendary",
+      "era": "Future",
+      "value": 2500,
+      "weight": 1,
+      "isStackable": false,
+      "iconEmoji": "🗡️",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 6,
+        "damageDiceCount": 2,
+        "damageDieSize": 12,
+        "damageBonus": 6,
+        "damageType": "Force",
+        "dexterityBonus": 3,
+        "specialProperties": ["Phase Strike", "Ignores Armor"]
+      }
+    }
+  ]
+}

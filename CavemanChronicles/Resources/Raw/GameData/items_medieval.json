@@ -1,0 +1,94 @@
+{
+  "era": "Medieval",
+  "items": [
+    {
+      "id": "steel_longsword",
+      "name": "Steel Longsword",
+      "description": "A masterfully crafted steel blade",
+      "itemType": "Weapon",
+      "rarity": "Rare",
+      "era": "Medieval",
+      "value": 150,
+      "weight": 3,
+      "isStackable": false,
+      "iconEmoji": "⚔️",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 3,
+        "damageDiceCount": 1,
+        "damageDieSize": 10,
+        "damageBonus": 2,
+        "damageType": "Slashing",
+        "specialProperties": ["Versatile"]
+      }
+    },
+    {
+      "id": "plate_armor",
+      "name": "Plate Armor",
+      "description": "Full plate armor providing maximum protection",
+      "itemType": "Armor",
+      "rarity": "Rare",
+      "era": "Medieval",
+      "value": 500,
+      "weight": 50,
+      "isStackable": false,
+      "iconEmoji": "🛡️",
+      "equipmentSlot": "Chest",
+      "equipmentStats": {
+        "armorClass": 18
+      }
+    },
+    {
+      "id": "war_hammer",
+      "name": "War Hammer",
+      "description": "Heavy hammer for crushing armor",
+      "itemType": "Weapon",
+      "rarity": "Uncommon",
+      "era": "Medieval",
+      "value": 120,
+      "weight": 8,
+      "isStackable": false,
+      "iconEmoji": "🔨",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 2,
+        "damageDiceCount": 1,
+        "damageDieSize": 10,
+        "damageBonus": 1,
+        "damageType": "Bludgeoning"
+      }
+    },
+    {
+      "id": "kite_shield",
+      "name": "Kite Shield",
+      "description": "Large shield providing excellent defense",
+      "itemType": "Shield",
+      "rarity": "Uncommon",
+      "era": "Medieval",
+      "value": 80,
+      "weight": 8,
+      "isStackable": false,
+      "iconEmoji": "🛡️",
+      "equipmentSlot": "OffHand",
+      "equipmentStats": {
+        "armorClass": 2
+      }
+    },
+    {
+      "id": "knights_helmet",
+      "name": "Knight's Helmet",
+      "description": "Protective steel helmet",
+      "itemType": "Armor",
+      "rarity": "Uncommon",
+      "era": "Medieval",
+      "value": 100,
+      "weight": 5,
+      "isStackable": false,
+      "iconEmoji": "⛑️",
+      "equipmentSlot": "Head",
+      "equipmentStats": {
+        "armorClass": 1
+      }
+    }
+  ]
+}
