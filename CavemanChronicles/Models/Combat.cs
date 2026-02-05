@@ -46,7 +46,7 @@
         Enemy
     }
 
-    public enum EffectType
+    public enum StatusEffectType
     {
         Advantage,
         Disadvantage,

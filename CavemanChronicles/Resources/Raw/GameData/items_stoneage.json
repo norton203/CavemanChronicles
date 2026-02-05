@@ -1,0 +1,45 @@
+{
+  "era": "StoneAge",
+  "items": [
+    {
+      "id": "stone_axe",
+      "name": "Stone Axe",
+      "description": "A chipped stone axe head attached to a wooden handle",
+      "itemType": "Weapon",
+      "rarity": "Common",
+      "era": "StoneAge",
+      "value": 15,
+      "weight": 6,
+      "isStackable": false,
+      "iconEmoji": "🪓",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 0,
+        "damageDiceCount": 1,
+        "damageDieSize": 8,
+        "damageBonus": 0,
+        "damageType": "Slashing"
+      }
+    },
+    {
+      "id": "flint_spear",
+      "name": "Flint Spear",
+      "description": "A spear tipped with sharpened flint",
+      "itemType": "Weapon",
+      "rarity": "Uncommon",
+      "era": "StoneAge",
+      "value": 20,
+      "weight": 4,
+      "isStackable": false,
+      "iconEmoji": "🗡️",
+      "equipmentSlot": "MainHand",
+      "equipmentStats": {
+        "attackBonus": 1,
+        "damageDiceCount": 1,
+        "damageDieSize": 6,
+        "damageBonus": 0,
+        "damageType": "Piercing"
+      }
+    }
+  ]
+}

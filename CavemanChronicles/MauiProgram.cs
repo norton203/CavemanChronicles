@@ -29,8 +29,19 @@ namespace CavemanChronicles
             builder.Services.AddSingleton<SaveService>();
             builder.Services.AddSingleton<MonsterLoaderService>();
             builder.Services.AddSingleton<CombatService>();
+            builder.Services.AddSingleton<ItemLoaderService>();      
+            builder.Services.AddSingleton<InventoryService>();       
 
-            return builder.Build();
+            var app = builder.Build();
+
+            // Load items on startup 
+            var itemLoader = app.Services.GetRequiredService<ItemLoaderService>();
+            _ = itemLoader.LoadAllItems();
+
+            // Initialize ItemDatabase 
+            ItemDatabase.Initialize(itemLoader);
+
+            return app;
         }
     }
 }

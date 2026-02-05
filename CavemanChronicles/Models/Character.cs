@@ -68,14 +68,7 @@
         Barbarian
     }
 
-    public enum Race
-    {
-        Human,
-        Elf,
-        Dwarf,
-        HalfOrc,
-        Halfling
-    }
+   
 
     public enum TechnologyEra
     {
@@ -97,7 +90,7 @@
         Scholar,
         Criminal,
         Noble,
-        Folk Hero,
+        FolkHero,
         Hermit
     }
 }

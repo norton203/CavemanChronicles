@@ -236,8 +236,7 @@
                     BackgroundColor="Black"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    WidthRequest="350"
-                    MaxHeightRequest="500">
+                    WidthRequest="350">
                 <VerticalStackLayout Spacing="15">
                     
                     <!-- Item Header -->
