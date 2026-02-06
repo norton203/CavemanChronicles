@@ -164,6 +164,21 @@ namespace CavemanChronicles
             return (score - 10) / 2;
         }
 
+        private CavemanChronicles.Background ParseBackground(string name)
+        {
+            // Remove spaces for enum parsing
+            string enumName = name.Replace(" ", "");
+
+            // Try to parse the string to Background enum
+            if (Enum.TryParse<CavemanChronicles.Background>(enumName, out var result))
+            {
+                return result;
+            }
+
+            // Default to None if parsing fails
+            return CavemanChronicles.Background.None;
+        }
+
         private string FormatModifier(int modifier)
         {
             if (modifier >= 0)
@@ -282,7 +297,9 @@ namespace CavemanChronicles
                 Name = NameEntry.Text.Trim(),
                 Race = _selectedRace.Race,
                 Class = _selectedClass.Class,
-                Background = _selectedBackground?.Name ?? "None",
+                Background = _selectedBackground != null ?
+                Enum.Parse<Background>(_selectedBackground.Name.Replace(" ", "")) :
+                Background.None,
                 Backstory = BackstoryEditor.Text?.Trim() ?? "",
                 Alignment = "Neutral",
 
@@ -307,7 +324,7 @@ namespace CavemanChronicles
                 ArmorClass = armorClass,
                 Initiative = initiative,
                 Speed = 30,
-                ProficiencyBonus = 2,
+            
 
                 Skills = InitializeSkills(_selectedClass, _selectedBackground),
                 Inventory = InitializeInventory(_selectedClass),
@@ -400,21 +417,44 @@ namespace CavemanChronicles
             return skills;
         }
 
+
+
+
         private List<Item> InitializeInventory(ClassData classData)
         {
             var inventory = new List<Item>();
 
-            // Add class starting equipment adapted to Caveman era
-            foreach (var equipName in classData.StartingEquipment)
+            // Give starting health potions
+            var healthPotion = ItemDatabase.GetItem("health_potion_minor");
+            if (healthPotion != null)
             {
-                var item = new Item
-                {
-                    Name = AdaptToCavemanEra(equipName),
-                    Description = $"Primitive {equipName}",
-                    ItemType = GetItemType(equipName),
-                    Value = 10
-                };
-                inventory.Add(item);
+                healthPotion.Quantity = 3;
+                inventory.Add(healthPotion);
+            }
+
+            // Give era-appropriate starting weapon based on class
+            string weaponId = classData.Class switch
+            {
+                CharacterClass.Fighter => "wooden_club",
+                CharacterClass.Barbarian => "wooden_club",
+                CharacterClass.Rogue => "sharp_rock",
+                CharacterClass.Ranger => "bone_spear",
+                CharacterClass.Wizard => "sharp_rock",
+                CharacterClass.Cleric => "wooden_club",
+                _ => "wooden_club"
+            };
+
+            var weapon = ItemDatabase.GetItem(weaponId);
+            if (weapon != null)
+            {
+                inventory.Add(weapon);
+            }
+
+            // Give starting armor
+            var armor = ItemDatabase.GetItem("hide_armor");
+            if (armor != null)
+            {
+                inventory.Add(armor);
             }
 
             return inventory;

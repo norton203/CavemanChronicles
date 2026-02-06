@@ -82,7 +82,8 @@
         Accessory,
         QuestItem,
         Material,
-        Currency
+        Currency,
+        Misc
     }
 
     public enum ItemRarity
