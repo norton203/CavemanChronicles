@@ -8,6 +8,7 @@
         public ItemType ItemType { get; set; }
         public ItemRarity Rarity { get; set; }
         public TechnologyEra Era { get; set; }
+       
 
         // Value
         public int Value { get; set; } // Gold cost

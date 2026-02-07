@@ -297,9 +297,7 @@ namespace CavemanChronicles
                 Name = NameEntry.Text.Trim(),
                 Race = _selectedRace.Race,
                 Class = _selectedClass.Class,
-                Background = _selectedBackground != null ?
-                Enum.Parse<Background>(_selectedBackground.Name.Replace(" ", "")) :
-                Background.None,
+                             
                 Backstory = BackstoryEditor.Text?.Trim() ?? "",
                 Alignment = "Neutral",
 

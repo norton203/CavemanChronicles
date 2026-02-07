@@ -140,12 +140,18 @@
             var weapon = GetPlayerWeapon();
             var attackBonus = CalculatePlayerAttackBonus(weapon);
 
-            // Make attack roll
+            // Get weapon stats
+            int diceCount = weapon.EquipmentStats?.DamageDiceCount ?? 1;
+            int dieSize = weapon.EquipmentStats?.DamageDieSize ?? 4;
+            int weaponDamageBonus = weapon.EquipmentStats?.DamageBonus ?? 0;
+
             var result = MakeAttackRoll(
                 attackBonus,
                 CurrentCombat.Enemy.ArmorClass,
-                weapon.Damage,
-                weapon.ItemType == ItemType.Weapon ? CalculatePlayerDamageBonus() : 0,
+                diceCount,
+                dieSize,
+                weaponDamageBonus + CalculatePlayerDamageBonus(),
+                weapon.EquipmentStats?.DamageType ?? DamageType.Bludgeoning,
                 weapon.Name
             );
 
@@ -347,7 +353,7 @@
                     Description = "Attacks against you have disadvantage",
                     Duration = 1,
                     Target = EffectTarget.Player,
-                    Type = EffectType.Advantage
+                    Type = EffectType.BuffArmor  // ✓ Use existing enum value
                 });
             }
         }
@@ -474,9 +480,7 @@
             CurrentCombat.Player.Stats.Dexterity++;
             CurrentCombat.Player.Stats.Constitution++;
 
-            // Update proficiency bonus
-            CurrentCombat.Player.ProficiencyBonus = 2 + ((CurrentCombat.Player.Level - 1) / 4);
-
+           
             // Check for era advancement
             var oldEra = CurrentCombat.Player.CurrentEra;
             UpdateTechnologyEra();
@@ -558,8 +562,15 @@
                 Name = "Unarmed Strike",
                 Description = "Your fists",
                 ItemType = ItemType.Weapon,
-                Damage = 4, // 1d4
-                Value = 0
+                Value = 0,
+                EquipmentStats = new EquipmentStats
+                {
+                    DamageDiceCount = 1,
+                    DamageDieSize = 4,  // 1d4
+                    DamageBonus = 0,
+                    AttackBonus = 0,
+                    DamageType = DamageType.Bludgeoning
+                }
             };
         }
 
