@@ -8,7 +8,7 @@ namespace CavemanChronicles
         private ClassData _selectedClass;
         private BackgroundData _selectedBackground;
         private readonly SaveService _saveService;
-        private Random _random = new Random();
+       
 
         public CharacterCreationPage()
         {
@@ -102,10 +102,10 @@ namespace CavemanChronicles
             // Roll 4d6, drop the lowest
             var rolls = new List<int>
             {
-                _random.Next(1, 7),
-                _random.Next(1, 7),
-                _random.Next(1, 7),
-                _random.Next(1, 7)
+                Random.Shared.Next(1, 7),
+                Random.Shared.Next(1, 7),
+                Random.Shared.Next(1, 7),
+                Random.Shared.Next(1, 7)
             };
 
             rolls.Sort();
@@ -125,44 +125,41 @@ namespace CavemanChronicles
             if (int.TryParse(StrengthEntry.Text, out int str))
             {
                 int totalStr = str + (_selectedRace?.StrengthBonus ?? 0);
-                StrengthModLabel.Text = FormatModifier(CalculateModifier(totalStr));
+                StrengthModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalStr));
             }
 
             if (int.TryParse(DexterityEntry.Text, out int dex))
             {
                 int totalDex = dex + (_selectedRace?.DexterityBonus ?? 0);
-                DexterityModLabel.Text = FormatModifier(CalculateModifier(totalDex));
+                DexterityModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalDex));
 
                 // Update initiative
-                InitiativeLabel.Text = FormatModifier(CalculateModifier(totalDex));
+                InitiativeLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalDex));
             }
 
             if (int.TryParse(ConstitutionEntry.Text, out int con))
             {
-                ConstitutionModLabel.Text = FormatModifier(CalculateModifier(con));
+                ConstitutionModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(con));
             }
 
             if (int.TryParse(IntelligenceEntry.Text, out int intel))
             {
                 int totalInt = intel + (_selectedRace?.IntelligenceBonus ?? 0);
-                IntelligenceModLabel.Text = FormatModifier(CalculateModifier(totalInt));
+                IntelligenceModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalInt));
             }
 
             if (int.TryParse(WisdomEntry.Text, out int wis))
             {
-                WisdomModLabel.Text = FormatModifier(CalculateModifier(wis));
+                WisdomModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(wis));
             }
 
             if (int.TryParse(CharismaEntry.Text, out int cha))
             {
-                CharismaModLabel.Text = FormatModifier(CalculateModifier(cha));
+                CharismaModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(cha));
             }
         }
 
-        private int CalculateModifier(int score)
-        {
-            return (score - 10) / 2;
-        }
+       
 
         private CavemanChronicles.Background ParseBackground(string name)
         {
@@ -179,12 +176,7 @@ namespace CavemanChronicles
             return CavemanChronicles.Background.None;
         }
 
-        private string FormatModifier(int modifier)
-        {
-            if (modifier >= 0)
-                return $"+{modifier}";
-            return modifier.ToString();
-        }
+       
 
         private void UpdateSummary()
         {
@@ -194,7 +186,7 @@ namespace CavemanChronicles
             int baseHP = _selectedClass.HitDie;
             if (int.TryParse(ConstitutionEntry.Text, out int con))
             {
-                int conMod = CalculateModifier(con);
+                int conMod = GameMath.CalculateModifier(con);
                 int totalHP = baseHP + conMod + (_selectedRace?.HealthBonus ?? 0);
                 HitPointsLabel.Text = Math.Max(1, totalHP).ToString(); // Minimum 1 HP
             }
@@ -284,12 +276,12 @@ namespace CavemanChronicles
             intel += _selectedRace.IntelligenceBonus;
 
             // Calculate derived stats
-            int conMod = CalculateModifier(con);
+            int conMod = GameMath.CalculateModifier(con);
             int maxHP = _selectedClass.HitDie + conMod + _selectedRace.HealthBonus;
             maxHP = Math.Max(1, maxHP);
 
-            int initiative = CalculateModifier(dex);
-            int armorClass = 10 + CalculateModifier(dex);
+            int initiative = GameMath.CalculateModifier(dex);
+            int armorClass = 10 + GameMath.CalculateModifier(dex);
 
             // Create character
             var character = new Character
@@ -327,7 +319,7 @@ namespace CavemanChronicles
                 Skills = InitializeSkills(_selectedClass, _selectedBackground),
                 Inventory = InitializeInventory(_selectedClass),
                 Languages = new List<string> { "Common" },
-                Gold = _random.Next(50, 150)
+                Gold = Random.Shared.Next(50, 150)
             };
 
             // Save the character

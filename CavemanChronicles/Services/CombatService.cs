@@ -2,14 +2,14 @@
 {
     public class CombatService
     {
-        private Random _random;
+        
         private AudioService? _audioService;
 
         public CombatState? CurrentCombat { get; private set; }
 
         public CombatService()
         {
-            _random = new Random();
+           
         }
 
         public void SetAudioService(AudioService audioService)
@@ -148,9 +148,9 @@
             var result = MakeAttackRoll(
                 attackBonus,
                 CurrentCombat.Enemy.ArmorClass,
-                diceCount,
-                dieSize,
-                weaponDamageBonus + CalculatePlayerDamageBonus(),
+                weapon.EquipmentStats?.DamageDiceCount ?? 1,
+                weapon.EquipmentStats?.DamageDieSize ?? 4,
+                weapon.EquipmentStats?.DamageBonus ?? 0 + (weapon.ItemType == ItemType.Weapon ? CalculatePlayerDamageBonus() : 0),
                 weapon.EquipmentStats?.DamageType ?? DamageType.Bludgeoning,
                 weapon.Name
             );
@@ -195,7 +195,7 @@
                 return;
             }
 
-            var attack = CurrentCombat.Enemy.Attacks[_random.Next(CurrentCombat.Enemy.Attacks.Count)];
+            var attack = CurrentCombat.Enemy.Attacks[Random.Shared.Next(CurrentCombat.Enemy.Attacks.Count)];
 
             // Make attack roll
             var result = MakeAttackRoll(
@@ -412,7 +412,7 @@
             turnLog.Add($"You gained {expGained} XP!");
 
             // Award gold
-            int goldGained = _random.Next(CurrentCombat.Enemy.MinGold, CurrentCombat.Enemy.MaxGold + 1);
+            int goldGained = Random.Shared.Next(CurrentCombat.Enemy.MinGold, CurrentCombat.Enemy.MaxGold + 1);
             if (goldGained > 0)
             {
                 CurrentCombat.Player.Gold += goldGained;
@@ -422,10 +422,10 @@
             // Award loot
             if (CurrentCombat.Enemy.PossibleLoot != null && CurrentCombat.Enemy.PossibleLoot.Count > 0)
             {
-                int lootRoll = _random.Next(100);
+                int lootRoll = Random.Shared.Next(100);
                 if (lootRoll < 50) // 50% chance for loot
                 {
-                    var lootItem = CurrentCombat.Enemy.PossibleLoot[_random.Next(CurrentCombat.Enemy.PossibleLoot.Count)];
+                    var lootItem = CurrentCombat.Enemy.PossibleLoot[Random.Shared.Next(CurrentCombat.Enemy.PossibleLoot.Count)];
                     var item = new Item
                     {
                         Name = lootItem,
@@ -543,16 +543,15 @@
             if (CurrentCombat == null)
                 return CreateUnarmedStrike();
 
-            // Find equipped weapon in inventory
-            var weapon = CurrentCombat.Player.Inventory?
-                .FirstOrDefault(i => i.ItemType == ItemType.Weapon);
-
-            if (weapon == null)
+            // Check if player has a weapon equipped in main hand
+            if (CurrentCombat.Player.EquippedItems != null &&
+                CurrentCombat.Player.EquippedItems.TryGetValue(EquipmentSlot.MainHand, out var weapon))
             {
-                return CreateUnarmedStrike();
+                return weapon;
             }
 
-            return weapon;
+            // No weapon equipped - use unarmed strike
+            return CreateUnarmedStrike();
         }
 
         private Item CreateUnarmedStrike()
@@ -562,15 +561,16 @@
                 Name = "Unarmed Strike",
                 Description = "Your fists",
                 ItemType = ItemType.Weapon,
-                Value = 0,
+                EquipmentSlot = EquipmentSlot.MainHand,
                 EquipmentStats = new EquipmentStats
                 {
                     DamageDiceCount = 1,
-                    DamageDieSize = 4,  // 1d4
+                    DamageDieSize = 4,  // 1d4 damage
                     DamageBonus = 0,
-                    AttackBonus = 0,
-                    DamageType = DamageType.Bludgeoning
-                }
+                    DamageType = DamageType.Bludgeoning,
+                    AttackBonus = 0
+                },
+                Value = 0
             };
         }
 
@@ -592,12 +592,12 @@
 
         private int RollD20()
         {
-            return _random.Next(1, 21);
+            return Random.Shared.Next(1, 21);
         }
 
         private int RollDie(int sides)
         {
-            return _random.Next(1, sides + 1);
+            return Random.Shared.Next(1, sides + 1);
         }
 
         public void EndCombat()

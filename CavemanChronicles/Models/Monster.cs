@@ -39,8 +39,7 @@
             if (FlavorText == null || FlavorText.Count == 0)
                 return $"The {Name} prepares to attack!";
 
-            var random = new Random();
-            return FlavorText[random.Next(FlavorText.Count)];
+            return FlavorText[Random.Shared.Next(FlavorText.Count)];
         }
     }
 
@@ -54,17 +53,14 @@
         public int Charisma { get; set; }
 
         // Calculated modifiers
-        public int StrengthMod => CalculateModifier(Strength);
-        public int DexterityMod => CalculateModifier(Dexterity);
-        public int ConstitutionMod => CalculateModifier(Constitution);
-        public int IntelligenceMod => CalculateModifier(Intelligence);
-        public int WisdomMod => CalculateModifier(Wisdom);
-        public int CharismaMod => CalculateModifier(Charisma);
+        public int StrengthMod => GameMath.CalculateModifier(Strength);
+        public int DexterityMod => GameMath.CalculateModifier(Dexterity);
+        public int ConstitutionMod => GameMath.CalculateModifier(Constitution);
+        public int IntelligenceMod => GameMath.CalculateModifier(Intelligence);
+        public int WisdomMod => GameMath.CalculateModifier(Wisdom);
+        public int CharismaMod => GameMath.CalculateModifier(Charisma);
 
-        private int CalculateModifier(int score)
-        {
-            return (score - 10) / 2;
-        }
+       
     }
 
     public class MonsterAttack

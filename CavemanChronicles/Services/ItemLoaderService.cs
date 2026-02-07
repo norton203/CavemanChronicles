@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace CavemanChronicles
 {
@@ -43,13 +43,15 @@ namespace CavemanChronicles
             }
         }
 
-        private async Task LoadItemsFromFile(string fileName, TechnologyEra? era = null)
+        
+           private async Task LoadItemsFromFile(string fileName, TechnologyEra? era = null)
         {
             try
             {
-                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                // Try to load from embedded resource
+                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false);  // ✅ Added
                 using var reader = new StreamReader(stream);
-                var json = await reader.ReadToEndAsync();
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);  // ✅ Added
 
                 var options = new JsonSerializerOptions
                 {
@@ -58,6 +60,7 @@ namespace CavemanChronicles
                 };
 
                 var itemData = JsonSerializer.Deserialize<ItemDataFile>(json, options);
+
 
                 if (itemData?.Items != null)
                 {

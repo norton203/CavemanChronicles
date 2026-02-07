@@ -43,9 +43,9 @@ namespace CavemanChronicles
             try
             {
                 // Try to load from embedded resource
-                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                using var stream = await FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false);  // ✅ Added
                 using var reader = new StreamReader(stream);
-                var json = await reader.ReadToEndAsync();
+                var json = await reader.ReadToEndAsync().ConfigureAwait(false);  // ✅ Added
 
                 var options = new JsonSerializerOptions
                 {
@@ -101,8 +101,7 @@ namespace CavemanChronicles
             if (monsters == null || monsters.Count == 0)
                 return null;
 
-            var random = new Random();
-            var selectedMonster = monsters[random.Next(monsters.Count)];
+            var selectedMonster = monsters[Random.Shared.Next(monsters.Count)];
 
             // Create a copy so we don't modify the cached version
             return new Monster

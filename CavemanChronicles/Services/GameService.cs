@@ -3,7 +3,6 @@
     public class GameService
     {
         public Character Player { get; set; }
-        private Random _random = new Random();
         private AudioService? _audioService;
         private MonsterLoaderService? _monsterLoader;
         private CombatService? _combatService;
@@ -98,12 +97,12 @@
             }
 
             // Select random monster(s) for encounter
-            int encounterSize = _random.Next(1, 4); // 1-3 enemies
+            int encounterSize = Random.Shared.Next(1, 4); // 1-3 enemies
             var enemyList = new List<Monster>();
 
             for (int i = 0; i < encounterSize; i++)
             {
-                var randomMonster = monsters[_random.Next(monsters.Count)];
+                var randomMonster = monsters[Random.Shared.Next(monsters.Count)];
                 // Create a copy so each enemy is independent
                 var enemy = new Monster
                 {
@@ -154,7 +153,7 @@
                 TechnologyEra.Industrial => "Steam engines and factories dominate the landscape.",
                 TechnologyEra.Modern => "Technology and skyscrapers reach toward the sky.",
                 TechnologyEra.Future => "Advanced technology beyond comprehension surrounds you.",
-                _ => "You see... things."
+                _ => "You see.. things."
             };
         }
 
@@ -187,7 +186,7 @@
 
         private async Task<string> HandleRest()
         {
-            int healAmount = _random.Next(20, 40);
+            int healAmount = Random.Shared.Next(20, 40);
             Player.Health = Math.Min(Player.Health + healAmount, Player.MaxHealth);
 
             if (_audioService != null)
@@ -198,13 +197,13 @@
 
         private async Task<string> HandleExplore()
         {
-            int outcome = _random.Next(1, 4);
+            int outcome = Random.Shared.Next(1, 4);
 
             return outcome switch
             {
                 1 => "You explore and find nothing of interest.",
                 2 => await FindRandomItem(),
-                3 => "You discover a hidden path, but decide not to follow it... yet.",
+                3 => "You discover a hidden path, but decide not to follow it.. yet.",
                 _ => "Your exploration yields no results."
             };
         }
@@ -229,15 +228,15 @@
         {
             return Player.CurrentEra switch
             {
-                TechnologyEra.Caveman => _random.Next(2) == 0 ? "Sharp Rock" : "Wooden Club",
-                TechnologyEra.StoneAge => _random.Next(2) == 0 ? "Stone Axe" : "Flint Spear",
-                TechnologyEra.BronzeAge => _random.Next(2) == 0 ? "Bronze Sword" : "Bronze Shield",
-                TechnologyEra.IronAge => _random.Next(2) == 0 ? "Iron Blade" : "Iron Armor",
-                TechnologyEra.Medieval => _random.Next(2) == 0 ? "Steel Longsword" : "Chainmail",
-                TechnologyEra.Renaissance => _random.Next(2) == 0 ? "Rapier" : "Musket",
-                TechnologyEra.Industrial => _random.Next(2) == 0 ? "Revolver" : "Rifle",
-                TechnologyEra.Modern => _random.Next(2) == 0 ? "Tactical Gear" : "Combat Rifle",
-                TechnologyEra.Future => _random.Next(2) == 0 ? "Plasma Sword" : "Energy Shield",
+                TechnologyEra.Caveman => Random.Shared.Next(2) == 0 ? "Sharp Rock" : "Wooden Club",
+                TechnologyEra.StoneAge => Random.Shared.Next(2) == 0 ? "Stone Axe" : "Flint Spear",
+                TechnologyEra.BronzeAge => Random.Shared.Next(2) == 0 ? "Bronze Sword" : "Bronze Shield",
+                TechnologyEra.IronAge => Random.Shared.Next(2) == 0 ? "Iron Blade" : "Iron Armor",
+                TechnologyEra.Medieval => Random.Shared.Next(2) == 0 ? "Steel Longsword" : "Chainmail",
+                TechnologyEra.Renaissance => Random.Shared.Next(2) == 0 ? "Rapier" : "Musket",
+                TechnologyEra.Industrial => Random.Shared.Next(2) == 0 ? "Revolver" : "Rifle",
+                TechnologyEra.Modern => Random.Shared.Next(2) == 0 ? "Tactical Gear" : "Combat Rifle",
+                TechnologyEra.Future => Random.Shared.Next(2) == 0 ? "Plasma Sword" : "Energy Shield",
                 _ => "Mysterious Object"
             };
         }

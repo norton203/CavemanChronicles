@@ -2,12 +2,13 @@
 
 namespace CavemanChronicles
 {
-    public class AudioService
+    public class AudioService : IDisposable
     {
         private readonly IAudioManager _audioManager;
         private readonly SettingsService _settingsService;
         private IAudioPlayer? _backgroundMusic;
         private Dictionary<string, IAudioPlayer> _soundEffects;
+        private bool _disposed = false;
 
         public AudioService(IAudioManager audioManager, SettingsService settingsService)
         {
@@ -67,6 +68,8 @@ namespace CavemanChronicles
 
         public async Task PlayBackgroundMusic(string fileName)
         {
+            ThrowIfDisposed();  
+
             try
             {
                 // Stop current music if playing
@@ -76,7 +79,7 @@ namespace CavemanChronicles
                     _backgroundMusic.Dispose();
                 }
 
-                var audioStream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                var audioStream = await FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false);
                 _backgroundMusic = _audioManager.CreatePlayer(audioStream);
                 _backgroundMusic.Volume = MusicVolume;
                 _backgroundMusic.Loop = true;
@@ -94,6 +97,8 @@ namespace CavemanChronicles
 
         public async Task PlaySoundEffect(string fileName)
         {
+            ThrowIfDisposed();  // ✅ Added
+
             if (!IsSoundEnabled) return;
 
             try
@@ -101,7 +106,7 @@ namespace CavemanChronicles
                 // Check if we already have this sound loaded
                 if (!_soundEffects.ContainsKey(fileName))
                 {
-                    var audioStream = await FileSystem.OpenAppPackageFileAsync(fileName);
+                    var audioStream = await FileSystem.OpenAppPackageFileAsync(fileName).ConfigureAwait(false);
                     var player = _audioManager.CreatePlayer(audioStream);
                     player.Volume = SoundVolume;
                     _soundEffects[fileName] = player;
@@ -118,7 +123,7 @@ namespace CavemanChronicles
                 System.Diagnostics.Debug.WriteLine($"Error playing sound effect {fileName}: {ex.Message}");
             }
         }
-
+    
         public void StopBackgroundMusic()
         {
             _backgroundMusic?.Stop();
@@ -126,12 +131,54 @@ namespace CavemanChronicles
 
         public void Dispose()
         {
-            _backgroundMusic?.Dispose();
-            foreach (var sound in _soundEffects.Values)
-            {
-                sound.Dispose();
-            }
-            _soundEffects.Clear();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                // Dispose managed resources
+                try
+                {
+                    _backgroundMusic?.Stop();
+                    _backgroundMusic?.Dispose();
+                    _backgroundMusic = null;
+
+                    foreach (var sound in _soundEffects.Values)
+                    {
+                        try
+                        {
+                            sound?.Stop();
+                            sound?.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Error disposing sound: {ex.Message}");
+                        }
+                    }
+                    _soundEffects.Clear();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error disposing AudioService: {ex.Message}");
+                }
+            }
+
+            _disposed = true;
+        }
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(AudioService));
+            }
+        }
+
     }
+
 }

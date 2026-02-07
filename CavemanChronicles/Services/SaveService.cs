@@ -31,7 +31,7 @@ namespace CavemanChronicles
                     WriteIndented = true
                 });
 
-                await File.WriteAllTextAsync(filePath, json);
+                await File.WriteAllTextAsync(filePath, json).ConfigureAwait(false);  // ✅ Added
                 return true;
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace CavemanChronicles
                 {
                     try
                     {
-                        var json = await File.ReadAllTextAsync(file);
+                        var json = await File.ReadAllTextAsync(file).ConfigureAwait(false);  // ✅ Added
                         var character = JsonSerializer.Deserialize<Character>(json);
 
                         if (character != null)
@@ -85,7 +85,7 @@ namespace CavemanChronicles
         {
             try
             {
-                var json = await File.ReadAllTextAsync(filePath);
+                var json = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);  // ✅ Added
                 return JsonSerializer.Deserialize<Character>(json);
             }
             catch (Exception ex)
@@ -94,27 +94,8 @@ namespace CavemanChronicles
                 return null;
             }
         }
-
-        public bool DeleteSave(string filePath)
-        {
-            try
-            {
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Delete failed: {ex.Message}");
-                return false;
-            }
-        }
     }
-
-    public class SavedCharacterInfo
+        public class SavedCharacterInfo
     {
         public Character Character { get; set; }
         public string FileName { get; set; }

@@ -111,13 +111,13 @@ namespace CavemanChronicles
         private async Task ExecuteEnemyAttack(Monster enemy)
         {
             // Select random attack
-            var attack = enemy.Attacks[new Random().Next(enemy.Attacks.Count)];
+            var attack = enemy.Attacks[Random.Shared.Next(enemy.Attacks.Count)];
 
             AddToCombatLog($"{enemy.Name} uses {attack.Name}!");
 
             // Roll to hit (d20 + attack bonus vs player AC)
-            var random = new Random();
-            int attackRoll = random.Next(1, 21) + attack.AttackBonus;
+            
+            int attackRoll = Random.Shared.Next(1, 21) + attack.AttackBonus;
 
             if (attackRoll >= _player.ArmorClass)
             {
@@ -125,7 +125,7 @@ namespace CavemanChronicles
                 int totalDamage = 0;
                 for (int i = 0; i < attack.DamageDiceCount; i++)
                 {
-                    totalDamage += random.Next(1, attack.DamageDieSize + 1);
+                    totalDamage += Random.Shared.Next(1, attack.DamageDieSize + 1);
                 }
                 totalDamage += attack.DamageBonus;
 
@@ -362,13 +362,13 @@ namespace CavemanChronicles
             int attackBonus = _player.Stats.StrengthMod + _player.ProficiencyBonus;
 
             // Roll to hit
-            var random = new Random();
-            int attackRoll = random.Next(1, 21) + attackBonus;
+            
+            int attackRoll = Random.Shared.Next(1, 21) + attackBonus;
 
             if (attackRoll >= target.ArmorClass)
             {
                 // Hit! Calculate damage
-                int damage = random.Next(1, 9) + _player.Stats.StrengthMod; // d8 + STR mod
+                int damage = Random.Shared.Next(1, 9) + _player.Stats.StrengthMod; // d8 + STR mod
                 damage = Math.Max(1, damage);
 
                 target.HitPoints -= damage;
@@ -419,8 +419,8 @@ namespace CavemanChronicles
         {
             if (!_isPlayerTurn) return;
 
-            var random = new Random();
-            int fleeChance = random.Next(1, 101);
+            
+            int fleeChance = Random.Shared.Next(1, 101);
 
             if (fleeChance > 50)
             {
@@ -448,7 +448,7 @@ namespace CavemanChronicles
 
             // Calculate rewards
             int totalExp = _enemies.Sum(e => e.ExperienceValue);
-            int totalGold = _enemies.Sum(e => new Random().Next(e.MinGold, e.MaxGold + 1));
+            int totalGold = _enemies.Sum(e => Random.Shared.Next(e.MinGold, e.MaxGold + 1));
 
             _player.Experience += totalExp;
             _player.Gold += totalGold;
@@ -475,8 +475,8 @@ namespace CavemanChronicles
             _player.Experience -= (_player.Level - 1) * 100;
 
             var classData = ClassData.GetClassData(_player.Class);
-            int conMod = (_player.Stats.Constitution - 10) / 2;
-            int hpGain = new Random().Next(1, classData.HitDie + 1) + conMod;
+            int conMod = GameMath.CalculateModifier(_player.Stats.Constitution );
+            int hpGain = Random.Shared.Next(1, classData.HitDie + 1) + conMod;
             hpGain = Math.Max(1, hpGain);
 
             _player.MaxHealth += hpGain;
