@@ -53,7 +53,7 @@ namespace CavemanChronicles
                 {
                     try
                     {
-                        var json = await File.ReadAllTextAsync(file).ConfigureAwait(false);  // ✅ Added
+                        var json = await File.ReadAllTextAsync(file).ConfigureAwait(false);  
                         var character = JsonSerializer.Deserialize<Character>(json);
 
                         if (character != null)
@@ -85,13 +85,32 @@ namespace CavemanChronicles
         {
             try
             {
-                var json = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);  // ✅ Added
+                var json = await File.ReadAllTextAsync(filePath).ConfigureAwait(false);  
                 return JsonSerializer.Deserialize<Character>(json);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Load failed: {ex.Message}");
                 return null;
+            }
+        }
+    
+
+      public bool DeleteSave(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Delete failed: {ex.Message}");
+                return false;
             }
         }
     }
