@@ -17,226 +17,466 @@
             </BoxView.Background>
         </BoxView>
 
-        <Grid Padding="10" RowSpacing="8">
+        <Grid Padding="8" RowSpacing="6">
             <Grid.RowDefinitions>
-                <!-- Status Bar -->
-                <RowDefinition Height="Auto"/>
-                <!-- Graphics Area -->
-                <RowDefinition Height="200"/>
-                <!-- Game Text Area -->
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
-                <!-- Command Input -->
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="140"/>
             </Grid.RowDefinitions>
 
-            <!-- STATUS BAR -->
+            <!-- TOP STATUS BAR -->
             <Border Grid.Row="0" 
                     Stroke="#FFD700" 
-                    StrokeThickness="3"
-                    Padding="12"
+                    StrokeThickness="2"
+                    Padding="10,8"
                     BackgroundColor="#0a0015">
                 <Grid ColumnSpacing="15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Character Info -->
-                    <VerticalStackLayout Grid.Column="0" Spacing="3">
-                        <Label x:Name="CharacterNameLabel" 
-                               Text="HERO" 
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="16"
-                               FontAttributes="Bold"/>
-                        <Label x:Name="EraLabel" 
-                               Text="CAVEMAN ERA" 
-                               TextColor="#00FFFF"
-                               FontFamily="Courier New"
-                               FontSize="12"/>
-                    </VerticalStackLayout>
+                    <Label Grid.Column="0"
+                           x:Name="LocationLabel" 
+                           Text="CAVEMAN ERA - DARK CAVE" 
+                           TextColor="#00FFFF"
+                           FontFamily="Courier New"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
 
-                    <!-- Level -->
                     <Border Grid.Column="1"
-                            Stroke="#FF4500"
-                            StrokeThickness="2"
-                            Padding="10,5"
-                            BackgroundColor="#1a0a00"
-                            VerticalOptions="Center">
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="LEVEL" 
-                                   TextColor="#FF4500"
-                                   FontFamily="Courier New"
-                                   FontSize="10"
-                                   HorizontalOptions="Center"/>
-                            <Label x:Name="LevelLabel" 
-                                   Text="1" 
-                                   TextColor="#FFD700"
-                                   FontFamily="Courier New"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
+                            Stroke="#00FF00"
+                            StrokeThickness="1"
+                            Padding="8,4"
+                            BackgroundColor="#001100">
+                        <Label x:Name="DirectionLabel"
+                               Text="▲ N"
+                               TextColor="#00FF00"
+                               FontFamily="Courier New"
+                               FontSize="12"
+                               FontAttributes="Bold"/>
                     </Border>
 
-                    <!-- Health -->
-                    <Border Grid.Column="2"
-                            Stroke="#00FF00"
-                            StrokeThickness="2"
-                            Padding="10,5"
-                            BackgroundColor="#001a00"
-                            VerticalOptions="Center">
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="HP" 
-                                   TextColor="#00FF00"
-                                   FontFamily="Courier New"
-                                   FontSize="10"
-                                   HorizontalOptions="Center"/>
-                            <Label x:Name="HealthLabel" 
-                                   Text="100/100" 
-                                   TextColor="#00FF00"
-                                   FontFamily="Courier New"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   HorizontalOptions="Center"/>
-                        </VerticalStackLayout>
+                    <Label Grid.Column="2"
+                           x:Name="TurnLabel" 
+                           Text="TURN: 1" 
+                           TextColor="#FFD700"
+                           FontFamily="Courier New"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+
+                    <Border Grid.Column="3"
+                            Stroke="#FFD700"
+                            StrokeThickness="1"
+                            Padding="8,4"
+                            BackgroundColor="#221100">
+                        <Label x:Name="GoldLabel" 
+                               Text="💰 100 GP" 
+                               TextColor="#FFD700"
+                               FontFamily="Courier New"
+                               FontSize="12"
+                               FontAttributes="Bold"/>
                     </Border>
                 </Grid>
             </Border>
 
-            <!-- GRAPHICS AREA (SkiaSharp Canvas) -->
+            <!-- DUNGEON VIEW -->
             <Border Grid.Row="1" 
                     Stroke="#00FFFF" 
-                    StrokeThickness="2"
-                    Margin="0,5,0,0"
+                    StrokeThickness="3"
                     BackgroundColor="Black">
                 <Grid>
-                    <!-- Inner glow effect -->
                     <Border Stroke="#00FFFF"
                             StrokeThickness="1"
                             Margin="2"
                             Opacity="0.3"/>
 
-                    <skia:SKCanvasView x:Name="GraphicsCanvas"
-                                      PaintSurface="OnCanvasViewPaintSurface"
+                    <skia:SKCanvasView x:Name="DungeonCanvas"
+                                      PaintSurface="OnDungeonCanvasPaint"
                                       BackgroundColor="Black"
                                       Margin="4"/>
+
+                    <!-- Movement Controls -->
+                    <Grid VerticalOptions="Center"
+                          HorizontalOptions="Center"
+                          WidthRequest="180"
+                          HeightRequest="180"
+                          Opacity="0.8">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Forward -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="8"
+                                BackgroundColor="#002200"
+                                Margin="2">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMoveForward"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="▲"
+                                   TextColor="#00FF00"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Turn Left -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                Stroke="#FFAA00"
+                                StrokeThickness="2"
+                                Padding="8"
+                                BackgroundColor="#221100"
+                                Margin="2">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTurnLeft"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="◄"
+                                   TextColor="#FFAA00"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Compass -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                Stroke="#FFD700"
+                                StrokeThickness="1"
+                                BackgroundColor="#111111"
+                                Margin="2">
+                            <Label x:Name="CompassIcon"
+                                   Text="🧭"
+                                   FontSize="20"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Turn Right -->
+                        <Border Grid.Row="1" Grid.Column="2"
+                                Stroke="#FFAA00"
+                                StrokeThickness="2"
+                                Padding="8"
+                                BackgroundColor="#221100"
+                                Margin="2">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTurnRight"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="►"
+                                   TextColor="#FFAA00"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Back -->
+                        <Border Grid.Row="2" Grid.Column="1"
+                                Stroke="#FF0000"
+                                StrokeThickness="2"
+                                Padding="8"
+                                BackgroundColor="#220000"
+                                Margin="2">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMoveBack"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="▼"
+                                   TextColor="#FF0000"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Border>
 
-            <!-- GAME TEXT AREA -->
+            <!-- MESSAGE LOG -->
             <Border Grid.Row="2" 
                     Stroke="#FFD700" 
                     StrokeThickness="2"
-                    Margin="0,5,0,0"
                     BackgroundColor="Black">
-                <Grid>
-                    <!-- Decorative corner accents -->
-                    <Grid>
-                        <!-- Top-left corner -->
-                        <BoxView WidthRequest="20" HeightRequest="2" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="Start" 
-                                 VerticalOptions="Start"
-                                 Margin="0"/>
-                        <BoxView WidthRequest="2" HeightRequest="20" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="Start" 
-                                 VerticalOptions="Start"
-                                 Margin="0"/>
-
-                        <!-- Top-right corner -->
-                        <BoxView WidthRequest="20" HeightRequest="2" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="End" 
-                                 VerticalOptions="Start"
-                                 Margin="0"/>
-                        <BoxView WidthRequest="2" HeightRequest="20" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="End" 
-                                 VerticalOptions="Start"
-                                 Margin="0"/>
-
-                        <!-- Bottom-left corner -->
-                        <BoxView WidthRequest="20" HeightRequest="2" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="Start" 
-                                 VerticalOptions="End"
-                                 Margin="0"/>
-                        <BoxView WidthRequest="2" HeightRequest="20" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="Start" 
-                                 VerticalOptions="End"
-                                 Margin="0"/>
-
-                        <!-- Bottom-right corner -->
-                        <BoxView WidthRequest="20" HeightRequest="2" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="End" 
-                                 VerticalOptions="End"
-                                 Margin="0"/>
-                        <BoxView WidthRequest="2" HeightRequest="20" 
-                                 Color="#FFD700" 
-                                 HorizontalOptions="End" 
-                                 VerticalOptions="End"
-                                 Margin="0"/>
-                    </Grid>
-
-                    <ScrollView x:Name="GameTextScroll" Margin="5">
-                        <Label x:Name="GameTextLabel" 
-                               Text="Welcome to Caveman Chronicles!&#x0a;&#x0a;You awaken in a primitive cave. The smell of smoke and dirt fills your nostrils. You are level 1, wielding only a crude stone...&#x0a;&#x0a;What will you do?"
-                               TextColor="#00FF00"
-                               BackgroundColor="Black"
-                               FontFamily="Courier New"
-                               FontSize="14"
-                               Padding="10"
-                               LineBreakMode="WordWrap"/>
-                    </ScrollView>
-                </Grid>
-            </Border>
-
-            <!-- COMMAND INPUT -->
-            <Border Grid.Row="3" 
-                    Stroke="#00FFFF" 
-                    StrokeThickness="2"
-                    Margin="0,5,0,0"
-                    Padding="0"
-                    BackgroundColor="#001a1a">
-                <Grid ColumnSpacing="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Prompt indicator -->
-                    <Border Grid.Column="0"
-                            BackgroundColor="#003333"
-                            Padding="15,12"
-                            WidthRequest="50">
-                        <Label Text=">" 
-                               TextColor="#00FFFF"
-                               FontFamily="Courier New"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"/>
-                    </Border>
-
-                    <!-- Input field -->
-                    <Entry Grid.Column="1" 
-                           x:Name="CommandEntry"
-                           Placeholder="enter command..."
-                           PlaceholderColor="#004444"
-                           TextColor="#00FFFF"
-                           BackgroundColor="#001a1a"
+                <ScrollView x:Name="MessageScrollView"
+                           Padding="8">
+                    <Label x:Name="MessageLabel"
+                           Text="You awaken in a dark cave..."
+                           TextColor="#00FF00"
                            FontFamily="Courier New"
-                           FontSize="14"
-                           VerticalOptions="Center"
-                           Completed="OnCommandEntered"
-                           Margin="10,0,10,0"/>
-                </Grid>
+                           FontSize="11"
+                           LineBreakMode="WordWrap"/>
+                </ScrollView>
             </Border>
+
+            <!-- PARTY PANEL & ACTIONS -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- PARTY PORTRAITS -->
+                <Border Grid.Column="0"
+                        Stroke="#00FFFF"
+                        StrokeThickness="2"
+                        BackgroundColor="Black">
+                    <Grid ColumnSpacing="4" Padding="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Character 1 -->
+                        <Border Grid.Column="0"
+                                x:Name="CharSlot1"
+                                Stroke="#FFD700"
+                                StrokeThickness="2"
+                                BackgroundColor="#001100">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCharacter1Tapped"/>
+                            </Border.GestureRecognizers>
+                            <Grid RowSpacing="2" Padding="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <skia:SKCanvasView Grid.Row="0"
+                                                  x:Name="Portrait1Canvas"
+                                                  PaintSurface="OnPortrait1Paint"
+                                                  BackgroundColor="#000000"/>
+
+                                <Label Grid.Row="1"
+                                       x:Name="Char1Name"
+                                       Text="HERO"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="10"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+
+                                <Grid Grid.Row="2" HeightRequest="12" Margin="2,0">
+                                    <Border BackgroundColor="#330000"
+                                            Stroke="#FF0000"
+                                            StrokeThickness="1"/>
+                                    <Border x:Name="Char1HPBar"
+                                            BackgroundColor="#00FF00"
+                                            HorizontalOptions="Start"
+                                            WidthRequest="100"/>
+                                </Grid>
+
+                                <Label Grid.Row="3"
+                                       x:Name="Char1HP"
+                                       Text="100/100"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       HorizontalOptions="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Empty slots -->
+                        <Border Grid.Column="1"
+                                x:Name="CharSlot2"
+                                Stroke="#444444"
+                                StrokeThickness="2"
+                                BackgroundColor="#111111"
+                                Opacity="0.5">
+                            <Label Text="[EMPTY]"
+                                   TextColor="#666666"
+                                   FontFamily="Courier New"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <Border Grid.Column="2"
+                                x:Name="CharSlot3"
+                                Stroke="#444444"
+                                StrokeThickness="2"
+                                BackgroundColor="#111111"
+                                Opacity="0.5">
+                            <Label Text="[EMPTY]"
+                                   TextColor="#666666"
+                                   FontFamily="Courier New"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <Border Grid.Column="3"
+                                x:Name="CharSlot4"
+                                Stroke="#444444"
+                                StrokeThickness="2"
+                                BackgroundColor="#111111"
+                                Opacity="0.5">
+                            <Label Text="[EMPTY]"
+                                   TextColor="#666666"
+                                   FontFamily="Courier New"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- ACTION BUTTONS -->
+                <Border Grid.Column="1"
+                        Stroke="#FF00FF"
+                        StrokeThickness="2"
+                        BackgroundColor="Black">
+                    <Grid RowSpacing="4" ColumnSpacing="4" Padding="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Attack -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                Stroke="#FF0000"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#330000">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAttackClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="⚔️" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="ATTACK"
+                                       TextColor="#FF0000"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Rest -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                Stroke="#0000FF"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#000033">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRestClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="💤" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="REST"
+                                       TextColor="#0000FF"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Search -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                Stroke="#FFAA00"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#221100">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSearchClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="🔍" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="SEARCH"
+                                       TextColor="#FFAA00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Inventory -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                Stroke="#00FF00"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#003300">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnInventoryClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="🎒" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="ITEMS"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Camp -->
+                        <Border Grid.Row="2" Grid.Column="0"
+                                Stroke="#9370DB"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#1a0033">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCampClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="🏕️" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="CAMP"
+                                       TextColor="#9370DB"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Menu -->
+                        <Border Grid.Row="2" Grid.Column="1"
+                                Stroke="#888888"
+                                StrokeThickness="2"
+                                Padding="6"
+                                BackgroundColor="#222222">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMenuClicked"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                <Label Text="⚙️" FontSize="18" HorizontalOptions="Center"/>
+                                <Label Text="MENU"
+                                       TextColor="#888888"
+                                       FontFamily="Courier New"
+                                       FontSize="9"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
