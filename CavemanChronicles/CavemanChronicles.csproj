@@ -93,7 +93,11 @@
       <Folder Include="Assets\Enemies\" />
       <Folder Include="Assets\Sprites\" />
       <Folder Include="NewFolder\" />
-      <Folder Include="Resources\Images\" />
+      <Folder Include="Resources\Images\Dungeon\" />
+      <Folder Include="Resources\Images\Characters\" />
+      <Folder Include="Resources\Images\Monsters\" />
+      <Folder Include="Resources\Images\Items\" />
+      <Folder Include="Resources\Images\UI\" />
     </ItemGroup>
 
     <ItemGroup>
