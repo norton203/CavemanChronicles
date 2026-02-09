@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CavemanChronicles"
              x:Class="CavemanChronicles.TitlePage"
              BackgroundColor="Black">
 
     <Grid>
-        <!-- Background gradient effect -->
+        <!-- Clean gradient background -->
         <BoxView>
             <BoxView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -16,10 +17,9 @@
             </BoxView.Background>
         </BoxView>
 
-        <!-- Decorative grid lines -->
         <Grid RowDefinitions="Auto,*,Auto,Auto,Auto" Padding="20">
 
-            <!-- Top D&D style border with dice motif -->
+            <!-- Top border -->
             <Grid Grid.Row="0" 
                   ColumnDefinitions="*,Auto,*"
                   Margin="0,20,0,0">
@@ -27,18 +27,18 @@
                     <BoxView.Background>
                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                             <GradientStop Color="Transparent" Offset="0.0"/>
-                            <GradientStop Color="#FFD700" Offset="1.0"/>
+                            <GradientStop Color="#8B4513" Offset="1.0"/>
                         </LinearGradientBrush>
                     </BoxView.Background>
                 </BoxView>
 
                 <Border Grid.Column="1"
-                        Stroke="#FFD700"
-                        StrokeThickness="2"
+                        Stroke="#8B4513"
+                        StrokeThickness="3"
                         Padding="15,8"
                         Margin="10,0"
-                        BackgroundColor="#1a0033">
-                    <Label Text="⚔ D20 ⚔"
+                        BackgroundColor="#3a2817">
+                    <Label Text="🦴 STONE AGE 🦴"
                            TextColor="#FFD700"
                            FontFamily="Courier New"
                            FontSize="16"
@@ -48,7 +48,7 @@
                 <BoxView Grid.Column="2" HeightRequest="3" VerticalOptions="Center">
                     <BoxView.Background>
                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                            <GradientStop Color="#FFD700" Offset="0.0"/>
+                            <GradientStop Color="#8B4513" Offset="0.0"/>
                             <GradientStop Color="Transparent" Offset="1.0"/>
                         </LinearGradientBrush>
                     </BoxView.Background>
@@ -60,440 +60,335 @@
                                 VerticalOptions="Center" 
                                 Spacing="5">
 
-                <!-- Fantasy banner top -->
-                <Label Text="╔═══════════════════════════════════╗"
-                       TextColor="#8B4513"
-                       FontFamily="Courier New"
-                       FontSize="12"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,5"/>
+                <Border StrokeThickness="3"
+                        Stroke="#654321"
+                        Padding="30,20"
+                        Margin="0,0,0,20"
+                        HeightRequest="200"
+                        WidthRequest="400"
+                        HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="8,8" Radius="20" Opacity="0.8"/>
+                    </Border.Shadow>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#4a4a4a" Offset="0.0"/>
+                            <GradientStop Color="#2a2a2a" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
 
-                <!-- Main Title with fantasy shadow -->
-                <Grid>
-                    <!-- Deep shadow for depth -->
-                    <Label Text="CAVEMAN"
-                           TextColor="#4B0000"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="4,4,0,0"/>
-                    <!-- Mid shadow for 3D effect -->
-                    <Label Text="CAVEMAN"
-                           TextColor="#8B0000"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="2,2,0,0"/>
-                    <!-- Main text in gold/red gradient simulation -->
-                    <Label Text="CAVEMAN"
-                           TextColor="#FF4500"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
-                </Grid>
+                    <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                        <Grid>
+                            <Label Text="CAVEMAN"
+                                   TextColor="#1a1a1a"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   Margin="3,3,0,0"/>
+                            <Label Text="CAVEMAN"
+                                   TextColor="#3a3a3a"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   Margin="2,2,0,0"/>
+                            <Label Text="CAVEMAN"
+                                   TextColor="#D2691E"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </Grid>
 
-                <Grid>
-                    <!-- Deep shadow -->
-                    <Label Text="CHRONICLES"
-                           TextColor="#004B4B"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="4,4,0,0"/>
-                    <!-- Mid shadow -->
-                    <Label Text="CHRONICLES"
-                           TextColor="#008B8B"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="2,2,0,0"/>
-                    <!-- Main text in cyan/blue -->
-                    <Label Text="CHRONICLES"
-                           TextColor="#00FFFF"
-                           FontFamily="Courier New"
-                           FontSize="52"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
-                </Grid>
+                        <Grid>
+                            <Label Text="CHRONICLES"
+                                   TextColor="#1a1a1a"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   Margin="3,3,0,0"/>
+                            <Label Text="CHRONICLES"
+                                   TextColor="#3a3a3a"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   Margin="2,2,0,0"/>
+                            <Label Text="CHRONICLES"
+                                   TextColor="#808080"
+                                   FontFamily="Courier New"
+                                   FontSize="42"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
 
-                <!-- Fantasy banner bottom -->
-                <Label Text="╚═══════════════════════════════════╝"
-                       TextColor="#8B4513"
-                       FontFamily="Courier New"
-                       FontSize="12"
-                       HorizontalOptions="Center"
-                       Margin="0,5,0,0"/>
-
-                <!-- Medieval decorative separator -->
-                <Label Text="⚔═══════════════════════════════════⚔"
+                <Label Text="⚔ A JOURNEY THROUGH TIME ⚔"
                        TextColor="#FFD700"
                        FontFamily="Courier New"
-                       FontSize="10"
+                       FontSize="14"
+                       FontAttributes="Bold"
                        HorizontalOptions="Center"
-                       Margin="0,15,0,5"/>
-
-                <!-- RPG-style tagline -->
-                <Grid>
-                    <Label Text="~ FROM CAVEMAN TO THE FUTURE ~"
-                           TextColor="#4B2600"
-                           FontFamily="Courier New"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           Margin="2,2,0,0"/>
-                    <Label Text="~ FROM CAVEMAN TO THE FUTURE ~"
-                           TextColor="#FFD700"
-                           FontFamily="Courier New"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
-                </Grid>
-
-                <!-- Class/Race indicator style -->
-                <Label Text="⟨ A TEXT-BASED RPG ADVENTURE ⟩"
-                       TextColor="#C0C0C0"
-                       FontFamily="Courier New"
-                       FontSize="12"
-                       FontAttributes="Italic"
-                       HorizontalOptions="Center"
-                       Margin="0,8,0,0"/>
-
+                       Margin="0,10,0,0"/>
             </VerticalStackLayout>
 
-            <!-- Stats-style divider -->
-            <Grid Grid.Row="2" 
-                  ColumnDefinitions="Auto,*,Auto"
-                  Margin="0,0,0,20">
+            <!-- Decorative divider -->
+            <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" Margin="0,10,0,10">
                 <Label Grid.Column="0" 
                        Text="▓▓▓"
-                       TextColor="#FFD700"
+                       TextColor="#8B4513"
                        FontFamily="Courier New"
                        FontSize="12"/>
                 <BoxView Grid.Column="1" 
                          HeightRequest="2" 
-                         Color="#FFD700"
+                         Color="#654321"
                          VerticalOptions="Center"
                          Margin="5,0"/>
                 <Label Grid.Column="2" 
                        Text="▓▓▓"
-                       TextColor="#FFD700"
+                       TextColor="#8B4513"
                        FontFamily="Courier New"
                        FontSize="12"/>
             </Grid>
 
-            <!-- Menu Options with D&D character sheet styling -->
+            <!-- Menu Options with TILED stone buttons -->
             <VerticalStackLayout Grid.Row="3" Spacing="15" Margin="0,0,0,20">
 
-                <!-- New Game Button - Styled like character creation -->
+                <!-- New Game Button -->
                 <Border x:Name="NewGameButton"
-            StrokeThickness="0"
-            Padding="0"
-            BackgroundColor="Transparent">
-                    <Grid>
-                        <!-- Outer stone border effect -->
-                        <Border x:Name="NewGameGlow"
-                    Stroke="#8B4513"
-                    StrokeThickness="4"
-                    Padding="25,15"
-                    BackgroundColor="Transparent"
-                    Opacity="0.5"
-                    Margin="-3,-3,-3,-3">
-                        </Border>
+                        StrokeThickness="0"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="60"
+                        HorizontalOptions="Fill">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="4,4" Radius="10" Opacity="0.6"/>
+                    </Border.Shadow>
 
-                        <!-- Main button with parchment style -->
-                        <Border x:Name="NewGameBorder"
-                    StrokeThickness="3"
-                    Padding="25,15">
-                            <Border.Stroke>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#FFD700" Offset="0.0"/>
-                                    <GradientStop Color="#FFA500" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Stroke>
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#2B1810" Offset="0.0"/>
-                                    <GradientStop Color="#1a0f0a" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnNewGame"/>
-                                <PointerGestureRecognizer PointerEntered="OnNewGamePointerEntered"
-                                             PointerExited="OnNewGamePointerExited"/>
-                            </Border.GestureRecognizers>
+                    <Border x:Name="NewGameBorder"
+                            StrokeThickness="3"
+                            Stroke="#654321"
+                            BackgroundColor="Transparent"
+                            HeightRequest="60">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNewGame"/>
+                            <PointerGestureRecognizer PointerEntered="OnNewGamePointerEntered"
+                                                     PointerExited="OnNewGamePointerExited"/>
+                        </Border.GestureRecognizers>
 
-                            <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Grid>
+                            <!-- TILED Stone texture -->
+                            <local:TiledImageView Source="flatstones.png"
+                                                  OpacityValue="0.6"/>
+
+                            <!-- Button content -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" Padding="25,0">
                                 <Label Grid.Column="0"
-                           x:Name="NewGameLeftIcon"
-                           Text="⚔ "
-                           TextColor="#FFD700"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="NewGameLeftIcon"
+                                       Text="⚔ "
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
 
                                 <Grid Grid.Column="1">
                                     <Label x:Name="NewGameShadow"
-                               Text="NEW GAME"
-                               TextColor="#4B2600"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               Margin="2,2,0,0"/>
+                                           Text="NEW GAME"
+                                           TextColor="#1a0f0a"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Margin="2,2,0,0"/>
                                     <Label x:Name="NewGameText"
-                               Text="NEW GAME"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                                           Text="NEW GAME"
+                                           TextColor="#FFD700"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
                                 </Grid>
 
                                 <Label Grid.Column="2"
-                           x:Name="NewGameRightIcon"
-                           Text=" ⚔"
-                           TextColor="#FFD700"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="NewGameRightIcon"
+                                       Text=" ⚔"
+                                       TextColor="#FFD700"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
                             </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </Border>
 
-                <!-- Load Game Button - Styled like spell scroll -->
+                <!-- Load Game Button -->
                 <Border x:Name="LoadGameButton"
-            StrokeThickness="0"
-            Padding="0"
-            BackgroundColor="Transparent">
-                    <Grid>
-                        <!-- Outer glow -->
-                        <Border x:Name="LoadGameGlow"
-                    Stroke="#4169E1"
-                    StrokeThickness="4"
-                    Padding="25,15"
-                    BackgroundColor="Transparent"
-                    Opacity="0.5"
-                    Margin="-3,-3,-3,-3">
-                        </Border>
+                        StrokeThickness="0"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="60"
+                        HorizontalOptions="Fill">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="4,4" Radius="10" Opacity="0.6"/>
+                    </Border.Shadow>
 
-                        <!-- Main button -->
-                        <Border x:Name="LoadGameBorder"
-                    StrokeThickness="3"
-                    Padding="25,15">
-                            <Border.Stroke>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#00FFFF" Offset="0.0"/>
-                                    <GradientStop Color="#4169E1" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Stroke>
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#0a1628" Offset="0.0"/>
-                                    <GradientStop Color="#050b14" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnLoadGame"/>
-                                <PointerGestureRecognizer PointerEntered="OnLoadGamePointerEntered"
-                                             PointerExited="OnLoadGamePointerExited"/>
-                            </Border.GestureRecognizers>
+                    <Border x:Name="LoadGameBorder"
+                            StrokeThickness="3"
+                            Stroke="#4a5f5f"
+                            BackgroundColor="Transparent"
+                            HeightRequest="60">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLoadGame"/>
+                            <PointerGestureRecognizer PointerEntered="OnLoadGamePointerEntered"
+                                                     PointerExited="OnLoadGamePointerExited"/>
+                        </Border.GestureRecognizers>
 
-                            <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Grid>
+                            <!-- TILED Stone texture -->
+                            <local:TiledImageView Source="flatstones.png"
+                                                  OpacityValue="0.6"/>
+
+                            <!-- Button content -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" Padding="25,0">
                                 <Label Grid.Column="0"
-                           x:Name="LoadGameLeftIcon"
-                           Text="📜 "
-                           TextColor="#00FFFF"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="LoadGameLeftIcon"
+                                       Text="📜 "
+                                       TextColor="#00FFFF"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
 
                                 <Grid Grid.Column="1">
                                     <Label x:Name="LoadGameShadow"
-                               Text="LOAD GAME"
-                               TextColor="#003366"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               Margin="2,2,0,0"/>
+                                           Text="LOAD GAME"
+                                           TextColor="#001a1a"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Margin="2,2,0,0"/>
                                     <Label x:Name="LoadGameText"
-                               Text="LOAD GAME"
-                               TextColor="#00FFFF"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                                           Text="LOAD GAME"
+                                           TextColor="#00FFFF"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
                                 </Grid>
 
                                 <Label Grid.Column="2"
-                           x:Name="LoadGameRightIcon"
-                           Text=" 📜"
-                           TextColor="#00FFFF"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="LoadGameRightIcon"
+                                       Text=" 📜"
+                                       TextColor="#00FFFF"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
                             </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </Border>
 
                 <!-- Settings Button -->
-                <Border StrokeThickness="0"
-            Padding="0"
-            BackgroundColor="Transparent">
-                    <Grid>
-                        <!-- Outer glow -->
-                        <Border x:Name="SettingsGameGlow"
-                    Stroke="#00FF00"
-                    StrokeThickness="4"
-                    Padding="25,15"
-                    BackgroundColor="Transparent"
-                    Opacity="0.5"
-                    Margin="-3,-3,-3,-3">
-                        </Border>
+                <Border x:Name="SettingsButton"
+                        StrokeThickness="0"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        HeightRequest="60"
+                        HorizontalOptions="Fill">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="4,4" Radius="10" Opacity="0.6"/>
+                    </Border.Shadow>
 
-                        <!-- Main button -->
-                        <Border x:Name="SettingsGameBorder"
-                    StrokeThickness="3"
-                    Padding="25,15">
-                            <Border.Stroke>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#00FF00" Offset="0.0"/>
-                                    <GradientStop Color="#FFD700" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Stroke>
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#0a1a0a" Offset="0.0"/>
-                                    <GradientStop Color="#051405" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSettings"/>
-                                <PointerGestureRecognizer PointerEntered="OnSettingsPointerEntered"
-                                             PointerExited="OnSettingsPointerExited"/>
-                            </Border.GestureRecognizers>
+                    <Border x:Name="SettingsBorder"
+                            StrokeThickness="3"
+                            Stroke="#2d4d2d"
+                            BackgroundColor="Transparent"
+                            HeightRequest="60">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSettings"/>
+                            <PointerGestureRecognizer PointerEntered="OnSettingsPointerEntered"
+                                                     PointerExited="OnSettingsPointerExited"/>
+                        </Border.GestureRecognizers>
 
-                            <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Grid>
+                            <!-- TILED Stone texture -->
+                            <local:TiledImageView Source="flatstones.png"
+                                                  OpacityValue="0.6"/>
+
+                            <!-- Button content -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" Padding="25,0">
                                 <Label Grid.Column="0"
-                           x:Name="SettingsLeftIcon"
-                           Text="⚙ "
-                           TextColor="#00FF00"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="SettingsLeftIcon"
+                                       Text="⚙ "
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
 
                                 <Grid Grid.Column="1">
                                     <Label x:Name="SettingsShadow"
-                               Text="SETTINGS"
-                               TextColor="#003300"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               Margin="2,2,0,0"/>
+                                           Text="SETTINGS"
+                                           TextColor="#001a00"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Margin="2,2,0,0"/>
                                     <Label x:Name="SettingsText"
-                               Text="SETTINGS"
-                               TextColor="#00FF00"
-                               FontFamily="Courier New"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               HorizontalOptions="Center"/>
+                                           Text="SETTINGS"
+                                           TextColor="#00FF00"
+                                           FontFamily="Courier New"
+                                           FontSize="24"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
                                 </Grid>
 
                                 <Label Grid.Column="2"
-                           x:Name="SettingsRightIcon"
-                           Text=" ⚙"
-                           TextColor="#00FF00"
-                           FontFamily="Courier New"
-                           FontSize="24"
-                           VerticalOptions="Center"/>
+                                       x:Name="SettingsRightIcon"
+                                       Text=" ⚙"
+                                       TextColor="#00FF00"
+                                       FontFamily="Courier New"
+                                       FontSize="24"
+                                       VerticalOptions="Center"/>
                             </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </Border>
 
             </VerticalStackLayout>
-            <!-- Footer with D&D stat block style -->
-            <VerticalStackLayout Grid.Row="4" Spacing="8">
 
-                <!-- Stat line separator -->
+            <!-- Footer -->
+            <VerticalStackLayout Grid.Row="4" Spacing="8">
                 <Grid ColumnDefinitions="*,Auto,*" Margin="0,10,0,0">
                     <BoxView Grid.Column="0" 
                              HeightRequest="1" 
-                             Color="#8B4513" 
+                             Color="#654321"
                              VerticalOptions="Center"/>
                     <Label Grid.Column="1"
-                           Text=" ◆ LEVEL 1 ADVENTURE ◆ "
+                           Text=" 🦴 FROM CAVES TO STARS 🦴 "
                            TextColor="#8B4513"
                            FontFamily="Courier New"
                            FontSize="10"
                            FontAttributes="Bold"/>
                     <BoxView Grid.Column="2" 
                              HeightRequest="1" 
-                             Color="#8B4513" 
+                             Color="#654321"
                              VerticalOptions="Center"/>
                 </Grid>
 
-                <!-- D&D style info -->
-                <Grid ColumnDefinitions="*,*,*" 
-                      ColumnSpacing="10"
-                      Margin="0,5,0,0">
-                    <Border Grid.Column="0"
-                            Stroke="#FFD700"
-                            StrokeThickness="1"
-                            Padding="5"
-                            BackgroundColor="#0a0015">
-                        <Label Text="STR: ∞"
-                               TextColor="#FFD700"
-                               FontFamily="Courier New"
-                               FontSize="10"
-                               HorizontalOptions="Center"/>
-                    </Border>
-                    <Border Grid.Column="1"
-                            Stroke="#00FFFF"
-                            StrokeThickness="1"
-                            Padding="5"
-                            BackgroundColor="#0a0015">
-                        <Label Text="INT: ∞"
-                               TextColor="#00FFFF"
-                               FontFamily="Courier New"
-                               FontSize="10"
-                               HorizontalOptions="Center"/>
-                    </Border>
-                    <Border Grid.Column="2"
-                            Stroke="#FF4500"
-                            StrokeThickness="1"
-                            Padding="5"
-                            BackgroundColor="#0a0015">
-                        <Label Text="WIS: ∞"
-                               TextColor="#FF4500"
-                               FontFamily="Courier New"
-                               FontSize="10"
-                               HorizontalOptions="Center"/>
-                    </Border>
-                </Grid>
-
-                <!-- Classic "press start" message -->
-                <Label Text="[ROLL FOR INITIATIVE]"
-                       TextColor="#FFD700"
+                <Label Text="v1.0 - Prehistoric Edition"
+                       TextColor="#666666"
                        FontFamily="Courier New"
-                       FontSize="11"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       Opacity="0.7"
-                       Margin="0,10,0,5"/>
-
-                <Label Text="© 2026 Caveman Chronicles - All Rights Reserved"
-                       TextColor="#004400"
-                       FontFamily="Courier New"
-                       FontSize="8"
+                       FontSize="10"
                        HorizontalOptions="Center"
                        Margin="0,0,0,10"/>
             </VerticalStackLayout>
