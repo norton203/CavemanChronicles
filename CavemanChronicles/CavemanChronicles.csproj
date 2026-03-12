@@ -122,33 +122,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Resources\Images\Textures\Rocks\dirt.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\flatstones.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\goldrocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\grayrocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\iceyrocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\lavarocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\pathrocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Images\Textures\Rocks\slimrocks.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Update="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.30" />
     </ItemGroup>
 
