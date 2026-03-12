@@ -101,6 +101,36 @@
     </ItemGroup>
 
     <ItemGroup>
+      <MauiImage Include="Resources\raw\Textures\Doors\creakydoor.png" />
+      <MauiImage Include="Resources\raw\Textures\Doors\officedoor.png" />
+      <MauiImage Include="Resources\raw\Textures\Doors\spookeydoor.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\bigleaves.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\lava.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\rapids.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\sand.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\sandmarks.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\snow.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\tallgrass.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\tinyleaves.png" />
+      <MauiImage Include="Resources\raw\Textures\Elements\water.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\dirt.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\flatstones.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\goldrocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\grayrocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\iceyrocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\lavarocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\pathrocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Rocks\slimrocks.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\bigtrunk.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\creakywood.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\darkwood.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\trunks.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\wooda.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\woodb.png" />
+      <MauiImage Include="Resources\raw\Textures\Wood\woodtitle.png" />
+    </ItemGroup>
+
+    <ItemGroup>
       <MauiXaml Update="CharacterCreationPage.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>

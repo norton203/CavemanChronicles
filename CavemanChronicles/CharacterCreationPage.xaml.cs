@@ -1,4 +1,4 @@
-using Microsoft.Maui.Platform;
+﻿using Microsoft.Maui.Platform;
 
 namespace CavemanChronicles
 {
@@ -8,7 +8,7 @@ namespace CavemanChronicles
         private ClassData _selectedClass;
         private BackgroundData _selectedBackground;
         private readonly SaveService _saveService;
-       
+        private int _currentStep = 1;
 
         public CharacterCreationPage()
         {
@@ -20,45 +20,134 @@ namespace CavemanChronicles
             BackgroundCollectionView.ItemsSource = BackgroundData.AllBackgrounds;
         }
 
-        private async void OnRaceSelected(object sender, SelectionChangedEventArgs e)
+        // ══════════════════════════════════════════════════
+        // STEP NAVIGATION
+        // ══════════════════════════════════════════════════
+
+        private async void OnNext(object sender, EventArgs e)
         {
-            if (e.CurrentSelection.Count == 0)
-                return;
-
-            _selectedRace = e.CurrentSelection[0] as RaceStats;
-
-            if (_selectedRace != null)
+            if (_currentStep == 1)
             {
-                // Update display label
-                RaceDisplayLabel.Text = _selectedRace.Name.ToUpper();
-
-                UpdateStatModifiers();
-                CheckIfCanProceed();
-
-                // Auto-scroll
-                await Task.Delay(100);
-                await MainScrollView.ScrollToAsync(ClassCollectionView, ScrollToPosition.MakeVisible, true);
+                if (string.IsNullOrWhiteSpace(NameEntry.Text))
+                {
+                    await DisplayAlert("Missing Name", "Please enter your character's name.", "OK");
+                    return;
+                }
+                if (_selectedRace == null)
+                {
+                    await DisplayAlert("Missing Species", "Please select a species (race).", "OK");
+                    return;
+                }
+                GoToStep(2);
+            }
+            else if (_currentStep == 2)
+            {
+                if (_selectedClass == null)
+                {
+                    await DisplayAlert("Missing Class", "Please select a class.", "OK");
+                    return;
+                }
+                GoToStep(3);
             }
         }
 
-        private async void OnClassSelected(object sender, SelectionChangedEventArgs e)
+        private void OnBack(object sender, EventArgs e)
         {
-            if (e.CurrentSelection.Count == 0)
-                return;
+            if (_currentStep > 1)
+                GoToStep(_currentStep - 1);
+        }
+
+        private async void GoToStep(int step)
+        {
+            _currentStep = step;
+
+            Step1Panel.IsVisible = step == 1;
+            Step2Panel.IsVisible = step == 2;
+            Step3Panel.IsVisible = step == 3;
+
+            BackButton.IsVisible = step > 1;
+            NextButton.IsVisible = step < 3;
+
+            // Update step indicator dots
+            UpdateStepIndicator();
+
+            // On step 3 — roll stats if not yet rolled, refresh derived stats
+            if (step == 3)
+            {
+                if (string.IsNullOrWhiteSpace(StrengthEntry.Text))
+                    RollInitialStats();
+                UpdateDerivedStats();
+                CheckIfCanProceed();
+            }
+
+            // Scroll to top of page on step change
+            await MainScrollView.ScrollToAsync(0, 0, false);
+        }
+
+        private void UpdateStepIndicator()
+        {
+            // Step 1 dot
+            SetDotActive(Step1Dot, Step1DotLabel ?? null, Step1Label, _currentStep == 1, "#FF00FF");
+            // Step 2 dot
+            SetDotActive(Step2Dot, Step2DotLabel, Step2Label, _currentStep == 2, "#00FFFF");
+            // Step 3 dot
+            SetDotActive(Step3Dot, Step3DotLabel, Step3Label, _currentStep == 3, "#FFD700");
+        }
+
+        private void SetDotActive(Border dot, Label dotLabel, Label stepLabel, bool active, string activeColor)
+        {
+            if (active)
+            {
+                dot.BackgroundColor = Color.FromArgb(activeColor);
+                dot.Stroke = Color.FromArgb(activeColor);
+                if (dotLabel != null) dotLabel.TextColor = Colors.Black;
+                stepLabel.TextColor = Color.FromArgb(activeColor);
+            }
+            else
+            {
+                dot.BackgroundColor = Color.FromArgb("#333333");
+                dot.Stroke = Color.FromArgb("#333333");
+                if (dotLabel != null) dotLabel.TextColor = Color.FromArgb("#666666");
+                stepLabel.TextColor = Color.FromArgb("#444444");
+            }
+        }
+
+        // ══════════════════════════════════════════════════
+        // STEP 1: RACE SELECTION
+        // ══════════════════════════════════════════════════
+
+        private void OnRaceSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count == 0) return;
+
+            _selectedRace = e.CurrentSelection[0] as RaceStats;
+            if (_selectedRace != null)
+            {
+                RaceDisplayLabel.Text = _selectedRace.Name.ToUpper();
+                RaceSelectedBanner.IsVisible = true;
+                UpdateStatModifiers();
+            }
+        }
+
+        private void OnNameChanged(object sender, TextChangedEventArgs e)
+        {
+            // Nothing needed here for step wizard — validation happens on Next tap
+        }
+
+        // ══════════════════════════════════════════════════
+        // STEP 2: CLASS & BACKGROUND
+        // ══════════════════════════════════════════════════
+
+        private void OnClassSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.Count == 0) return;
 
             _selectedClass = e.CurrentSelection[0] as ClassData;
-
             if (_selectedClass != null)
             {
-                // Update display label
                 ClassDisplayLabel.Text = _selectedClass.Name.ToUpper();
-
+                ClassSelectedBanner.IsVisible = true;
                 RollInitialStats();
-                UpdateSummary();
-                CheckIfCanProceed();
-
-                await Task.Delay(100);
-                await MainScrollView.ScrollToAsync(BackgroundCollectionView, ScrollToPosition.MakeVisible, true);
             }
         }
 
@@ -68,160 +157,129 @@ namespace CavemanChronicles
             {
                 _selectedBackground = null;
                 BackgroundDisplayLabel.Text = "NONE";
+                BackgroundSelectedBanner.IsVisible = false;
                 return;
             }
 
             _selectedBackground = e.CurrentSelection[0] as BackgroundData;
-
             if (_selectedBackground != null)
             {
                 BackgroundDisplayLabel.Text = _selectedBackground.Name.ToUpper();
+                BackgroundSelectedBanner.IsVisible = true;
             }
-
-            CheckIfCanProceed();
         }
+
+        // ══════════════════════════════════════════════════
+        // STEP 3: ABILITY SCORES
+        // ══════════════════════════════════════════════════
 
         private void OnRollStats(object sender, EventArgs e)
         {
             RollInitialStats();
+            UpdateDerivedStats();
         }
 
         private void RollInitialStats()
         {
-            // Roll 4d6, drop lowest - classic D&D method
-            StrengthEntry.Text = RollAbilityScore().ToString();
-            DexterityEntry.Text = RollAbilityScore().ToString();
-            ConstitutionEntry.Text = RollAbilityScore().ToString();
-            IntelligenceEntry.Text = RollAbilityScore().ToString();
-            WisdomEntry.Text = RollAbilityScore().ToString();
-            CharismaEntry.Text = RollAbilityScore().ToString();
-        }
+            if (_selectedClass == null) return;
 
-        private int RollAbilityScore()
-        {
-            // Roll 4d6, drop the lowest
-            var rolls = new List<int>
+            var random = new Random();
+            int[] stats = new int[6];
+            for (int i = 0; i < 6; i++)
+                stats[i] = Roll4d6DropLowest(random);
+
+            // Assign based on class priority
+            int[] sorted = stats.OrderByDescending(x => x).ToArray();
+
+            int[] indices = _selectedClass.Class switch
             {
-                Random.Shared.Next(1, 7),
-                Random.Shared.Next(1, 7),
-                Random.Shared.Next(1, 7),
-                Random.Shared.Next(1, 7)
+                CharacterClass.Fighter or CharacterClass.Barbarian => new[] { 0, 1, 2, 3, 4, 5 },
+                CharacterClass.Wizard => new[] { 3, 1, 2, 0, 4, 5 },
+                CharacterClass.Rogue => new[] { 1, 0, 2, 3, 4, 5 },
+                CharacterClass.Cleric => new[] { 2, 1, 0, 3, 4, 5 },
+                CharacterClass.Ranger => new[] { 1, 0, 2, 3, 4, 5 },
+                _ => new[] { 0, 1, 2, 3, 4, 5 }
             };
 
-            rolls.Sort();
-            return rolls[1] + rolls[2] + rolls[3]; // Sum the three highest
+            StrengthEntry.Text     = sorted[indices[0]].ToString();
+            DexterityEntry.Text    = sorted[indices[1]].ToString();
+            ConstitutionEntry.Text = sorted[indices[2]].ToString();
+            IntelligenceEntry.Text = sorted[indices[3]].ToString();
+            WisdomEntry.Text       = sorted[indices[4]].ToString();
+            CharismaEntry.Text     = sorted[indices[5]].ToString();
+
+            UpdateStatModifiers();
+            UpdateDerivedStats();
+            CheckIfCanProceed();
+        }
+
+        private int Roll4d6DropLowest(Random random)
+        {
+            int[] rolls = { random.Next(1, 7), random.Next(1, 7), random.Next(1, 7), random.Next(1, 7) };
+            return rolls.Sum() - rolls.Min();
         }
 
         private void OnStatChanged(object sender, TextChangedEventArgs e)
         {
             UpdateStatModifiers();
-            UpdateSummary();
+            UpdateDerivedStats();
             CheckIfCanProceed();
         }
 
         private void UpdateStatModifiers()
         {
-            // Update modifier labels as stats change
-            if (int.TryParse(StrengthEntry.Text, out int str))
-            {
-                int totalStr = str + (_selectedRace?.StrengthBonus ?? 0);
-                StrengthModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalStr));
-            }
-
-            if (int.TryParse(DexterityEntry.Text, out int dex))
-            {
-                int totalDex = dex + (_selectedRace?.DexterityBonus ?? 0);
-                DexterityModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalDex));
-
-                // Update initiative
-                InitiativeLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalDex));
-            }
-
-            if (int.TryParse(ConstitutionEntry.Text, out int con))
-            {
-                ConstitutionModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(con));
-            }
-
-            if (int.TryParse(IntelligenceEntry.Text, out int intel))
-            {
-                int totalInt = intel + (_selectedRace?.IntelligenceBonus ?? 0);
-                IntelligenceModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(totalInt));
-            }
-
-            if (int.TryParse(WisdomEntry.Text, out int wis))
-            {
-                WisdomModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(wis));
-            }
-
-            if (int.TryParse(CharismaEntry.Text, out int cha))
-            {
-                CharismaModLabel.Text = GameMath.FormatModifier(GameMath.CalculateModifier(cha));
-            }
+            UpdateModifierLabel(StrengthEntry, StrengthModLabel);
+            UpdateModifierLabel(DexterityEntry, DexterityModLabel);
+            UpdateModifierLabel(ConstitutionEntry, ConstitutionModLabel);
+            UpdateModifierLabel(IntelligenceEntry, IntelligenceModLabel);
+            UpdateModifierLabel(WisdomEntry, WisdomModLabel);
+            UpdateModifierLabel(CharismaEntry, CharismaModLabel);
         }
 
-       
-
-        private CavemanChronicles.Background ParseBackground(string name)
+        private void UpdateModifierLabel(Entry entry, Label modLabel)
         {
-            // Remove spaces for enum parsing
-            string enumName = name.Replace(" ", "");
-
-            // Try to parse the string to Background enum
-            if (Enum.TryParse<CavemanChronicles.Background>(enumName, out var result))
+            if (int.TryParse(entry?.Text, out int score))
             {
-                return result;
-            }
-
-            // Default to None if parsing fails
-            return CavemanChronicles.Background.None;
-        }
-
-       
-
-        private void UpdateSummary()
-        {
-            if (_selectedClass == null) return;
-
-            // Calculate HP based on class hit die + CON modifier
-            int baseHP = _selectedClass.HitDie;
-            if (int.TryParse(ConstitutionEntry.Text, out int con))
-            {
-                int conMod = GameMath.CalculateModifier(con);
-                int totalHP = baseHP + conMod + (_selectedRace?.HealthBonus ?? 0);
-                HitPointsLabel.Text = Math.Max(1, totalHP).ToString(); // Minimum 1 HP
-            }
-        }
-
-        private void OnNameChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckIfCanProceed();
-        }
-
-        private async void CheckIfCanProceed()
-        {
-            bool hasName = !string.IsNullOrWhiteSpace(NameEntry.Text);
-            bool hasRace = _selectedRace != null;
-            bool hasClass = _selectedClass != null;
-            bool hasStats = HasValidStats();
-
-            bool wasVisible = StartButton.IsVisible;
-
-            if (hasName && hasRace && hasClass && hasStats)
-            {
-                BackstoryPanel.IsVisible = true;
-                StartButton.IsVisible = true;
-
-                // Auto-scroll to start button when it appears
-                if (!wasVisible)
-                {
-                    await Task.Delay(100);
-                    await MainScrollView.ScrollToAsync(StartButton, ScrollToPosition.End, true);
-                }
+                int mod = GameMath.CalculateModifier(score);
+                modLabel.Text = mod >= 0 ? $"+{mod}" : $"{mod}";
             }
             else
             {
-                StartButton.IsVisible = false;
+                modLabel.Text = "--";
             }
+        }
+
+        private void UpdateDerivedStats()
+        {
+            if (!HasValidStats() || _selectedClass == null || _selectedRace == null)
+            {
+                DerivedStatsPanel.IsVisible = false;
+                return;
+            }
+
+            int.TryParse(ConstitutionEntry.Text, out int con);
+            int.TryParse(DexterityEntry.Text, out int dex);
+
+            int conMod = GameMath.CalculateModifier(con);
+            int dexMod = GameMath.CalculateModifier(dex);
+            int maxHP = Math.Max(1, _selectedClass.HitDie + conMod + _selectedRace.HealthBonus);
+            int ac = 10 + dexMod;
+
+            HitPointsLabel.Text = maxHP.ToString();
+            ArmorClassLabel.Text = ac.ToString();
+            InitiativeLabel.Text = dexMod >= 0 ? $"+{dexMod}" : $"{dexMod}";
+
+            DerivedStatsPanel.IsVisible = true;
+        }
+
+        private void CheckIfCanProceed()
+        {
+            bool canStart = !string.IsNullOrWhiteSpace(NameEntry.Text)
+                            && _selectedRace != null
+                            && _selectedClass != null
+                            && HasValidStats();
+
+            StartButton.IsVisible = canStart && _currentStep == 3;
         }
 
         private bool HasValidStats()
@@ -234,7 +292,9 @@ namespace CavemanChronicles
                    int.TryParse(CharismaEntry.Text, out _);
         }
 
-        // In CharacterCreationPage.xaml.cs, update the OnStartAdventure method:
+        // ══════════════════════════════════════════════════
+        // START ADVENTURE
+        // ══════════════════════════════════════════════════
 
         private async void OnStartAdventure(object sender, EventArgs e)
         {
@@ -243,26 +303,22 @@ namespace CavemanChronicles
                 await DisplayAlert("Missing Name", "Please enter a character name.", "OK");
                 return;
             }
-
             if (_selectedRace == null)
             {
-                await DisplayAlert("Missing Race", "Please select a race.", "OK");
+                await DisplayAlert("Missing Species", "Please select a species.", "OK");
                 return;
             }
-
             if (_selectedClass == null)
             {
                 await DisplayAlert("Missing Class", "Please select a class.", "OK");
                 return;
             }
-
             if (!HasValidStats())
             {
                 await DisplayAlert("Invalid Stats", "Please ensure all ability scores are filled in.", "OK");
                 return;
             }
 
-            // Parse stats
             int.TryParse(StrengthEntry.Text, out int str);
             int.TryParse(DexterityEntry.Text, out int dex);
             int.TryParse(ConstitutionEntry.Text, out int con);
@@ -270,211 +326,45 @@ namespace CavemanChronicles
             int.TryParse(WisdomEntry.Text, out int wis);
             int.TryParse(CharismaEntry.Text, out int cha);
 
-            // Apply racial bonuses
-            str += _selectedRace.StrengthBonus;
-            dex += _selectedRace.DexterityBonus;
+            str   += _selectedRace.StrengthBonus;
+            dex   += _selectedRace.DexterityBonus;
             intel += _selectedRace.IntelligenceBonus;
 
-            // Calculate derived stats
             int conMod = GameMath.CalculateModifier(con);
-            int maxHP = _selectedClass.HitDie + conMod + _selectedRace.HealthBonus;
-            maxHP = Math.Max(1, maxHP);
+            int dexMod = GameMath.CalculateModifier(dex);
+            int maxHP = Math.Max(1, _selectedClass.HitDie + conMod + _selectedRace.HealthBonus);
+            int initiative = dexMod;
+            int armorClass = 10 + dexMod;
 
-            int initiative = GameMath.CalculateModifier(dex);
-            int armorClass = 10 + GameMath.CalculateModifier(dex);
-
-            // Create character
             var character = new Character
             {
-                Name = NameEntry.Text.Trim(),
-                Race = _selectedRace.Race,
-                Class = _selectedClass.Class,
-                             
-                Backstory = BackstoryEditor.Text?.Trim() ?? "",
-                Alignment = "Neutral",
-
-                Level = 1,
+                Name       = NameEntry.Text.Trim(),
+                Race       = _selectedRace.Race,
+                Class      = _selectedClass.Class,
+                Backstory  = BackstoryEditor.Text?.Trim() ?? string.Empty,
+                Level      = 1,
                 Experience = 0,
-                MaxHealth = maxHP,
-                Health = maxHP,
-                HitDice = _selectedClass.HitDie,
-
-                CurrentEra = TechnologyEra.Caveman,
-
-                Stats = new CharacterStats
-                {
-                    Strength = str,
-                    Dexterity = dex,
-                    Constitution = con,
-                    Intelligence = intel,
-                    Wisdom = wis,
-                    Charisma = cha
-                },
-
-                ArmorClass = armorClass,
-                Initiative = initiative,
-                Speed = 30,
-            
-
-                Skills = InitializeSkills(_selectedClass, _selectedBackground),
-                Inventory = InitializeInventory(_selectedClass),
-                Languages = new List<string> { "Common" },
-                Gold = Random.Shared.Next(50, 150)
+                Strength     = str,
+                Dexterity    = dex,
+                Constitution = con,
+                Intelligence = intel,
+                Wisdom       = wis,
+                Charisma     = cha,
+                MaxHP        = maxHP,
+                CurrentHP    = maxHP,
+                Initiative   = initiative,
+                ArmorClass   = armorClass,
+                ProficiencyBonus = 2,
+                Speed        = 30,
+                CurrentTechEra = TechEra.StoneAge
             };
 
-            // Save the character
-            bool saved = await _saveService.SaveCharacter(character);
+            await _saveService.SaveCharacterAsync(character).ConfigureAwait(false);
 
-            if (saved)
+            await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                // Get services from DI
-                var gameService = Handler?.MauiContext?.Services.GetService<GameService>();
-                var combatService = Handler?.MauiContext?.Services.GetService<CombatService>();
-                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
-                var audioService = Handler?.MauiContext?.Services.GetService<AudioService>();
-
-                // Navigate to main game page with character and services
-                var mainPage = new MainPage(character, gameService, combatService, monsterLoader, audioService);
-                await Navigation.PushAsync(mainPage);
-            }
-            else
-            {
-                await DisplayAlert("Save Failed", "Could not save character, but you can still play.", "OK");
-
-                var gameService = Handler?.MauiContext?.Services.GetService<GameService>();
-                var combatService = Handler?.MauiContext?.Services.GetService<CombatService>();
-                var monsterLoader = Handler?.MauiContext?.Services.GetService<MonsterLoaderService>();
-                var audioService = Handler?.MauiContext?.Services.GetService<AudioService>();
-
-                var mainPage = new MainPage(character, gameService, combatService, monsterLoader, audioService);
-                await Navigation.PushAsync(mainPage);
-            }
-        }
-        private List<Skill> InitializeSkills(ClassData classData, BackgroundData background)
-        {
-            var skills = new List<Skill>
-            {
-                // Strength
-                new Skill { Name = "Athletics", Ability = "STR", IsProficient = false },
-                
-                // Dexterity
-                new Skill { Name = "Acrobatics", Ability = "DEX", IsProficient = false },
-                new Skill { Name = "Sleight of Hand", Ability = "DEX", IsProficient = false },
-                new Skill { Name = "Stealth", Ability = "DEX", IsProficient = false },
-                
-                // Intelligence
-                new Skill { Name = "Arcana", Ability = "INT", IsProficient = false },
-                new Skill { Name = "History", Ability = "INT", IsProficient = false },
-                new Skill { Name = "Investigation", Ability = "INT", IsProficient = false },
-                new Skill { Name = "Nature", Ability = "INT", IsProficient = false },
-                new Skill { Name = "Religion", Ability = "INT", IsProficient = false },
-                
-                // Wisdom
-                new Skill { Name = "Animal Handling", Ability = "WIS", IsProficient = false },
-                new Skill { Name = "Insight", Ability = "WIS", IsProficient = false },
-                new Skill { Name = "Medicine", Ability = "WIS", IsProficient = false },
-                new Skill { Name = "Perception", Ability = "WIS", IsProficient = false },
-                new Skill { Name = "Survival", Ability = "WIS", IsProficient = false },
-                
-                // Charisma
-                new Skill { Name = "Deception", Ability = "CHA", IsProficient = false },
-                new Skill { Name = "Intimidation", Ability = "CHA", IsProficient = false },
-                new Skill { Name = "Performance", Ability = "CHA", IsProficient = false },
-                new Skill { Name = "Persuasion", Ability = "CHA", IsProficient = false }
-            };
-
-            // For now, give proficiency in a couple skills based on class
-            // In a full implementation, you'd let the player choose
-            var classSkills = classData.SkillProficiencies.Take(2);
-            foreach (var skillName in classSkills)
-            {
-                var skill = skills.FirstOrDefault(s => s.Name == skillName);
-                if (skill != null)
-                    skill.IsProficient = true;
-            }
-
-            // Add background proficiencies
-            if (background != null)
-            {
-                foreach (var skillName in background.SkillProficiencies)
-                {
-                    var skill = skills.FirstOrDefault(s => s.Name == skillName);
-                    if (skill != null)
-                        skill.IsProficient = true;
-                }
-            }
-
-            return skills;
-        }
-
-
-
-
-        private List<Item> InitializeInventory(ClassData classData)
-        {
-            var inventory = new List<Item>();
-
-            // Give starting health potions
-            var healthPotion = ItemDatabase.GetItem("health_potion_minor");
-            if (healthPotion != null)
-            {
-                healthPotion.Quantity = 3;
-                inventory.Add(healthPotion);
-            }
-
-            // Give era-appropriate starting weapon based on class
-            string weaponId = classData.Class switch
-            {
-                CharacterClass.Fighter => "wooden_club",
-                CharacterClass.Barbarian => "wooden_club",
-                CharacterClass.Rogue => "sharp_rock",
-                CharacterClass.Ranger => "bone_spear",
-                CharacterClass.Wizard => "sharp_rock",
-                CharacterClass.Cleric => "wooden_club",
-                _ => "wooden_club"
-            };
-
-            var weapon = ItemDatabase.GetItem(weaponId);
-            if (weapon != null)
-            {
-                inventory.Add(weapon);
-            }
-
-            // Give starting armor
-            var armor = ItemDatabase.GetItem("hide_armor");
-            if (armor != null)
-            {
-                inventory.Add(armor);
-            }
-
-            return inventory;
-        }
-
-        private string AdaptToCavemanEra(string modernEquipment)
-        {
-            // Convert modern/medieval equipment to caveman equivalents
-            return modernEquipment.ToLower() switch
-            {
-                string s when s.Contains("sword") => "Sharp Stone",
-                string s when s.Contains("axe") => "Stone Axe",
-                string s when s.Contains("mail") || s.Contains("armor") => "Hide Armor",
-                string s when s.Contains("shield") => "Wooden Shield",
-                string s when s.Contains("bow") => "Crude Bow",
-                string s when s.Contains("staff") => "Wooden Staff",
-                string s when s.Contains("dagger") => "Flint Knife",
-                string s when s.Contains("spellbook") => "Cave Drawings",
-                _ => $"Primitive {modernEquipment}"
-            };
-        }
-
-        private ItemType GetItemType(string equipName)
-        {
-            string lower = equipName.ToLower();
-            if (lower.Contains("armor") || lower.Contains("mail") || lower.Contains("shield") || lower.Contains("hide"))
-                return ItemType.Armor;
-            if (lower.Contains("tool"))
-                return ItemType.Misc;
-            return ItemType.Weapon;
+                await Navigation.PushAsync(new GamePage(character)).ConfigureAwait(false);
+            });
         }
     }
 }

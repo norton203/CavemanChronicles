@@ -19,6 +19,12 @@ namespace CavemanChronicles
         private Direction _playerDirection = Direction.North;
         private int _turnCount = 1;
 
+        // Dungeon textures
+        private SKBitmap _wallTexture;
+        private SKBitmap _floorTexture;
+        private SKBitmap _ceilingTexture;
+        private bool _texturesLoaded = false;
+
         // Dungeon map (0 = floor, 1 = wall)
         private int[,] _dungeonMap;
 
@@ -48,7 +54,6 @@ namespace CavemanChronicles
 
         private void InitializeDungeon()
         {
-            // Simple 10x10 dungeon for now
             _dungeonMap = new int[10, 10]
             {
                 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -62,6 +67,8 @@ namespace CavemanChronicles
                 { 1, 0, 1, 0, 1, 0, 1, 0, 1, 1 },
                 { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
             };
+
+            _ = LoadDungeonTextures(); // fire-and-forget async load
         }
 
         // ==================== MOVEMENT ====================
@@ -440,80 +447,194 @@ namespace CavemanChronicles
 
         private void DrawFirstPersonDungeon(SKCanvas canvas, int width, int height)
         {
-            // Simple pseudo-3D dungeon view (Eye of the Beholder style)
-            var paint = new SKPaint();
-
-            // Check walls in front, left, and right
             bool wallFront = !IsWalkableTile(_playerDirection);
             bool wallLeft = !IsWalkableTile(TurnLeft(_playerDirection));
             bool wallRight = !IsWalkableTile(TurnRight(_playerDirection));
 
-            // Background (sky/ceiling)
-            paint.Color = new SKColor(10, 5, 20);
-            canvas.DrawRect(0, 0, width, height / 2, paint);
-
-            // Floor
-            paint.Color = new SKColor(40, 30, 20);
-            canvas.DrawRect(0, height / 2, width, height / 2, paint);
-
-            // Draw perspective walls
-            if (wallFront)
+            // ── helpers ──────────────────────────────────────────────────────────
+            SKPaint MakePaint(SKBitmap bitmap, byte alpha, SKColor tint)
             {
-                // Front wall
-                paint.Color = new SKColor(80, 60, 40);
-                canvas.DrawRect(width * 0.25f, height * 0.25f, width * 0.5f, height * 0.5f, paint);
-
-                // Wall details
-                paint.Color = new SKColor(60, 45, 30);
-                paint.StrokeWidth = 2;
-                canvas.DrawLine(width * 0.5f, height * 0.25f, width * 0.5f, height * 0.75f, paint);
-                canvas.DrawLine(width * 0.25f, height * 0.5f, width * 0.75f, height * 0.5f, paint);
-            }
-            else
-            {
-                // Corridor ahead - draw perspective lines
-                paint.Color = new SKColor(60, 45, 30);
-                paint.StrokeWidth = 3;
-
-                // Left wall perspective
-                canvas.DrawLine(0, height / 2, width * 0.25f, height * 0.25f, paint);
-                canvas.DrawLine(0, height / 2, width * 0.25f, height * 0.75f, paint);
-
-                // Right wall perspective  
-                canvas.DrawLine(width, height / 2, width * 0.75f, height * 0.25f, paint);
-                canvas.DrawLine(width, height / 2, width * 0.75f, height * 0.75f, paint);
+                if (bitmap != null)
+                {
+                    var shader = SKShader.CreateBitmap(bitmap,
+                        SKShaderTileMode.Repeat, SKShaderTileMode.Repeat);
+                    var cf = SKColorFilter.CreateBlendMode(
+                        tint.WithAlpha(alpha), SKBlendMode.Multiply);
+                    return new SKPaint
+                    {
+                        Shader = shader,
+                        ColorFilter = cf,
+                        IsAntialias = false
+                    };
+                }
+                return new SKPaint { Color = tint.WithAlpha(alpha) };
             }
 
+            void FillRect(float x, float y, float w, float h,
+                          SKBitmap bmp, byte alpha, SKColor tint)
+            {
+                using var p = MakePaint(bmp, alpha, tint);
+                canvas.DrawRect(x, y, w, h, p);
+            }
+
+            void FillPath(SKPath path, SKBitmap bmp, byte alpha, SKColor tint)
+            {
+                using var p = MakePaint(bmp, alpha, tint);
+                canvas.DrawPath(path, p);
+            }
+
+            // ── CEILING ───────────────────────────────────────────────────────────
+            FillRect(0, 0, width, height / 2f,
+                     _ceilingTexture, 255, new SKColor(12, 8, 18));
+
+            // ── FLOOR ─────────────────────────────────────────────────────────────
+            FillRect(0, height / 2f, width, height / 2f,
+                     _floorTexture, 255, new SKColor(55, 40, 25));
+
+            // Perspective floor grid lines for depth
+            using (var linePaint = new SKPaint
+            {
+                Color = new SKColor(30, 20, 10, 120),
+                StrokeWidth = 1,
+                IsAntialias = true
+            })
+            {
+                for (int i = 1; i <= 6; i++)
+                {
+                    float t = i / 7f;
+                    float lineY = height / 2f + t * (height / 2f);
+                    float margin = t * width * 0.4f;
+                    canvas.DrawLine(margin, lineY, width - margin, lineY, linePaint);
+                }
+            }
+
+            // ── SIDE WALLS ────────────────────────────────────────────────────────
             if (wallLeft)
             {
-                // Left wall
-                paint.Color = new SKColor(70, 52, 35);
                 var path = new SKPath();
                 path.MoveTo(0, 0);
                 path.LineTo(width * 0.25f, height * 0.25f);
                 path.LineTo(width * 0.25f, height * 0.75f);
                 path.LineTo(0, height);
                 path.Close();
-                canvas.DrawPath(path, paint);
+                FillPath(path, _wallTexture, 255, new SKColor(60, 45, 30));
+
+                // edge shadow
+                using var edge = new SKPaint
+                {
+                    Shader = SKShader.CreateLinearGradient(
+                        new SKPoint(0, 0), new SKPoint(width * 0.25f, 0),
+                        new[] { new SKColor(0, 0, 0, 160), SKColors.Transparent },
+                        SKShaderTileMode.Clamp),
+                    IsAntialias = true
+                };
+                canvas.DrawPath(path, edge);
             }
 
             if (wallRight)
             {
-                // Right wall
-                paint.Color = new SKColor(70, 52, 35);
                 var path = new SKPath();
                 path.MoveTo(width, 0);
                 path.LineTo(width * 0.75f, height * 0.25f);
                 path.LineTo(width * 0.75f, height * 0.75f);
                 path.LineTo(width, height);
                 path.Close();
-                canvas.DrawPath(path, paint);
+                FillPath(path, _wallTexture, 255, new SKColor(50, 38, 24));
+
+                using var edge = new SKPaint
+                {
+                    Shader = SKShader.CreateLinearGradient(
+                        new SKPoint(width, 0), new SKPoint(width * 0.75f, 0),
+                        new[] { new SKColor(0, 0, 0, 160), SKColors.Transparent },
+                        SKShaderTileMode.Clamp),
+                    IsAntialias = true
+                };
+                canvas.DrawPath(path, edge);
             }
 
-            // Add some atmospheric lighting
-            paint.Color = new SKColor(255, 200, 100, 30);
-            paint.Style = SKPaintStyle.Fill;
-            canvas.DrawCircle(width / 2, height / 2, 100, paint);
+            // ── FRONT WALL or CORRIDOR ────────────────────────────────────────────
+            if (wallFront)
+            {
+                // front face (centre panel)
+                FillRect(width * 0.25f, height * 0.25f,
+                         width * 0.5f, height * 0.5f,
+                         _wallTexture, 255, new SKColor(90, 68, 45));
+
+                // subtle centre-shadow vignette
+                using var shadow = new SKPaint
+                {
+                    Shader = SKShader.CreateRadialGradient(
+                        new SKPoint(width / 2f, height / 2f), width * 0.35f,
+                        new[] { SKColors.Transparent, new SKColor(0, 0, 0, 140) },
+                        SKShaderTileMode.Clamp),
+                    IsAntialias = true
+                };
+                canvas.DrawRect(width * 0.25f, height * 0.25f,
+                                width * 0.5f, height * 0.5f, shadow);
+
+                // mortar lines on the front wall
+                using var mortar = new SKPaint
+                {
+                    Color = new SKColor(20, 14, 8, 100),
+                    StrokeWidth = 1,
+                    IsAntialias = false
+                };
+                float wx1 = width * 0.25f, wx2 = width * 0.75f;
+                float wy1 = height * 0.25f, wy2 = height * 0.75f;
+                float ww = wx2 - wx1, wh = wy2 - wy1;
+                int rowH = 14, colW = 22;
+                for (float ry = wy1; ry < wy2; ry += rowH)
+                    canvas.DrawLine(wx1, ry, wx2, ry, mortar);
+                bool offset = false;
+                for (float ry = wy1; ry < wy2; ry += rowH)
+                {
+                    float startX = offset ? wx1 : wx1 + colW / 2f;
+                    for (float rx = startX; rx < wx2; rx += colW)
+                        canvas.DrawLine(rx, ry, rx, ry + rowH, mortar);
+                    offset = !offset;
+                }
+            }
+            else
+            {
+                // open corridor — perspective guide lines
+                using var corridorPaint = new SKPaint
+                {
+                    Color = new SKColor(70, 52, 32, 200),
+                    StrokeWidth = 2,
+                    IsAntialias = true
+                };
+                // left wall lines
+                canvas.DrawLine(0, height / 2f, width * 0.25f, height * 0.25f, corridorPaint);
+                canvas.DrawLine(0, height / 2f, width * 0.25f, height * 0.75f, corridorPaint);
+                // right wall lines
+                canvas.DrawLine(width, height / 2f, width * 0.75f, height * 0.25f, corridorPaint);
+                canvas.DrawLine(width, height / 2f, width * 0.75f, height * 0.75f, corridorPaint);
+
+                // distant end-wall in corridor (faint texture)
+                if (_wallTexture != null)
+                {
+                    using var distPaint = MakePaint(_wallTexture, 120, new SKColor(40, 30, 18));
+                    canvas.DrawRect(width * 0.35f, height * 0.35f,
+                                    width * 0.3f, height * 0.3f, distPaint);
+                }
+                else
+                {
+                    using var distPaint = new SKPaint { Color = new SKColor(40, 30, 18, 120) };
+                    canvas.DrawRect(width * 0.35f, height * 0.35f,
+                                    width * 0.3f, height * 0.3f, distPaint);
+                }
+            }
+
+            // ── TORCH GLOW ────────────────────────────────────────────────────────
+            using var torch = new SKPaint
+            {
+                Shader = SKShader.CreateRadialGradient(
+                    new SKPoint(width / 2f, height * 0.45f), width * 0.55f,
+                    new[] { new SKColor(255, 180, 60, 55), SKColors.Transparent },
+                    SKShaderTileMode.Clamp),
+                IsAntialias = true
+            };
+            canvas.DrawRect(0, 0, width, height, torch);
         }
 
         private bool IsWalkableTile(Direction dir)
@@ -614,7 +735,40 @@ namespace CavemanChronicles
                 _ => new SKColor(210, 180, 140)
             };
         }
+
+        private async Task LoadDungeonTextures()
+        {
+            try
+            {
+                using var wallStream = await FileSystem.OpenAppPackageFileAsync("Textures/Rocks/flatstones.png");
+                _wallTexture = SKBitmap.Decode(wallStream);
+
+                using var floorStream = await FileSystem.OpenAppPackageFileAsync("Textures/Rocks/flatstones.png");
+                _floorTexture = SKBitmap.Decode(floorStream);
+
+                using var ceilStream = await FileSystem.OpenAppPackageFileAsync("Textures/Rocks/flatstones.png");
+                _ceilingTexture = SKBitmap.Decode(ceilStream);
+
+                _texturesLoaded = true;
+                MainThread.BeginInvokeOnMainThread(() => DungeonCanvas.InvalidateSurface());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load dungeon textures: {ex.Message}");
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _wallTexture?.Dispose();
+            _floorTexture?.Dispose();
+            _ceilingTexture?.Dispose();
+        }
+
     }
+
+
 
     public enum Direction
     {
